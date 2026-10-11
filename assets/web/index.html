@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Canavar Arenası - Taktiksel Slot Oyunu</title>
+    <meta name="theme-color" content="#ff4757">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Canavar Arenası">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700;800;900&family=Lilita+One&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 0. ÜST BAŞLIK & PROFİL BARI (Giriş yapıldığında görünür) -->
+        <!-- 0. ÜST OYUN LOGO VE ÇENTİK GÜVENLİ BARI (EN TEPE) -->
+        <header class="game-header" id="game-header-bar" style="display: none;">
+            <div class="header-branding-centered">
+                <span class="header-game-logo">⚔️🐾</span>
+                <span class="header-game-title">ANICLASH: BEAST RUMBLE</span>
+            </div>
+        </header>
+
+        <!-- 1. GİRİŞ & KAYIT EKRANI (AUTH) -->
+        <section id="auth-view" class="view-panel">
+            <div class="auth-container">
+                <div style="display: flex; justify-content: flex-end; margin-bottom: -15px;">
+                    <button class="btn-icon-small" id="btn-toggle-theme-auth" title="Açık / Koyu Tema">☀️</button>
+                </div>
+                <div class="auth-hero">
+                    <div class="auth-logo">⚔️🐾</div>
+                    <h1 style="font-family: var(--font-manga); font-size: 2.3rem; letter-spacing: 2px; background: linear-gradient(180deg, #ff4757, #ffa502); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(2px 2px 0 #000); margin-bottom: -4px;">ANICLASH</h1>
+                    <div style="font-family: var(--font-manga); font-size: 1.15rem; color: #ffa502; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 1.5px 1.5px 0 #000;">BEAST RUMBLE</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-weight: 700;">Taktiksel Koridor ve Slot Arenası</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" id="tab-btn-login">GİRİŞ YAP</button>
+                    <button class="auth-tab-btn" id="tab-btn-register">KAYIT OL</button>
+                </div>
+
+                <div class="auth-alert-box" id="auth-alert"></div>
+
+                <!-- Giriş Formu -->
+                <form id="form-login" class="auth-form-card">
+                    <div class="input-group">
+                        <label class="input-label">Kullanıcı Adı</label>
+                        <input type="text" id="login-username" class="input-field" placeholder="Kullanıcı adınızı girin..." required autocomplete="username">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Şifre</label>
+                        <input type="password" id="login-password" class="input-field" placeholder="Şifrenizi girin..." required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn-primary" id="btn-submit-login" style="margin-top: 6px;">GİRİŞ YAP</button>
+                </form>
+
+                <!-- Kayıt Formu -->
+                <form id="form-register" class="auth-form-card hidden">
+                    <div class="input-group">
+                        <label class="input-label">Kullanıcı Adı</label>
+                        <input type="text" id="reg-username" class="input-field" placeholder="Yeni kullanıcı adı belirleyin..." required autocomplete="username">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Şifre</label>
+                        <input type="password" id="reg-password" class="input-field" placeholder="En az 4 karakterli şifre..." required autocomplete="new-password">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Avatar Seçimi</label>
+                        <div class="avatar-picker-grid" id="reg-avatar-picker">
+                            <!-- Emojiler JS ile gelecek -->
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="btn-submit-register" style="margin-top: 6px;">HESAP OLUŞTUR</button>
+                </form>
+
+                <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+                    <button class="btn-secondary" id="btn-guest-login" style="width: 100%;">⚡ Misafir Olarak Hızlı Başla</button>
+                    <button class="btn-secondary" id="btn-admin-login" style="width: 100%; border-color: #ffa502; color: #ffa502; font-weight: 900;">👑 Admin Olarak Başla (Sınırsız Yetki)</button>
+                </div>
+                <div style="font-size: 0.65rem; color: var(--text-muted); text-align: center; margin-top: 8px;">
+                    🔑 Admin Giriş Bilgileri: <b>admin</b> / <b>admin</b>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ANASAYFA / LOBBY EKRANI -->
+        <section id="lobby-view" class="view-panel hidden">
+            <div class="lobby-dashboard">
+                <!-- KULLANICI PROFİL, CÜZDAN & KONTROL PANELİ (AŞAĞI ALINAN TÜM KONTROLLER) -->
+                <div class="lobby-user-dashboard-card">
+                    <!-- Üst Satır: Profil & Seviye (Sol) + Kupa, Ses, Tema, Çıkış (Sağ) -->
+                    <div class="user-dashboard-top">
+                        <div class="profile-pill" id="btn-open-profile-strip" style="cursor: pointer;" title="Profili Aç">
+                            <div class="avatar-badge" id="header-avatar">🦁</div>
+                            <div class="profile-stats">
+                                <div style="display: flex; align-items: center; gap: 5px;">
+                                    <span class="header-user-name" id="header-username">Oyuncu</span>
+                                    <span class="streak-badge" id="win-streak-badge" style="display: none;">🔥 2 Seri</span>
+                                </div>
+                                <span class="profile-tier" id="player-tier">🥉 Bronz Lig</span>
+                                <div class="exp-bar-wrapper">
+                                    <div class="exp-bar-fill" id="player-exp-bar" style="width: 20%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="user-dashboard-actions">
+                            <div class="lobby-trophy-box" id="player-trophies" title="Kupa Puanı">
+                                <span class="trophy-icon">🏆</span>
+                                <span id="player-trophies-val">150</span>
+                            </div>
+                            <button class="btn-icon-small" id="btn-toggle-sound" title="Sesi Aç/Kapat">🔊</button>
+                            <button class="btn-icon-small" id="btn-toggle-theme" title="Açık / Koyu Tema">☀️</button>
+                            <button class="btn-icon-small btn-logout-danger" id="btn-logout" title="Oturumu Kapat (Çıkış Yap)">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Alt Satır: Token Bakiyesi & Tahmin Hakları & Günlük Savaş Hakkı -->
+                    <div class="user-dashboard-wallet-row">
+                        <div class="dashboard-wallet-pill token-pill" id="btn-header-tokens" title="Token Bakiyesi (Mağazayı Aç)">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span class="token-coin-icon"></span>
+                                <span class="wallet-pill-label">Token:</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span class="wallet-pill-val" id="player-tokens">250</span>
+                                <span class="wallet-pill-arrow">➔</span>
+                            </div>
+                        </div>
+                        <div class="dashboard-wallet-pill ticket-pill" id="btn-header-tickets" title="Tahmin Hakları (Mağazayı Aç)">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span class="ticket-badge-icon"></span>
+                                <span class="wallet-pill-label">Tahmin:</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span class="wallet-pill-val" id="player-tickets">3</span>
+                                <span class="wallet-pill-arrow">➔</span>
+                            </div>
+                        </div>
+                        <div class="dashboard-wallet-pill energy-pill" id="lobby-daily-battles-pill" title="Günlük Savaş Hakkı (Günde Max 3 Maç)">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span style="font-size: 0.85rem;">⚡</span>
+                                <span class="wallet-pill-label">Günlük:</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span class="wallet-pill-val" id="player-daily-battles-count" style="color: #2ed573;">3/3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ÜST ÖNE ÇIKAN SEZON & ÖZELLİK BANNERI -->
+                <div class="lobby-hero-banner" id="lobby-hero-banner">
+                    <div class="banner-top-badge">
+                        <span class="badge-fire-icon">🔥</span>
+                        <span>SEZON 1 ARENASI</span>
+                        <span class="badge-tag-live">CANLI</span>
+                    </div>
+                    <div class="banner-main-content">
+                        <div class="banner-title">⚔️ 3v3 Taktik Koridor & Canlı Tahmin</div>
+                        <div class="banner-desc">Doğru canavarları koridorlara diz, stratejik tahminini yap ve 3.5x'e varan büyük ödülleri kazan!</div>
+                    </div>
+                    <div class="banner-perks-row">
+                        <div class="banner-perk-item" id="btn-open-daily-login" style="cursor: pointer;" title="7 Günlük Giriş Takvimi & Ödülleri">
+                            <span class="perk-icon">🎁</span>
+                            <span class="perk-text">7 Günlük Giriş</span>
+                        </div>
+                        <div class="banner-perk-item" id="btn-open-perk-tahmin" style="cursor: pointer;" title="Tahmin Sistemi Rehberi">
+                            <span class="perk-icon">🎯</span>
+                            <span class="perk-text">3.5x Tahmin</span>
+                        </div>
+                        <div class="banner-perk-item" id="btn-open-perk-hak" style="cursor: pointer;" title="Günlük Savaş Hakları">
+                            <span class="perk-icon">⚡</span>
+                            <span class="perk-text">Günde 3 Maç</span>
+                        </div>
+                        <div class="banner-perk-item" id="btn-open-bestiary" style="cursor: pointer;" title="18+ Canavar ve Yetenek Rehberi">
+                            <span class="perk-icon">🐯</span>
+                            <span class="perk-text">18+ Canavar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menü Kartları Grid (5'li Zenginleştirilmiş Kart Dizilimi) -->
+                <div class="lobby-menu-grid-4">
+                    <div class="menu-card" id="btn-open-profile">
+                        <div class="menu-card-icon-wrap icon-purple">
+                            <span class="menu-card-icon">👤</span>
+                        </div>
+                        <div class="menu-card-details">
+                            <div class="menu-card-title">Profil & Başarım</div>
+                            <div class="menu-card-desc">İstatistik & Rozetler</div>
+                        </div>
+                    </div>
+                    <div class="menu-card menu-card-highlight" id="btn-open-shop-lobby">
+                        <div class="menu-card-icon-wrap icon-gold">
+                            <span class="menu-card-icon">🏪</span>
+                        </div>
+                        <div class="menu-card-details">
+                            <div class="menu-card-title">Mağaza & Token</div>
+                            <div class="menu-card-desc">Bilet & Altın Al</div>
+                        </div>
+                    </div>
+                    <div class="menu-card" id="btn-open-leaderboard">
+                        <div class="menu-card-icon-wrap icon-cyan">
+                            <span class="menu-card-icon">🏆</span>
+                        </div>
+                        <div class="menu-card-details">
+                            <div class="menu-card-title">Lider Tablosu</div>
+                            <div class="menu-card-desc">Haftalık & Aylık Tablo</div>
+                        </div>
+                    </div>
+                    <div class="menu-card menu-card-boss" id="btn-open-boss-raid">
+                        <div class="menu-card-icon-wrap icon-red">
+                            <span class="menu-card-icon">🐉</span>
+                        </div>
+                        <div class="menu-card-details">
+                            <div class="menu-card-title" style="color: #ff4757;">Titan Raid</div>
+                            <div class="menu-card-desc">Dünya Bossu Savaşı</div>
+                        </div>
+                    </div>
+                    <div class="menu-card" id="btn-open-info">
+                        <div class="menu-card-icon-wrap icon-green">
+                            <span class="menu-card-icon">📖</span>
+                        </div>
+                        <div class="menu-card-details">
+                            <div class="menu-card-title">Oyun Rehberi</div>
+                            <div class="menu-card-desc">Roller & Taktikler</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GÜNLÜK GÖREV & ARENA İLERLEME KARTI -->
+                <div class="lobby-daily-quest-card" id="lobby-daily-quest">
+                    <div class="quest-header-row">
+                        <div class="quest-title-badge">
+                            <span>🎁 GÜNLÜK GÖREV</span>
+                        </div>
+                        <div class="quest-reward-badge" id="quest-reward-badge">
+                            <span class="token-coin-icon"></span>
+                            <span id="quest-reward-text">+50 Token</span>
+                        </div>
+                    </div>
+                    <div class="quest-body">
+                        <div class="quest-desc" id="quest-desc-text">Bugün 1 Arena Savaşı Kazan (Taktik Tahmin Aktif)</div>
+                        <div class="quest-progress-bar-bg">
+                            <div class="quest-progress-fill" id="quest-progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <div class="quest-status-row">
+                            <span class="quest-progress-text" id="quest-progress-text">0 / 1 (%0)</span>
+                            <button class="btn-claim-quest hidden" id="btn-claim-quest">🎁 Ödülü Al</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lobby-action-container">
+                    <!-- Günlük Savaş Hakkı Sayaç Çubuğu -->
+                    <div class="daily-battle-counter-bar" id="daily-battle-counter-bar">
+                        <div class="daily-battle-dots" id="daily-battle-dots">
+                            <span class="daily-battle-dot active" id="dot-battle-1">⚡</span>
+                            <span class="daily-battle-dot active" id="dot-battle-2">⚡</span>
+                            <span class="daily-battle-dot active" id="dot-battle-3">⚡</span>
+                        </div>
+                        <span class="daily-battle-text" id="daily-battle-status-text">Günlük Savaş: <b>3 / 3 Kalan</b> (Sıfırlanma: 00:00)</span>
+                    </div>
+                    <button class="btn-primary" id="btn-quick-play">🔥 HIZLI ARENA SAVAŞI BUL</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. DRAFT & 3-SLOT YERLEŞTİRME EKRANI (ARENA GÖRÜNÜMÜ & SÜRÜKLE-BIRAK) -->
+        <section id="draft-view" class="view-panel hidden">
+            <!-- Savaş Öncesi Arena Koridoru -->
+            <div class="draft-arena-stage">
+                <!-- Rakip Bot Slotları (Savaş görünümüyle birebir aynı) -->
+                <div>
+                    <div class="lane-header-row bot-header">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span>🔴 RAKİP BOT DİZİLİMİ</span>
+                        </div>
+                        <span class="lane-sub-text bot-match-diff-badge tier-bronze" id="bot-difficulty-badge">🥉 Acemi Rakip</span>
+                    </div>
+                    <div class="arena-team-row arena-bot-row" id="bot-team-preview">
+                        <!-- Bot Canavarları Arena Formatında Gelecek -->
+                    </div>
+                </div>
+
+                <!-- Koridor Karşılaşma Göstergesi -->
+                <div class="lane-clash-indicators">
+                    <div class="clash-arrow"><span>⚔️ Slot 1</span></div>
+                    <div class="clash-arrow"><span>⚔️ Slot 2</span></div>
+                    <div class="clash-arrow"><span>⚔️ Slot 3</span></div>
+                </div>
+
+                <!-- Oyuncu Slotları (Sürükle-Bırak Drop Hedefleri) -->
+                <div>
+                    <div class="lane-header-row player-header">
+                        <span>🟢 SENİN KORİDOR SLOTLARIN (<span id="selected-count">0/3</span>)</span>
+                        <span class="lane-sub-text">Aşağıdan Sürükleyip Bırakın</span>
+                    </div>
+
+                    <!-- Takım Element Sinerjisi Rozet Kutusu -->
+                    <div id="draft-synergy-banner" class="draft-synergy-pill hidden">
+                        <span class="synergy-icon" id="draft-synergy-icon">🔥</span>
+                        <span class="synergy-text" id="draft-synergy-text">2x Ateş: Alev Hiddeti (+%15 ATK)</span>
+                    </div>
+
+                    <div class="arena-team-row arena-player-row draft-drop-row" id="player-slots-container">
+                        <!-- 3 Sürükle-Bırak Slot Kutusu JS ile Gelecek -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="draft-alert info" id="draft-validation-alert" style="margin: 6px 0;">
+                Canavarları savaş slotlarına yerleştirin (Sürükleyin veya Tıklayın).
+            </div>
+
+            <!-- Canavar Kartları Havuzu (Tek Sırada 5 Kart) -->
+            <div id="player-pool-selection" class="draft-pool-5-grid">
+                <!-- 5 Sürüklenebilir Kart JS ile Gelecek -->
+            </div>
+
+            <!-- SAVAŞ ÖNCESİ YAPAY ZEKA TAHMİN & SİMÜLASYON MERKEZİ (AI SAVAŞ RADARI) -->
+            <div class="prediction-hub-box" id="ai-prediction-hub">
+                <div class="pred-hub-header">
+                    <span style="font-size: 0.68rem; font-weight: 900; color: var(--accent-cyan); display: flex; align-items: center; gap: 4px;">
+                        <span>🔮 AI SAVAŞ TAHMİNİ & SİMÜLASYONU</span>
+                    </span>
+                    <div class="pred-ticket-badge" style="display: flex; align-items: center; gap: 4px;">
+                        <span class="ticket-badge-icon"></span>
+                        <span>Kalan Bilet: <b id="pred-rights-count" style="color: #ff7675;">3</b></span>
+                    </div>
+                </div>
+
+                <!-- Simülasyon Öncesi Başlatma Butonu -->
+                <div id="ai-pred-idle-view">
+                    <button type="button" class="btn-ai-simulate" id="btn-run-ai-simulation">
+                        <div class="btn-sim-left">
+                            <span class="btn-sim-icon">🧠</span>
+                            <div class="btn-sim-texts">
+                                <span class="btn-sim-title">Taktiksel Zafer İhtimalini Simüle Et</span>
+                                <span class="btn-sim-desc">200 Arkaplan Maçı Oynatır & Kazanma Yüzdesini Verir</span>
+                            </div>
+                        </div>
+                        <div class="btn-sim-cost">
+                            <span class="ticket-badge-icon"></span>
+                            <span>1 Bilet</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Simülasyon Sonuç Raporu Kartı -->
+                <div id="ai-pred-result-card" class="ai-pred-result-container hidden">
+                    <div class="ai-result-top-row">
+                        <div class="ai-win-rate-badge" id="ai-win-rate-badge">
+                            <span class="ai-win-rate-num" id="ai-win-rate-num">%72</span>
+                            <span class="ai-win-rate-lbl">Zafer İhtimali</span>
+                        </div>
+                        <div class="ai-lanes-breakdown">
+                            <div class="ai-lane-stat-row">
+                                <span class="ai-lane-lbl">⚔️ Slot 1:</span>
+                                <div class="ai-bar-mini-bg"><div class="ai-bar-mini-fill" id="ai-bar-slot-1" style="width: 70%;"></div></div>
+                                <b class="ai-lane-val" id="ai-pct-slot-1">%70</b>
+                            </div>
+                            <div class="ai-lane-stat-row">
+                                <span class="ai-lane-lbl">⚔️ Slot 2:</span>
+                                <div class="ai-bar-mini-bg"><div class="ai-bar-mini-fill" id="ai-bar-slot-2" style="width: 50%;"></div></div>
+                                <b class="ai-lane-val" id="ai-pct-slot-2">%50</b>
+                            </div>
+                            <div class="ai-lane-stat-row">
+                                <span class="ai-lane-lbl">⚔️ Slot 3:</span>
+                                <div class="ai-bar-mini-bg"><div class="ai-bar-mini-fill" id="ai-bar-slot-3" style="width: 85%;"></div></div>
+                                <b class="ai-lane-val" id="ai-pct-slot-3">%85</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ai-tactical-tip-box" id="ai-tactical-tip-box">
+                        <span class="ai-tip-icon">💡</span>
+                        <div class="ai-tip-text" id="ai-tactical-tip-text">AI Analizi hazırlanıyor...</div>
+                    </div>
+                    
+                    <!-- Tek Tıkla Öneriyi Uygula Butonu -->
+                    <button type="button" class="btn-ai-action-apply hidden" id="btn-apply-ai-sim">
+                        ⚡ Önerilen Dizilimi Uygula
+                    </button>
+
+                    <div class="ai-result-actions-row">
+                        <button type="button" class="btn-ai-action-close" id="btn-close-ai-sim" title="Paneli kapat ve simülasyon butonuna dön">
+                            ✖️ Paneli Kapat
+                        </button>
+                        <button type="button" class="btn-ai-action-rerun" id="btn-rerun-ai-sim" title="Mevcut slot dizilimine göre tekrar simüle et">
+                            <span>🔄 Yeniden Simüle Et</span>
+                            <span class="btn-sim-cost-mini"><span class="ticket-badge-icon"></span>1 Bilet</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="draft-action-container">
+                <button class="btn-primary" id="btn-start-battle" style="flex: 2.2;" disabled>⚔️ SAVAŞI BAŞLAT</button>
+                <button class="btn-secondary" id="btn-back-lobby" style="flex: 1;">⬅️ Geri</button>
+            </div>
+        </section>
+
+        <!-- 4. KORİDOR VE SLOT SAVAŞ ARENASI -->
+        <section id="battle-view" class="view-panel hidden">
+            <div class="battle-arena-wrapper">
+                <!-- Savaş Durum Barı -->
+                <div class="battle-hud-header">
+                    <div class="battle-hud-badge bot-badge">🔴 RAKİP BOT</div>
+                    <div class="battle-hud-center">
+                        <span class="battle-hud-round" id="battle-round-indicator">⚔️ 3v3 KORİDOR SAVAŞI</span>
+                        <div id="battle-synergy-pill" class="battle-synergy-pill hidden">🔥 Sinerji Aktif</div>
+                    </div>
+                    <button class="btn-battle-quit" id="btn-battle-quit" title="Savaştan Çık (Pes Et)">🏳️ Çık</button>
+                </div>
+
+                <!-- KARŞI KARŞIYA DOĞRUDAN SLOT ARENASI -->
+                <div class="face-to-face-arena">
+                    <!-- Rakip Bot Takımı (Üst Sıra: Slot 1, Slot 2, Slot 3) -->
+                    <div class="arena-team-container bot-container">
+                        <div class="arena-team-row arena-bot-row" id="arena-bot-team"></div>
+                    </div>
+
+                    <!-- Ortadaki Koridor Çatışma Hattı (VS İndikatörleri) -->
+                    <div class="arena-clash-divider">
+                        <div class="clash-lane-col">
+                            <span class="clash-lane-tag">KORİDOR 1</span>
+                            <span class="clash-lane-vs">⚔️ VS ⚔️</span>
+                        </div>
+                        <div class="clash-lane-col">
+                            <span class="clash-lane-tag">KORİDOR 2</span>
+                            <span class="clash-lane-vs">⚔️ VS ⚔️</span>
+                        </div>
+                        <div class="clash-lane-col">
+                            <span class="clash-lane-tag">KORİDOR 3</span>
+                            <span class="clash-lane-vs">⚔️ VS ⚔️</span>
+                        </div>
+                    </div>
+
+                    <!-- Oyuncu Takımı (Alt Sıra: Slot 1, Slot 2, Slot 3) -->
+                    <div class="arena-team-container player-container">
+                        <div class="arena-team-row arena-player-row" id="arena-player-team"></div>
+                    </div>
+                </div>
+
+                <!-- Arena Altı / Canlı Savaş Log Akışı -->
+                <div class="battle-bottom-panel">
+                    <div class="battle-logs-header">
+                        <span class="logs-header-title">📜 CANLI SAVAŞ AKIŞI</span>
+                        <span class="logs-header-sub" id="battle-live-speed">⚡ Otomatik Savaş</span>
+                    </div>
+                    <div class="battle-logs-box" id="battle-logs">
+                        <p class="log-line system">Arena hazır, koridorlar hedefleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL: PROFİL YÖNETİMİ & MAÇ GEÇMİŞİ -->
+        <div id="profile-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">👤 Profil & İstatistikler</h2>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+
+                <div class="profile-edit-avatar-section">
+                    <div class="prof-large-avatar" id="prof-modal-avatar">⚔️</div>
+                    <div style="flex: 1;">
+                        <input type="text" id="prof-modal-username" class="input-field" style="width: 100%; font-weight: bold;" placeholder="Kullanıcı Adı">
+                        <span id="prof-stat-level" style="font-size: 0.72rem; color: var(--accent-cyan);">Seviye 1</span>
+                    </div>
+                </div>
+
+                <!-- Profil Avatar Değiştirme Izgarası -->
+                <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); margin-bottom: 4px;">🎨 AVATARINI SEÇ</div>
+                <div class="avatar-picker-grid" id="prof-avatar-picker" style="margin-bottom: 12px;"></div>
+
+                <!-- Detaylı İstatistikler Grid -->
+                <div class="quick-stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-val" id="prof-stat-matches">0</div>
+                        <div class="stat-box-lbl">Toplam Maç</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-val" id="prof-stat-winrate">%0</div>
+                        <div class="stat-box-lbl">Kazanma Oranı</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-val" id="prof-stat-streak">0 Maç</div>
+                        <div class="stat-box-lbl">En İyi Seri</div>
+                    </div>
+                </div>
+
+                <!-- Başarımlar -->
+                <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-gold); margin-top: 4px;">🏆 BAŞARIMLAR & ROZETLER</div>
+                <div class="achievements-grid" id="prof-achievements-list"></div>
+
+                <!-- Maç Geçmişi -->
+                <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-cyan); margin-top: 8px;">📜 SON MAÇ GEÇMİŞİ</div>
+                <div class="match-history-list" id="prof-match-history"></div>
+
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <button class="btn-primary" id="btn-save-profile" style="flex: 1; padding: 10px; font-size: 0.88rem;">💾 Kaydet</button>
+                    <button class="btn-secondary btn-close-modal" style="flex: 1; padding: 10px;">Kapat</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: GELİŞMİŞ LİDERLİK TABLOSU -->
+        <div id="leaderboard-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">🏆 Liderlik Tablosu & Ligler</h2>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+
+                <!-- 1. ZAMAN DİLİMİ ANA SEKMELERİ (HAFTALIK / AYLIK / TÜM ZAMANLAR) -->
+                <div class="lb-timeframe-tabs">
+                    <button class="lb-tf-btn active" data-timeframe="weekly">🗓️ Haftalık (Pzt-Paz)</button>
+                    <button class="lb-tf-btn" data-timeframe="monthly">📅 Aylık (Bu Ay)</button>
+                    <button class="lb-tf-btn" data-timeframe="all_time">👑 Tüm Zamanlar</button>
+                </div>
+
+                <!-- 2. ZAMAN DİLİMİ SAYAÇ & BİLGİ KARTI -->
+                <div class="lb-timeframe-banner" id="lb-timeframe-banner">
+                    <span class="lb-tf-icon" id="lb-tf-icon">🗓️</span>
+                    <div class="lb-tf-info">
+                        <div class="lb-tf-title" id="lb-tf-title">HAFTALIK ARENA SIRALAMASI</div>
+                        <div class="lb-tf-timer" id="lb-tf-timer">⏳ Sezon Bitişi: Yükleniyor...</div>
+                        <div class="lb-tf-desc" id="lb-tf-desc">Pazartesi 00:00 - Pazar 23:59 arası kupa yarışı</div>
+                    </div>
+                </div>
+
+                <!-- 3. LİG DERECE SEKMELERİ -->
+                <div class="lb-tabs-row">
+                    <button class="lb-tab-btn active" data-tier="all">Tümü</button>
+                    <button class="lb-tab-btn" data-tier="bronze">🥉 Bronz</button>
+                    <button class="lb-tab-btn" data-tier="silver">🥈 Gümüş</button>
+                    <button class="lb-tab-btn" data-tier="gold">🥇 Altın</button>
+                    <button class="lb-tab-btn" data-tier="diamond">💎 Elmas</button>
+                    <button class="lb-tab-btn" data-tier="champion">👑 Efsane</button>
+                </div>
+
+                <!-- Arama Kutusu -->
+                <div class="lb-search-box">
+                    <input type="text" id="lb-search-input" class="input-field" placeholder="🔍 Oyuncu ara..." style="width: 100%; padding: 8px 12px; font-size: 0.8rem;">
+                </div>
+
+                <div class="leaderboard-list" id="leaderboard-list"></div>
+
+                <button class="btn-secondary btn-close-modal" style="margin-top: 12px;">Kapat</button>
+            </div>
+        </div>
+
+        <!-- MODAL: RAKİP DETAY İNCELEME -->
+        <div id="player-detail-modal" class="modal-overlay hidden">
+            <div class="modal-content result-card" style="text-align: center;">
+                <div class="result-icon" id="insp-avatar" style="font-size: 3rem;">🦁</div>
+                <h3 id="insp-name" style="font-size: 1.2rem; font-weight: 900;">Oyuncu</h3>
+                <p id="insp-title" style="font-size: 0.75rem; color: var(--accent-gold); margin-bottom: 12px;">Kadim Gladyatör</p>
+
+                <div class="quick-stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-val" id="insp-trophies">🏆 0</div>
+                        <div class="stat-box-lbl" id="insp-tier">Lig</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-val" id="insp-winrate">%0</div>
+                        <div class="stat-box-lbl">Win Rate</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-val"><span id="insp-wins">0</span> / <span id="insp-losses" style="color: #ff6b81;">0</span></div>
+                        <div class="stat-box-lbl">G / M</div>
+                    </div>
+                </div>
+
+                <button class="btn-secondary btn-close-modal" style="margin-top: 10px;">Geri Dön</button>
+            </div>
+        </div>
+
+        <!-- MODAL: OYUN REHBERİ (SEKMELİ & KAPSAMLI REHBER MERKEZİ) -->
+        <div id="info-modal" class="modal-overlay hidden">
+            <div class="modal-content guide-modal-content">
+                <div class="modal-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.4rem;">📖</span>
+                        <h2 class="modal-title">AniClash Rehber & Taktik Merkezi</h2>
+                    </div>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+
+                <!-- REHBER SEKMELERİ -->
+                <div class="info-guide-tabs">
+                    <button class="info-tab-btn active" data-tab="rules">⚔️ Genel Kurallar</button>
+                    <button class="info-tab-btn" data-tab="prediction">🎯 3.5x Tahmin</button>
+                    <button class="info-tab-btn" data-tab="daily">⚡ Günlük Haklar</button>
+                    <button class="info-tab-btn" data-tab="synergy">🌪️ Sinerjiler</button>
+                </div>
+
+                <!-- SEKME 1: GENEL KURALLAR & KORİDORLAR -->
+                <div id="info-panel-rules" class="info-tab-panel">
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">⚔️</span> <b>3v3 Koridor & Slot Mantığı</b></div>
+                        <p>Her savaşta 3 koridor bulunur (Slot 1, Slot 2, Slot 3). Canavarınız doğrudan karşısındaki rakip slota saldırır. Karşıdaki canavar elendiğinde açık koridor oluşur ve canavarınız yaşayan diğer hedeflere yönelir.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">🎲</span> <b>5'li Draft & Takım Kurma</b></div>
+                        <p>Savaş öncesinde size 5 rastgele canavar kartı önerilir. Bu havuzdan en stratejik 3 canavarı seçip slotlarınıza yerleştirirsiniz. Rakip bot ile <b>birebir aynı 3'lü dizilim</b> kurulamaz.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">🏆</span> <b>Ligler & Kupa Basamakları</b></div>
+                        <p>Zaferlerinizle Kupa kazanın ve lig basamaklarını tırmanın: <b>Bronz ➔ Gümüş ➔ Altın ➔ Elmas ➔ Efsane Şampiyon</b>. Her ligde haftalık ve aylık liderlik tablosu ödülleri dağıtılır.</p>
+                    </div>
+                </div>
+
+                <!-- SEKME 2: 3.5X TAHMİN & AI SİMÜLASYON SİSTEMİ -->
+                <div id="info-panel-prediction" class="info-tab-panel hidden">
+                    <div class="info-guide-card highlight-gold">
+                        <div class="info-card-header"><span class="info-card-icon">🎯</span> <b>3.5x Ödül Çarpanı & Tahmin</b></div>
+                        <p>Savaş başlamadan önce AI Tahminini çalıştırarak koridor üstünlüğünü analiz edebilirsiniz. 1 Tahmin Bileti kullanarak savaşı kazandığınızda <b>3.5x'e varan devasa Token</b> ve ekstra <b>Bonus Kupa (+5~8)</b> kazanırsınız!</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">🧠</span> <b>200 Maçlık Monte Carlo Simülasyonu</b></div>
+                        <p>AI Motoru, diziliminiz ile rakip takım arasında arkaplanda <b>200 hızlı simülasyon maçı</b> oynatır ve gerçek kazanma olasılığınızı (%Win Rate) koridor koridor hesaplar.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">⚡</span> <b>Tek Tıkla Önerilen Dizilimi Uygula</b></div>
+                        <p>AI motoru daha yüksek zafer şansı sunan bir canavar takası bulduğunda, <i>"⚡ Önerilen Dizilimi Uygula"</i> butonuna basarak tek tıkla en yüksek galibiyet ihtimalli kadroya geçebilirsiniz.</p>
+                    </div>
+                </div>
+
+                <!-- SEKME 3: GÜNLÜK SAVAŞ HAKLARI & TİTAN RAİD -->
+                <div id="info-panel-daily" class="info-tab-panel hidden">
+                    <div class="info-guide-card highlight-green">
+                        <div class="info-card-header"><span class="info-card-icon">⚡</span> <b>Günde 3 Arena Maçı Sınırı</b></div>
+                        <p>Tüm oyuncuların günde <b>3 resmi lig maçı</b> yapma hakkı vardır. Bu sistem rekabet dengesini korur ve maçların her birini taktiksel olarak çok değerli kılar.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">⏰</span> <b>Gece 00:00 Sıfırlanması</b></div>
+                        <p>Günlük savaş haklarınız her gece <b>saat 00:00'da</b> otomatik olarak 3/3 şeklinde tamamen yenilenir. Lobideki canlı sayaçtan sıfırlanmaya kalan süreyi saniye saniye takip edebilirsiniz.</p>
+                    </div>
+
+                    <div class="info-guide-card highlight-red">
+                        <div class="info-card-header"><span class="info-card-icon">🐉</span> <b>Titan Boss Raid (Sınırsız Oynanış)</b></div>
+                        <p>Günlük 3 maç hakkınız bitse bile oyundan kopmazsınız! <b>Kadim Titan Ejderha Ignis</b>'e karşı Dünya Bossu savaşına girip hasar rekorları kırarak sınırsız Token ödülleri toplayabilirsiniz.</p>
+                    </div>
+                </div>
+
+                <!-- SEKME 4: ELEMENT SİNERJİLERİ -->
+                <div id="info-panel-synergy" class="info-tab-panel hidden">
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">🔥</span> <b>2x Ateş: Alev Hiddeti</b></div>
+                        <p>Takımınızdaki tüm canavarların <b>Saldırı Gücü (ATK) %15 artar</b>. Yüksek hasar odaklı hızlı bitirici takımlar için idealdir.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">🌿</span> <b>2x Toprak: Kaya Barikatı</b></div>
+                        <p>Savaş başında takımınızdaki tüm canavarlara <b>+30 Zırh (Kalkan)</b> eklenir. Rakiplerin ilk darbelerini sönümler.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">🌪️</span> <b>2x Rüzgar: Fırtına Çevikliği</b></div>
+                        <p>Tüm takımın <b>Hızı (SPD) %15 artar</b>. Koridorda ilk vuruşu yapma ve rakipten önce yetenek doldurma avantajı sağlar.</p>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="info-card-header"><span class="info-card-icon">💧</span> <b>2x Su: Yaşam Pınarı</b></div>
+                        <p>Her turun başında takımınızdaki tüm canlı dostlar <b>+25 Can Yenilenmesi</b> kazanır.</p>
+                    </div>
+                </div>
+
+                <button class="btn-secondary btn-close-modal" style="margin-top: 12px;">Kapat</button>
+            </div>
+        </div>
+
+        <!-- MODAL: OYUN İÇİ MAĞAZA (STORE) -->
+        <div id="store-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.4rem;">🏪</span>
+                        <h2 class="modal-title">Oyun İçi Mağaza</h2>
+                    </div>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+
+                <!-- Bakiye Özeti -->
+                <div class="store-balance-banner">
+                    <div style="display: flex; align-items: center; gap: 4px;">Mevcut Bakiye: <b id="store-current-tokens" style="color: var(--accent-gold);">250</b> <span class="token-coin-icon"></span></div>
+                    <div style="display: flex; align-items: center; gap: 4px;">Tahmin Hakları: <b id="store-current-tickets" style="color: #ff7675;">3</b> <span class="ticket-badge-icon"></span></div>
+                </div>
+
+                <!-- Mağaza Sekmeleri -->
+                <div class="store-tabs-row">
+                    <button class="store-tab-btn active" id="tab-store-tickets"><span class="ticket-badge-icon"></span> Tahmin Hakları</button>
+                    <button class="store-tab-btn" id="tab-store-tokens"><span class="token-coin-icon"></span> Token Satın Al</button>
+                </div>
+
+                <!-- Sekme 1: Token İle Tahmin Hakkı Satın Alma -->
+                <div id="store-tickets-panel" class="store-items-grid">
+                    <!-- JS ile dinamik gelecek -->
+                </div>
+
+                <!-- Sekme 2: Gerçek Para ile Token Satın Alma -->
+                <div id="store-tokens-panel" class="store-items-grid hidden">
+                    <!-- JS ile dinamik gelecek -->
+                </div>
+
+                <button class="btn-secondary btn-close-modal" style="margin-top: 12px;">Mağazadan Çık</button>
+            </div>
+        </div>
+
+        <!-- MODAL: GÜVENLİ ÖDEME SİMÜLATÖRÜ (CHECKOUT) -->
+        <div id="checkout-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">💳 Güvenli Ödeme (Simülasyon)</h2>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+
+                <div class="checkout-pkg-summary" id="checkout-pkg-details">
+                    <!-- Seçilen paket detayları -->
+                </div>
+
+                <form id="checkout-form" class="auth-form-card" style="margin: 10px 0;">
+                    <div class="input-group">
+                        <label class="input-label">Kart Üzerindeki İsim</label>
+                        <input type="text" class="input-field" value="AHMET YILMAZ" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Kart Numarası</label>
+                        <input type="text" class="input-field" value="5428 •••• •••• 9842" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="input-group">
+                            <label class="input-label">Son Kullanma</label>
+                            <input type="text" class="input-field" value="12/28" required>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">CVV / CVC</label>
+                            <input type="text" class="input-field" value="784" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="btn-confirm-checkout" style="margin-top: 6px;">🔒 ÖDEMEYİ TAMAMLA</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL: 18+ EFSANEVİ CANAVAR KÜTÜPHANESİ & YETENEK REHBERİ -->
+        <div id="bestiary-modal" class="modal-overlay hidden">
+            <div class="modal-content bestiary-content">
+                <div class="modal-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.5rem;">🐯</span>
+                        <div>
+                            <h2 style="margin: 0; font-size: 1.15rem; color: var(--accent-gold); font-family: var(--font-manga); letter-spacing: 0.8px;">18+ EFSANEVİ CANAVAR REHBERİ</h2>
+                            <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700;">Canavar Yetenekleri, Elementler ve Taktik Bilgileri</div>
+                        </div>
+                    </div>
+                    <button class="btn-close-modal">✕</button>
+                </div>
+
+                <!-- Arama ve Filtreleme Sekmeleri -->
+                <div class="bestiary-filter-row">
+                    <input type="text" id="bestiary-search-input" class="bestiary-search-box" placeholder="🔍 Canavar adı, rolü veya yetenek ara...">
+                    <div class="bestiary-tabs">
+                        <button class="bestiary-tab active" data-cat="all">Tümü (18)</button>
+                        <button class="bestiary-tab" data-cat="dps">⚔️ Saldırı</button>
+                        <button class="bestiary-tab" data-cat="tank">🛡️ Tank</button>
+                        <button class="bestiary-tab" data-cat="speed">⚡ Hız</button>
+                        <button class="bestiary-tab" data-cat="special">🔮 Özel/Büyü</button>
+                    </div>
+                </div>
+
+                <!-- Canavar Kartları Listesi -->
+                <div class="bestiary-grid" id="bestiary-monster-list">
+                    <!-- Dinamik JS ile 18 Kart Basılacak -->
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: SAVAŞ SONUCU (GELİŞMİŞ TAHMİN ÖDÜLLÜ) -->
+        <div id="result-modal" class="modal-overlay hidden">
+            <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+            <div class="modal-content result-card">
+                <div class="result-icon" id="result-icon">🏆</div>
+                <h2 class="result-title" id="result-title">ZAFER!</h2>
+                
+                <div class="result-rewards">
+                    <span id="result-trophies">+28 Kupa 🏆</span>
+                    <span id="result-tokens" style="color: var(--accent-gold);">+15 🪙</span>
+                    <span id="result-exp" style="color: var(--accent-cyan);">+45 TP</span>
+                </div>
+
+                <!-- MVP Canavar Kartı -->
+                <div id="result-mvp-box" class="result-mvp-box hidden">
+                    <div class="mvp-tag">⭐ MAÇIN MVP'Sİ ⭐</div>
+                    <div class="mvp-details">
+                        <span class="mvp-avatar" id="result-mvp-avatar">🐯</span>
+                        <div class="mvp-info">
+                            <div class="mvp-name" id="result-mvp-name">Kaplan</div>
+                            <div class="mvp-stats" id="result-mvp-stats">💥 340 Hasar • ⚔️ 2 Nakavt</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tahmin Sonucu Özel Banner -->
+                <div id="result-prediction-box" class="result-pred-banner hidden"></div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                    <button class="btn-primary" id="btn-play-again">🔥 TEKRAR OYNA</button>
+                    <button class="btn-secondary" id="btn-return-lobby">🏠 Lobiye Dön</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: 7 GÜNLÜK GİRİŞ TAKVİMİ & ÖDÜLLERİ -->
+        <div id="daily-login-modal" class="modal-overlay hidden">
+            <div class="modal-content daily-login-content">
+                <div class="modal-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.5rem;">🎁</span>
+                        <div>
+                            <h2 style="margin: 0; font-size: 1.15rem; color: var(--accent-gold); font-family: var(--font-manga);">7 GÜNLÜK GİRİŞ TAKVİMİ</h2>
+                            <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700;">Her gün giriş yap, kupa ve bilet ödüllerini topla!</div>
+                        </div>
+                    </div>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+                <div class="daily-login-streak-bar">
+                    <span id="daily-login-streak-text">🔥 Giriş Serisi: 1 Gün</span>
+                    <span id="daily-login-timer-text" style="color: var(--accent-cyan); font-size: 0.72rem;">⏳ Yenilenme: 00:00</span>
+                </div>
+                <div class="daily-login-grid" id="daily-login-grid"></div>
+                <button class="btn-primary" id="btn-claim-daily-login" style="margin-top: 12px; width: 100%;">🎁 BUGÜNKÜ ÖDÜLÜ AL</button>
+                <button class="btn-secondary btn-close-modal" style="margin-top: 6px; width: 100%;">Kapat</button>
+            </div>
+        </div>
+
+        <!-- MODAL: TİTAN WORLD BOSS RAİD -->
+        <div id="boss-raid-modal" class="modal-overlay hidden">
+            <div class="modal-content boss-raid-content">
+                <div class="modal-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.5rem;">🐉</span>
+                        <div>
+                            <h2 style="margin: 0; font-size: 1.15rem; color: #ff4757; font-family: var(--font-manga);">KADİM TİTAN WORLD BOSS</h2>
+                            <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700;">Haftalık PvE Raid • En Yüksek Hasarı Vur, Büyük Ödülleri Kap!</div>
+                        </div>
+                    </div>
+                    <button class="btn-icon-small btn-close-modal">✕</button>
+                </div>
+                
+                <div class="boss-card-hero">
+                    <div class="boss-hero-avatar">🐉</div>
+                    <div class="boss-hero-info">
+                        <div class="boss-hero-title">KADİM TİTAN EJDERHA IGNIS</div>
+                        <div class="boss-hero-stats">🔥 Ateş Titanı • ❤️ 2500 HP • ⚔️ 85 Alan Hasarı</div>
+                        <div class="boss-hero-skill">💥 <b>Özel Yetenek:</b> Alev Kıyameti (Tüm koridorlara 120 Hasar)</div>
+                    </div>
+                </div>
+
+                <div class="boss-record-bar">
+                    <span>🏆 En Yüksek Hasarın: <b id="boss-raid-highscore" style="color: var(--accent-gold);">0 DMG</b></span>
+                    <span style="color: #2ed573; font-weight: bold; font-size: 0.72rem;">⚡ Sınırsız Ücretsiz Deneme</span>
+                </div>
+
+                <div class="boss-tiers-box">
+                    <div class="boss-tier-item"><span>500+ DMG:</span> <b style="color: var(--accent-gold);">+15 🪙</b></div>
+                    <div class="boss-tier-item"><span>1000+ DMG:</span> <b style="color: var(--accent-gold);">+35 🪙</b></div>
+                    <div class="boss-tier-item"><span>2000+ DMG:</span> <b style="color: var(--accent-gold);">+80 🪙</b></div>
+                </div>
+
+                <button class="btn-primary" id="btn-start-boss-raid" style="margin-top: 12px; width: 100%; background: linear-gradient(180deg, #ff4757, #c0392b);">🐉 TİTAN SAVAŞINA BAŞLA</button>
+                <button class="btn-secondary btn-close-modal" style="margin-top: 6px; width: 100%;">Kapat</button>
+            </div>
+        </div>
+
+        <!-- ÖZEL OYUN POPUP & UYARI DİYALOĞU (NATIVE ALERT YERİNE) -->
+        <div id="game-alert-modal" class="modal-overlay hidden" style="z-index: 10000;">
+            <div class="game-alert-box" id="game-alert-box">
+                <div class="game-alert-icon-wrap" id="game-alert-icon-wrap">
+                    <span class="game-alert-icon" id="game-alert-icon">✨</span>
+                </div>
+                <h3 class="game-alert-title" id="game-alert-title">Bildirim</h3>
+                <p class="game-alert-message" id="game-alert-message"></p>
+                <div class="game-alert-actions">
+                    <button class="btn-secondary game-alert-btn hidden" id="btn-game-alert-cancel">VAZGEÇ</button>
+                    <button class="btn-primary game-alert-btn" id="btn-game-alert-ok">TAMAM</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GİRİŞ HOŞ GELDİN KARŞILAMA EFEKTİ & POPUP OVERLAY -->
+        <div id="login-welcome-overlay" class="welcome-overlay hidden">
+            <div class="welcome-particles" id="welcome-particles"></div>
+            <div class="welcome-card-wrap">
+                <div class="welcome-card">
+                    <div class="welcome-comic-boom-tag">🔥 ARENAYA HOŞ GELDİN!</div>
+                    <div class="welcome-avatar-ring">
+                        <div class="welcome-avatar" id="welcome-user-avatar">🦁</div>
+                        <div class="welcome-ring-pulse"></div>
+                    </div>
+                    <div class="welcome-username" id="welcome-user-name">Oyuncu</div>
+                    <div class="welcome-tier-pill" id="welcome-user-tier">🥉 Bronz Lig • Seviye 1</div>
+                    <div class="welcome-quote" id="welcome-user-quote">⚔️ Savaş Slotları Seni Bekliyor!</div>
+                    <div class="welcome-progress-bar-bg">
+                        <div class="welcome-progress-bar-fill" id="welcome-progress-fill"></div>
+                    </div>
+                    <div class="welcome-tap-hint">Lobiye Geçiliyor... (Dokun ve Geç ➔)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÇIKIŞ VEDA EFEKTİ & POPUP OVERLAY -->
+        <div id="logout-farewell-overlay" class="welcome-overlay logout-overlay hidden">
+            <div class="welcome-particles" id="logout-particles"></div>
+            <div class="welcome-card-wrap">
+                <div class="welcome-card logout-card">
+                    <div class="welcome-comic-boom-tag logout-boom-tag">👋 GÖRÜŞMEK ÜZERE!</div>
+                    <div class="welcome-avatar-ring">
+                        <div class="welcome-avatar logout-avatar" id="logout-user-avatar">🦁</div>
+                        <div class="welcome-ring-pulse logout-ring-pulse"></div>
+                    </div>
+                    <div class="welcome-username" id="logout-user-name">Oyuncu</div>
+                    <div class="welcome-tier-pill logout-tier-pill" id="logout-user-status">💾 İlerleme Güvende</div>
+                    <div class="welcome-quote" id="logout-user-quote">🌌 <b>Arenadaki Zaferlerin Saklandı!</b><br>Yeni savaşlar için tekrar bekleriz!</div>
+                    <div class="welcome-progress-bar-bg">
+                        <div class="welcome-progress-bar-fill logout-progress-fill" id="logout-progress-fill"></div>
+                    </div>
+                    <div class="welcome-tap-hint">Çıkış Yapılıyor... (Dokun ve Geç ➔)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/GameRules.js"></script>
+    <script src="js/AudioManager.js"></script>
+    <script src="js/AuthManager.js"></script>
+    <script src="js/EconomyManager.js"></script>
+    <script src="js/ProfileManager.js"></script>
+    <script src="js/MonsterData.js"></script>
+    <script src="js/BotGenerator.js"></script>
+    <script src="js/Leaderboard.js"></script>
+    <script src="js/BattleEngine.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

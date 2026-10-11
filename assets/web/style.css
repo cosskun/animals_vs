@@ -1,0 +1,4739 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700;800;900&family=Lilita+One&family=Outfit:wght@600;800;900&display=swap');
+
+:root {
+    /* --- SHONEN COMIC MANGA TEMASI (KOYU MÜREKKEP MODU) --- */
+    --bg-body: #0d0f17;
+    --bg-container: radial-gradient(circle at 50% 20%, #1c2238 0%, #111524 65%, #0a0c16 100%);
+    --bg-header: rgba(18, 23, 39, 0.95);
+    --bg-card: #181e33;
+    --bg-card-grad: linear-gradient(180deg, #202742 0%, #151a2d 100%);
+    --bg-card-hover: #262e4e;
+    --bg-stage: #131728;
+    --bg-team-row: #191f35;
+    --bg-fighter: #1c223b;
+    --bg-slot: #101424;
+    --bg-input: #101424;
+    --bg-logs: #0c0e1a;
+    --bg-modal: #181e33;
+    --bg-modal-overlay: rgba(6, 8, 15, 0.85);
+    
+    --border-subtle: #293252;
+    --border-card: #313c63;
+    --border-input: #384570;
+    --border-modal: #3d4a7a;
+    --comic-stroke: #0a0c16;
+    
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-title: #ffffff;
+    --hero-title-grad: linear-gradient(180deg, #ff4757 0%, #ffa502 100%);
+    --hero-shadow: drop-shadow(2px 2px 0 #000000);
+    
+    --accent-blue: #2ed573;
+    --accent-cyan: #38bdf8;
+    --accent-gold: #ffa502;
+    --accent-red: #ff4757;
+    --accent-purple: #a55eea;
+    --accent-orange: #ff7f50;
+    
+    --btn-icon-bg: #1e2540;
+    --btn-icon-border: #333f66;
+    --btn-icon-color: #ffffff;
+    --btn-secondary-bg: #1e2540;
+    --btn-secondary-text: #ffffff;
+    --btn-secondary-border: #333f66;
+    
+    --shadow-main: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-card: 3px 3px 0 var(--comic-stroke);
+    --font-manga: 'Bangers', 'Lilita One', 'Fredoka', cursive, sans-serif;
+    --font-family: 'Fredoka', 'Outfit', -apple-system, sans-serif;
+}
+
+[data-theme="light"] {
+    /* --- SHONEN COMIC MANGA (AÇIK / PARŞÖMEN POP-ART MODU) --- */
+    --bg-body: #f3efe6;
+    --bg-container: radial-gradient(circle at 50% 15%, #fffdfa 0%, #f7f3e8 60%, #eee8d8 100%);
+    --bg-header: rgba(255, 255, 255, 0.98);
+    --bg-card: #ffffff;
+    --bg-card-grad: linear-gradient(180deg, #ffffff 0%, #faf8f2 100%);
+    --bg-card-hover: #f3efe6;
+    --bg-stage: #f8f6f0;
+    --bg-team-row: #ece7da;
+    --bg-fighter: #ffffff;
+    --bg-slot: #f4f0e6;
+    --bg-input: #ffffff;
+    --bg-logs: #fcfbf9;
+    --bg-modal: #ffffff;
+    --bg-modal-overlay: rgba(15, 23, 42, 0.7);
+    
+    --border-subtle: #d1c7b7;
+    --border-card: #1e293b;
+    --border-input: #1e293b;
+    --border-modal: #1e293b;
+    --comic-stroke: #1e293b;
+    
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --text-title: #0f172a;
+    --hero-title-grad: linear-gradient(180deg, #ff4757 0%, #e67e22 100%);
+    --hero-shadow: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+    
+    --accent-blue: #16a34a;
+    --accent-cyan: #0284c7;
+    --accent-gold: #d97706;
+    --accent-red: #dc2626;
+    --accent-purple: #7c3aed;
+    --accent-orange: #ea580c;
+    
+    --btn-icon-bg: #ffffff;
+    --btn-icon-border: #1e293b;
+    --btn-icon-color: #0f172a;
+    --btn-secondary-bg: #ffffff;
+    --btn-secondary-text: #0f172a;
+    --btn-secondary-border: #1e293b;
+    
+    --shadow-main: 0 8px 24px rgba(15, 23, 42, 0.1);
+    --shadow-card: 3px 3px 0 #1e293b;
+}
+
+/* Light Theme Spesifik Eleman Ayarları */
+/* Light Theme Spesifik Eleman Ayarları (Dengeli Komik Gölgeler & Net Çerçeveler) */
+[data-theme="light"] .lobby-user-dashboard-card {
+    background: #ffffff;
+    border: 2px solid #475569;
+    box-shadow: 3px 3px 0 #94a3b8;
+}
+
+[data-theme="light"] .profile-pill {
+    background: #f8fafc;
+    border: 1.5px solid #64748b;
+    box-shadow: 1.5px 1.5px 0 #cbd5e1;
+}
+
+[data-theme="light"] .avatar-badge {
+    background: linear-gradient(135deg, #ffedd5, #fed7aa);
+    border: 1.5px solid #475569;
+    box-shadow: 1.5px 1.5px 0 #94a3b8;
+}
+
+[data-theme="light"] .header-user-name {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .profile-tier {
+    color: #b45309 !important;
+    font-weight: 900;
+}
+
+[data-theme="light"] .exp-bar-wrapper {
+    background: #f1f5f9;
+    border: 1px solid #94a3b8;
+}
+
+[data-theme="light"] .lobby-trophy-box {
+    background: #fef08a;
+    border: 1.5px solid #ca8a04;
+    color: #854d0e !important;
+    box-shadow: 2px 2px 0 #ca8a04;
+}
+[data-theme="light"] .lobby-trophy-box span {
+    color: #854d0e !important;
+}
+
+[data-theme="light"] .btn-icon-small {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    color: #0f172a !important;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+
+[data-theme="light"] .btn-logout-danger {
+    background: #fee2e2;
+    border: 1.5px solid #dc2626;
+    color: #dc2626 !important;
+    box-shadow: 2px 2px 0 #fca5a5;
+}
+
+/* Light Mod Cüzdan ve Günlük Enerji Çubukları */
+[data-theme="light"] .token-pill {
+    background: #fffbeb !important;
+    border: 1.5px solid #d97706 !important;
+    color: #92400e !important;
+    box-shadow: 2px 2px 0 #fcd34d;
+}
+[data-theme="light"] .token-pill .wallet-pill-label { color: #92400e !important; }
+[data-theme="light"] .token-pill .wallet-pill-val { color: #78350f !important; font-weight: 900; }
+[data-theme="light"] .token-pill .wallet-pill-arrow { color: #b45309 !important; }
+
+[data-theme="light"] .ticket-pill {
+    background: #fef2f2 !important;
+    border: 1.5px solid #dc2626 !important;
+    color: #991b1b !important;
+    box-shadow: 2px 2px 0 #fca5a5;
+}
+[data-theme="light"] .ticket-pill .wallet-pill-label { color: #991b1b !important; }
+[data-theme="light"] .ticket-pill .wallet-pill-val { color: #7f1d1d !important; font-weight: 900; }
+[data-theme="light"] .ticket-pill .wallet-pill-arrow { color: #dc2626 !important; }
+
+[data-theme="light"] .energy-pill {
+    background: #f0fdf4 !important;
+    border: 1.5px solid #16a34a !important;
+    color: #166534 !important;
+    box-shadow: 2px 2px 0 #86efac;
+}
+[data-theme="light"] .energy-pill .wallet-pill-label { color: #166534 !important; }
+[data-theme="light"] .energy-pill .wallet-pill-val { color: #14532d !important; font-weight: 900; }
+
+/* Light Mod Günlük Savaş Hakkı Çubuğu */
+[data-theme="light"] .daily-battle-counter-bar {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .daily-battle-text { color: #0f172a !important; }
+[data-theme="light"] .daily-battle-dot { background: #f1f5f9; border: 1px solid #94a3b8; color: #64748b; }
+[data-theme="light"] .daily-battle-dot.active { background: #16a34a; border-color: #14532d; color: #ffffff; box-shadow: 1.5px 1.5px 0 #86efac; }
+
+[data-theme="light"] .menu-card {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2.5px 2.5px 0 #94a3b8;
+}
+[data-theme="light"] .menu-card-title { color: #0f172a !important; }
+[data-theme="light"] .menu-card-desc { color: #64748b !important; }
+
+[data-theme="light"] .lobby-hero-banner {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border: 2px solid #ea580c;
+    box-shadow: 3px 3px 0 #fed7aa;
+}
+[data-theme="light"] .banner-title { color: #9a3412 !important; text-shadow: none !important; }
+[data-theme="light"] .banner-desc { color: #431407 !important; }
+[data-theme="light"] .banner-perk-item {
+    background: #ffffff;
+    border: 1.5px solid #f97316;
+    box-shadow: 1.5px 1.5px 0 #fed7aa;
+}
+[data-theme="light"] .banner-perk-item .perk-text { color: #0f172a !important; }
+
+[data-theme="light"] .lobby-daily-quest-card {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2.5px 2.5px 0 #94a3b8;
+}
+[data-theme="light"] .quest-desc { color: #0f172a !important; }
+[data-theme="light"] .quest-progress-bar-bg { background: #f1f5f9; border: 1px solid #94a3b8; }
+[data-theme="light"] .btn-claim-quest {
+    background: #16a34a;
+    border: 1.5px solid #1e293b;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+[data-theme="light"] .btn-claim-quest.claimed {
+    background: #f1f5f9 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #64748b !important;
+    box-shadow: none !important;
+    font-weight: 800;
+}
+
+[data-theme="light"] .stat-box {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .stat-box-val { color: #ff4757; }
+
+/* Light Mod Savaş & Draft Sahnesi */
+[data-theme="light"] .draft-arena-stage {
+    background: #faf8f5;
+    border: 2px solid #475569;
+    box-shadow: 3px 3px 0 #94a3b8;
+}
+[data-theme="light"] .draft-arena-stage .arena-team-row { background: #f1ede4; border: 1.5px solid #94a3b8; }
+[data-theme="light"] .draft-arena-stage .fighter-card {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .draft-card-5 {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .card-stats-row-5 { background: #f8fafc; }
+
+/* Light Mod Draft Uyarı & Bot Rozetleri */
+[data-theme="light"] .draft-alert.info {
+    background: #f0f9ff !important;
+    border: 1.5px solid #0284c7 !important;
+    color: #0369a1 !important;
+    box-shadow: 2px 2px 0 #bae6fd !important;
+}
+[data-theme="light"] .draft-alert.success {
+    background: #f0fdf4 !important;
+    border: 1.5px solid #16a34a !important;
+    color: #15803d !important;
+    box-shadow: 2px 2px 0 #bbf7d0 !important;
+}
+[data-theme="light"] .draft-alert.warning {
+    background: #fef2f2 !important;
+    border: 1.5px solid #ef4444 !important;
+    color: #b91c1c !important;
+    box-shadow: 2px 2px 0 #fecaca !important;
+}
+
+[data-theme="light"] .bot-match-diff-badge.tier-bronze {
+    background: #ffedd5 !important;
+    border: 1.5px solid #ea580c !important;
+    color: #c2410c !important;
+}
+[data-theme="light"] .bot-match-diff-badge.tier-silver {
+    background: #f1f5f9 !important;
+    border: 1.5px solid #64748b !important;
+    color: #334155 !important;
+}
+[data-theme="light"] .bot-match-diff-badge.tier-gold {
+    background: #fef9c3 !important;
+    border: 1.5px solid #ca8a04 !important;
+    color: #854d0e !important;
+}
+[data-theme="light"] .bot-match-diff-badge.tier-master {
+    background: #fee2e2 !important;
+    border: 1.5px solid #dc2626 !important;
+    color: #b91c1c !important;
+}
+
+[data-theme="light"] .draft-pool-title {
+    color: #d97706 !important;
+}
+[data-theme="light"] .draft-pool-subtitle {
+    color: #64748b !important;
+}
+
+/* Light Mod AI Tahmin & Simülasyon Kartı */
+[data-theme="light"] .prediction-hub-box {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .ai-result-top-row {
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+}
+[data-theme="light"] .ai-tactical-tip-box {
+    background: #fffbeb !important;
+    border: 1.5px solid #f59e0b !important;
+    box-shadow: 2px 2px 0 #fed7aa !important;
+}
+[data-theme="light"] .ai-tip-text {
+    color: #78350f !important;
+}
+[data-theme="light"] .ai-tip-text b,
+[data-theme="light"] .ai-tip-text strong {
+    color: #b45309 !important;
+    font-weight: 900 !important;
+}
+[data-theme="light"] .btn-ai-action-close {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: #475569;
+    box-shadow: 1.5px 1.5px 0 #94a3b8;
+}
+[data-theme="light"] .btn-ai-action-close:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+[data-theme="light"] .face-to-face-arena {
+    background: #faf8f5;
+    border: 2px solid #475569;
+    box-shadow: 3px 3px 0 #94a3b8;
+}
+[data-theme="light"] .clash-lane-col {
+    background: #ffffff;
+    border: 1.5px dashed #64748b;
+    box-shadow: 1.5px 1.5px 0 #cbd5e1;
+}
+[data-theme="light"] .clash-lane-tag {
+    color: #64748b !important;
+}
+[data-theme="light"] .clash-lane-vs {
+    color: #ef4444 !important;
+}
+
+[data-theme="light"] .fighter-card {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .bot-fighter {
+    border-top: 3px solid #ef4444;
+}
+[data-theme="light"] .player-fighter {
+    border-bottom: 3px solid #16a34a;
+}
+[data-theme="light"] .fighter-avatar-box {
+    background: #f8fafc;
+    border: 1px solid #94a3b8;
+}
+[data-theme="light"] .slot-lane-indicator {
+    background: #f8fafc;
+    color: #b45309 !important;
+    border: 1px solid #cbd5e1;
+    box-shadow: 1px 1px 0 #cbd5e1;
+}
+[data-theme="light"] .hp-bar-outer {
+    background: #f1f5f9;
+    border: 1px solid #64748b;
+}
+[data-theme="light"] .energy-bar-outer {
+    background: #f1f5f9;
+}
+
+[data-theme="light"] .battle-hud-header {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .battle-hud-badge {
+    border: 1px solid #475569;
+}
+[data-theme="light"] .battle-hud-round {
+    color: #d97706 !important;
+}
+[data-theme="light"] .battle-logs-box {
+    background: #ffffff;
+    border: 1.5px solid #475569;
+}
+[data-theme="light"] .modal-content {
+    background: #ffffff;
+    border: 2px solid #475569;
+    box-shadow: 3px 3px 0 #94a3b8;
+}
+[data-theme="light"] .game-alert-box {
+    background: #ffffff;
+    border: 2px solid #475569;
+    box-shadow: 3px 3px 0 #94a3b8;
+}
+
+/* Light Mod Lider Tablosu & Sekmeler */
+[data-theme="light"] .lb-timeframe-tabs .lb-tf-btn {
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    color: #475569;
+}
+[data-theme="light"] .lb-timeframe-tabs .lb-tf-btn.active {
+    background: #f59e0b;
+    border-color: #1e293b;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+[data-theme="light"] .lb-timeframe-banner {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+[data-theme="light"] .lb-tf-title { color: #0284c7 !important; }
+[data-theme="light"] .lb-tf-timer { color: #16a34a !important; }
+[data-theme="light"] .lb-tf-desc { color: #64748b !important; }
+
+[data-theme="light"] .lb-tabs-row .lb-tab-btn {
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    color: #475569;
+}
+[data-theme="light"] .lb-tabs-row .lb-tab-btn.active {
+    background: #ff4757;
+    border-color: #1e293b;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+
+[data-theme="light"] .leaderboard-row {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    box-shadow: 2px 2px 0 #cbd5e1;
+}
+[data-theme="light"] .leaderboard-row.player-row {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+[data-theme="light"] .lb-name { color: #0f172a !important; }
+[data-theme="light"] .lb-trophies { color: #0284c7 !important; }
+
+/* Light Mod Mağaza */
+[data-theme="light"] .store-balance-banner {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    color: #0f172a !important;
+}
+[data-theme="light"] .store-tabs-row {
+    background: #e2e8f0;
+    border: 2px solid #cbd5e1;
+}
+[data-theme="light"] .store-tab-btn {
+    background: transparent;
+    border: none;
+    color: #475569;
+}
+[data-theme="light"] .store-tab-btn:hover {
+    color: #0f172a;
+}
+[data-theme="light"] .store-tab-btn.active {
+    background: #0284c7;
+    border: 2px solid #1e293b;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+[data-theme="light"] .store-item-card {
+    background: #ffffff;
+    border: 2px solid #1e293b;
+    box-shadow: 3px 3px 0 #1e293b;
+}
+[data-theme="light"] .store-item-name { color: #0f172a !important; }
+[data-theme="light"] .store-item-desc { color: #64748b !important; }
+
+/* Light Mod Giriş / Kayıt Ekranı (Auth) */
+[data-theme="light"] .auth-tabs {
+    background: #e2e8f0;
+    border: 2px solid #cbd5e1;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .auth-tab-btn {
+    color: #475569;
+}
+[data-theme="light"] .auth-tab-btn:hover {
+    color: #0f172a;
+    background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .auth-tab-btn.active {
+    background: #ff4757;
+    border: 2px solid #1e293b;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+[data-theme="light"] .auth-form-card {
+    background: #ffffff;
+    border: 2px solid #1e293b;
+    box-shadow: 3px 3px 0 #1e293b;
+}
+[data-theme="light"] .input-field {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    color: #0f172a;
+}
+[data-theme="light"] .input-field:focus {
+    border-color: #ff4757;
+    background: #ffffff;
+}
+[data-theme="light"] .input-label {
+    color: #475569;
+}
+[data-theme="light"] .avatar-opt {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    box-shadow: 2px 2px 0 #94a3b8;
+}
+[data-theme="light"] .avatar-opt:hover {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+[data-theme="light"] .avatar-opt.selected {
+    background: #fef3c7;
+    border-color: #d97706;
+    box-shadow: 2px 2px 0 #b45309;
+}
+[data-theme="light"] .auth-alert-box.error {
+    background: #fee2e2;
+    border: 2px solid #ef4444;
+    color: #b91c1c;
+    box-shadow: 2px 2px 0 #fca5a5;
+}
+[data-theme="light"] .auth-alert-box.success {
+    background: #dcfce7;
+    border: 2px solid #22c55e;
+    color: #15803d;
+    box-shadow: 2px 2px 0 #86efac;
+}
+[data-theme="light"] #btn-admin-login {
+    background: #fffbeb;
+    border-color: #d97706 !important;
+    color: #b45309 !important;
+}
+
+[data-theme="dark"] {
+    /* --- SHONEN COMIC MANGA (KOYU MOD) --- */
+    --bg-body: #0a0c16;
+    --bg-container: radial-gradient(circle at 50% 20%, #1a2035 0%, #0f1322 65%, #080a13 100%);
+    --bg-header: rgba(15, 19, 34, 0.96);
+    --bg-card: #151a2d;
+    --bg-card-grad: linear-gradient(180deg, #1c233c 0%, #121626 100%);
+    --bg-card-hover: #222a47;
+    --bg-stage: #101424;
+    --bg-team-row: #151a2d;
+    --bg-fighter: #181d32;
+    --bg-slot: #0d101c;
+    --bg-input: #0d101c;
+    --bg-logs: #090b14;
+    --bg-modal: #151a2d;
+    --bg-modal-overlay: rgba(3, 4, 10, 0.9);
+    
+    --border-subtle: #242c48;
+    --border-card: #2d375a;
+    --border-input: #323d64;
+    --border-modal: #38446f;
+    --comic-stroke: #05070e;
+    
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-title: #ffffff;
+    --hero-title-grad: linear-gradient(180deg, #ff4757 0%, #ffa502 100%);
+    --hero-shadow: drop-shadow(2px 2px 0 #000000);
+    
+    --accent-blue: #2ed573;
+    --accent-cyan: #38bdf8;
+    --accent-gold: #ffa502;
+    --accent-red: #ff4757;
+    --accent-purple: #a55eea;
+    --accent-orange: #ff7f50;
+    
+    --btn-icon-bg: #1a2038;
+    --btn-icon-border: #2e395e;
+    --btn-icon-color: #ffffff;
+    --btn-secondary-bg: #1a2038;
+    --btn-secondary-text: #ffffff;
+    --btn-secondary-border: #2e395e;
+    
+    --shadow-main: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-card: 3px 3px 0 #05070e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: var(--font-family);
+    color: var(--text-main);
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-family);
+    color: var(--text-main);
+    transition: background 0.3s ease;
+}
+
+/* Scrollbar Gizleme */
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    height: 0px;
+}
+
+/* --- OYUN SEMBOLLERİ (TOKEN & TİCKET) --- */
+.token-coin-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #ffa502;
+    border-radius: 50%;
+    border: 2px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    vertical-align: -3px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.token-coin-icon::before {
+    content: "★";
+    font-size: 11px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #1e293b;
+    line-height: 1;
+    display: block;
+}
+
+.ticket-badge-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 16px;
+    background: #ff4757;
+    border-radius: 4px;
+    border: 1.5px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    vertical-align: -2px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ticket-badge-icon::before {
+    content: "💥";
+    font-size: 10px;
+    color: #ffffff;
+    line-height: 1;
+    display: block;
+}
+
+/* Mobil Cihaz Konteyneri */
+.game-container {
+    width: 100%;
+    max-width: 460px;
+    height: 100%;
+    max-height: 100%;
+    background: var(--bg-container);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: var(--shadow-main);
+    border: 2px solid var(--border-subtle);
+    overflow: hidden;
+    transition: background 0.3s ease;
+    box-sizing: border-box;
+}
+
+@media (min-width: 500px) {
+    body {
+        padding: 8px 0;
+    }
+    .game-container {
+        border-radius: 24px;
+        height: calc(100vh - 16px);
+        max-height: 890px;
+        border: 3px solid #1e293b;
+    }
+}
+
+/* Üst Oyun Logo & Güvenli Başlık Barı */
+.game-header {
+    background: var(--bg-header);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--border-subtle);
+    padding: max(6px, env(safe-area-inset-top, 6px)) 12px 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.header-branding-centered {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.header-game-logo {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.header-game-title {
+    font-family: var(--font-manga);
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    background: linear-gradient(180deg, #ff4757 0%, #ffa502 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(1.5px 1.5px 0 #000);
+}
+
+/* --- KULLANICI PROFİL, CÜZDAN & KONTROL PANELİ --- */
+.lobby-user-dashboard-card {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 16px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2px;
+}
+
+.user-dashboard-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    background: #1e2540;
+    padding: 4px 10px 4px 4px;
+    border-radius: 25px;
+    border: 2px solid #333f66;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+[data-theme="light"] .profile-pill {
+    background: #ffffff;
+    border: 2px solid #1e293b;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+
+.avatar-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4757, #ffa502);
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    flex-shrink: 0;
+}
+
+.profile-stats {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 1px;
+}
+
+.header-user-name {
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: var(--text-title);
+    line-height: 1.1;
+    max-width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-tier {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #ffa502;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.exp-bar-wrapper {
+    width: 70px;
+    height: 5px;
+    background: #0d101c;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 2px;
+    border: 1px solid var(--border-subtle);
+}
+
+.exp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4757, #ffa502);
+    transition: width 0.3s ease;
+}
+
+.user-dashboard-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.lobby-trophy-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #1e293b;
+    background: #ffa502;
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 2px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    height: 30px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.trophy-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+.streak-badge {
+    height: 20px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff4757;
+    border: 1.5px solid #1e293b;
+    color: #ffffff;
+    padding: 0 5px;
+    border-radius: 6px;
+    font-size: 0.62rem;
+    font-weight: 900;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.btn-icon-small {
+    background: var(--btn-icon-bg);
+    border: 2px solid var(--btn-icon-border);
+    color: var(--btn-icon-color);
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.08s, box-shadow 0.08s;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.btn-icon-small:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.btn-logout-danger {
+    background: #ff4757;
+    border: 2px solid #1e293b;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.btn-logout-danger:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+/* Alt Satır: Token, Bilet ve Günlük Enerji Çubukları */
+.user-dashboard-wallet-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-wallet-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-sizing: border-box;
+    min-height: 32px;
+    border: 2px solid var(--border-card);
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.dashboard-wallet-pill:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.token-pill {
+    background: #2a1f0c;
+    border-color: #ffa502;
+    color: #ffa502;
+}
+.token-pill .wallet-pill-label,
+.token-pill .wallet-pill-val,
+.token-pill .wallet-pill-arrow {
+    color: #ffa502;
+}
+
+.ticket-pill {
+    background: #2f0f15;
+    border-color: #ff4757;
+    color: #ff4757;
+}
+.ticket-pill .wallet-pill-label,
+.ticket-pill .wallet-pill-val,
+.ticket-pill .wallet-pill-arrow {
+    color: #ff4757;
+}
+
+.energy-pill {
+    background: #0d2818;
+    border-color: #2ed573;
+    color: #2ed573;
+}
+.energy-pill .wallet-pill-label,
+.energy-pill .wallet-pill-val {
+    color: #2ed573;
+}
+
+.wallet-pill-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+}
+
+.wallet-pill-val {
+    font-size: 0.8rem;
+    font-weight: 900;
+    margin: 0 1px;
+}
+
+.wallet-pill-arrow {
+    font-size: 0.65rem;
+    opacity: 0.85;
+}
+
+/* Lobi Günlük Savaş Hakkı Çubuğu */
+.daily-battle-counter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 10px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.daily-battle-dots {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.daily-battle-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    background: #1e293b;
+    border: 1.5px solid #334155;
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+.daily-battle-dot.active {
+    background: #2ed573;
+    border-color: #1e293b;
+    color: #ffffff;
+    box-shadow: 1px 1px 0 var(--comic-stroke);
+    animation: pulseSubtle 2s infinite ease-in-out;
+}
+
+@keyframes pulseSubtle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+.daily-battle-text {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--text-title);
+}
+
+.daily-battle-text b {
+    color: #2ed573;
+}
+
+/* Ekran Görünüm Alanı */
+.view-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 12px calc(12px + env(safe-area-inset-bottom, 12px)) 12px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- AUTH EKRANI --- */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    padding: 10px;
+}
+
+.auth-hero {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-logo {
+    font-size: 3.5rem;
+    filter: drop-shadow(2px 2px 0 #000);
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: var(--bg-slot);
+    padding: 4px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 2px solid var(--border-subtle);
+}
+
+.auth-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-manga);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.auth-tab-btn.active {
+    background: #ff4757;
+    color: #ffffff;
+    border: 2px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.auth-form-card {
+    background: var(--bg-card-grad);
+    border: 2.5px solid var(--border-card);
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 4px 4px 0 var(--comic-stroke);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-field {
+    background: var(--bg-input);
+    border: 2px solid var(--border-input);
+    border-radius: 10px;
+    padding: 11px 13px;
+    color: var(--text-main);
+    font-size: 0.92rem;
+    font-weight: 700;
+    outline: none;
+    transition: border 0.15s;
+}
+
+.input-field:focus {
+    border-color: #ff4757;
+}
+
+.avatar-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.avatar-opt {
+    background: var(--bg-card-hover);
+    border: 2px solid var(--border-card);
+    border-radius: 10px;
+    font-size: 1.4rem;
+    padding: 6px 0;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.1s, border-color 0.1s;
+}
+
+.avatar-opt.selected {
+    border-color: #ffa502;
+    background: #2a1f0c;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+}
+
+.auth-alert-box {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-align: center;
+    display: none;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.auth-alert-box.error {
+    background: #2f0f15;
+    border: 2px solid #ff4757;
+    color: #ff4757;
+}
+
+.auth-alert-box.success {
+    background: #0f2b18;
+    border: 2px solid #2ed573;
+    color: #2ed573;
+}
+
+/* --- LOBBY EKRANI --- */
+.lobby-dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 4px 0 6px 0;
+}
+
+/* --- HERO BANNER (SHONEN MANGA ETKİSİ) --- */
+.lobby-hero-banner {
+    background: linear-gradient(135deg, #241620 0%, #171322 100%);
+    border: 2px solid #ff4757;
+    border-radius: 12px;
+    padding: 8px 10px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.banner-top-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-manga);
+    font-size: 0.72rem;
+    letter-spacing: 0.8px;
+    color: #ffa502;
+    text-transform: uppercase;
+}
+
+.badge-tag-live {
+    background: #ff4757;
+    color: #ffffff;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.58rem;
+    font-weight: 900;
+    border: 1px solid #1e293b;
+    box-shadow: 1px 1px 0 var(--comic-stroke);
+}
+
+.banner-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.banner-title {
+    font-family: var(--font-manga);
+    font-size: 0.98rem;
+    line-height: 1.15;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.banner-desc {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.banner-perks-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.banner-perk-item {
+    background: #111526;
+    border: 1.5px solid var(--border-card);
+    border-radius: 6px;
+    padding: 4px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1px;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+    transition: transform 0.08s;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.banner-perk-item:active {
+    transform: translate(1px, 1px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.banner-perk-item .perk-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.banner-perk-item .perk-text {
+    font-size: 0.58rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}
+
+/* Hızlı İstatistik Kartları */
+.quick-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.stat-box {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 12px;
+    padding: 8px 4px;
+    text-align: center;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.08s;
+}
+
+.stat-box:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.stat-box-val {
+    font-family: var(--font-manga);
+    font-size: 1.25rem;
+    color: #ff4757;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.stat-box-lbl {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-weight: 800;
+}
+
+/* --- MENÜ KARTLARI GRİD (4'LÜ ÇİZGİ ROMAN DİZİLİMİ) --- */
+.lobby-menu-grid-4 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.menu-card {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 14px;
+    padding: 10px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    min-height: 56px;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    transition: transform 0.08s;
+}
+
+.menu-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.menu-card-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.menu-card-icon-wrap.icon-purple {
+    background: #a55eea;
+}
+.menu-card-icon-wrap.icon-gold {
+    background: #ffa502;
+}
+.menu-card-icon-wrap.icon-cyan {
+    background: #38bdf8;
+}
+.menu-card-icon-wrap.icon-green {
+    background: #2ed573;
+}
+
+.menu-card-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.menu-card-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    gap: 1px;
+}
+
+.menu-card-title {
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.15;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ffffff;
+}
+
+.menu-card-desc {
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-muted);
+}
+
+/* Günlük Görev Kartı */
+.lobby-daily-quest-card {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 14px;
+    padding: 10px 12px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.quest-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quest-title-badge {
+    font-family: var(--font-manga);
+    font-size: 0.9rem;
+    color: #2ed573;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.quest-reward-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    color: #1e293b;
+    background: #ffa502;
+    padding: 3px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.quest-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.quest-desc {
+    font-size: 0.72rem;
+    color: var(--text-main);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.quest-progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: #0d101c;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1.5px solid var(--border-card);
+}
+
+.quest-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4757, #ffa502);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.quest-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.quest-progress-text {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.btn-claim-quest {
+    background: #2ed573;
+    border: 2px solid #1e293b;
+    color: #ffffff;
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.08s;
+}
+
+.btn-claim-quest:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.btn-claim-quest.claimed {
+    background: #1e2540;
+    border-color: #333f66;
+    color: var(--text-muted);
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+}
+
+.lobby-action-container {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: max(6px, env(safe-area-inset-bottom, 6px));
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- SHONEN MANGA DÜZ ÇİZGİ ROMAN BUTONLARI --- */
+.btn-primary, #btn-quick-play, #btn-start-battle, #btn-submit-login, #btn-submit-register, .game-alert-btn {
+    background: #ff4757 !important;
+    color: #ffffff !important;
+    text-shadow: 2px 2px 0 #111111 !important;
+    font-family: var(--font-manga) !important;
+    font-size: 1.45rem !important;
+    letter-spacing: 1.5px !important;
+    padding: 12px 18px !important;
+    border: 3px solid #111111 !important;
+    border-radius: 14px !important;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #111111 !important;
+    text-transform: uppercase !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    user-select: none;
+    text-decoration: none;
+}
+
+.btn-primary:active, #btn-quick-play:active, #btn-start-battle:active, .game-alert-btn:active {
+    transform: translate(3px, 3px) !important;
+    box-shadow: 1px 1px 0 #111111 !important;
+}
+
+.btn-primary:disabled, #btn-start-battle:disabled {
+    opacity: 0.45;
+    filter: grayscale(100%);
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.btn-secondary {
+    background: #38bdf8;
+    color: #ffffff !important;
+    text-shadow: 1.5px 1.5px 0 #111111;
+    font-family: var(--font-manga);
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    border: 2.5px solid #111111;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 3px 3px 0 #111111;
+    transition: transform 0.08s, box-shadow 0.08s;
+    text-transform: uppercase;
+}
+
+.btn-secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #111111;
+}
+
+/* --- DRAFT & ARENA EKRANI --- */
+#draft-view {
+    padding: 4px 8px 12px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.draft-arena-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-stage);
+    border: 2px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 6px;
+    margin-bottom: 2px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+}
+
+.draft-arena-stage .arena-team-row {
+    background: var(--bg-team-row);
+    padding: 5px;
+    gap: 5px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+    min-height: 100px;
+    border: 1.5px solid var(--border-card);
+}
+
+.draft-arena-stage .fighter-card {
+    background: var(--bg-fighter);
+    border: 2px solid var(--border-card);
+    padding: 4px;
+    border-radius: 10px;
+    min-height: 98px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.draft-arena-stage .fighter-avatar-box {
+    width: 28px;
+    height: 28px;
+    margin: 1px 0;
+    border-radius: 6px;
+    background: var(--bg-card-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--border-subtle);
+}
+
+.draft-arena-stage .fighter-emoji {
+    font-size: 1.15rem;
+    line-height: 1;
+}
+
+.draft-arena-stage .fighter-name {
+    font-size: 0.68rem;
+    font-weight: 900;
+    color: var(--text-title);
+    margin-bottom: 2px;
+    line-height: 1.1;
+}
+
+.draft-arena-stage .slot-lane-indicator {
+    font-family: var(--font-manga);
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    line-height: 1;
+}
+
+.draft-arena-stage .hp-bar-outer {
+    height: 12px;
+    margin-bottom: 2px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1.5px solid var(--comic-stroke);
+}
+
+.draft-arena-stage .hp-label {
+    font-size: 0.56rem;
+    line-height: 1;
+}
+
+.draft-arena-stage .energy-bar-outer {
+    height: 3px;
+    margin-bottom: 2px;
+    width: 100%;
+}
+
+.draft-arena-stage .fighter-mini-stats {
+    font-size: 0.58rem;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    color: var(--text-muted);
+    line-height: 1;
+    margin-top: 1px;
+}
+
+.draft-alert {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-align: center;
+    margin: 2px 0;
+    line-height: 1.2;
+    border: 1.5px solid var(--border-card);
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.draft-alert.info {
+    background: #142036;
+    border-color: #38bdf8;
+    color: #38bdf8;
+}
+
+.draft-alert.success {
+    background: #0f2b18;
+    border-color: #2ed573;
+    color: #2ed573;
+}
+
+.draft-alert.warning {
+    background: #2f0f15;
+    border-color: #ff4757;
+    color: #ff4757;
+}
+
+.lane-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-manga);
+    font-size: 0.88rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+}
+
+.lane-header-row.bot-header { color: #ff4757; }
+.lane-header-row.player-header { color: #2ed573; }
+.lane-sub-text { font-family: var(--font-family); font-size: 0.58rem; color: var(--text-muted); font-weight: 700; }
+
+/* Koridor Karşılaşma İkonları */
+.lane-clash-indicators {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    text-align: center;
+    padding: 2px 0;
+}
+
+.clash-arrow {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-card);
+    border-radius: 6px;
+    padding: 2px 0;
+    font-family: var(--font-manga);
+    font-size: 0.78rem;
+    color: #ffa502;
+    letter-spacing: 0.5px;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+}
+
+/* Sürükle-Bırak Slot Kutuları */
+.draft-drop-slot {
+    background: var(--bg-slot);
+    border: 2px dashed var(--border-card);
+    border-radius: 10px;
+    padding: 4px;
+    text-align: center;
+    min-height: 98px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    box-sizing: border-box;
+}
+
+.draft-drop-slot .fighter-card {
+    border: none;
+    background: transparent;
+    padding: 0;
+    min-height: unset;
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.draft-drop-slot.drag-over {
+    border-color: #2ed573 !important;
+    background: rgba(46, 213, 115, 0.15) !important;
+    transform: scale(1.02);
+}
+
+.draft-drop-slot.empty:hover {
+    border-color: #ff4757;
+    background: var(--bg-card-hover);
+}
+
+.draft-drop-slot.occupied {
+    border: 2px solid #2ed573;
+    background: var(--bg-card-grad);
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    padding: 4px;
+}
+
+.slot-drop-remove {
+    width: 18px;
+    height: 18px;
+    background: #ff4757;
+    border: 1.5px solid #1e293b;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    color: #ffffff;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: auto;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+}
+
+.slot-drop-remove:active {
+    transform: scale(0.9);
+}
+
+.slot-drop-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin: auto 0;
+}
+
+.slot-drop-icon {
+    font-size: 1.3rem;
+    animation: bounceDown 1.8s infinite ease-in-out;
+}
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+}
+
+.slot-drop-hint {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.1;
+}
+
+/* 5 Öneri Havuzu Başlık Satırı */
+.draft-pool-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.draft-pool-title {
+    font-family: var(--font-manga);
+    font-size: 0.95rem;
+    color: #ffa502;
+    white-space: nowrap;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.draft-pool-subtitle {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* 5 Öneri Havuzu Tek Sırada 5 Kart Grid */
+.draft-pool-5-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+}
+
+.draft-card-5 {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 10px;
+    padding: 3px 2px;
+    cursor: grab;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    gap: 1px;
+    height: 82px;
+    min-width: 0;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.08s ease;
+    user-select: none;
+    overflow: hidden;
+}
+
+.draft-card-5:active {
+    cursor: grabbing;
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--comic-stroke);
+}
+
+.draft-card-5.is-dragging {
+    opacity: 0.4;
+    transform: scale(0.94);
+    border-color: #ff4757;
+}
+
+.draft-card-5.assigned {
+    border-color: #2ed573;
+    background: #0f2b18;
+    opacity: 0.85;
+}
+
+.draft-badge-5 {
+    font-size: 0.48rem;
+    font-weight: 900;
+    padding: 1px 3px;
+    border-radius: 3px;
+    background: #101424;
+    color: var(--text-muted);
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+}
+
+.draft-card-5.assigned .draft-badge-5 {
+    background: #2ed573;
+    color: #ffffff;
+}
+
+.draft-card-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+}
+
+.draft-card-emoji {
+    font-size: 1.15rem;
+    line-height: 1;
+    margin: 1px 0;
+}
+
+.card-title-5 {
+    font-size: 0.56rem;
+    font-weight: 900;
+    color: var(--text-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    line-height: 1;
+}
+
+.card-role-5 {
+    font-size: 0.46rem;
+    color: #ffa502;
+    line-height: 1;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.card-stats-row-5 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: #0d101c;
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 0.46rem;
+    font-weight: 800;
+    color: var(--text-main);
+    width: 100%;
+    line-height: 1;
+    text-align: center;
+}
+
+/* Savaş Öncesi Bot Zorluk Rozetleri */
+.bot-match-diff-badge {
+    font-family: var(--font-manga);
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+    border: 1.5px solid var(--border-card);
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+}
+.bot-match-diff-badge.tier-bronze { background: #3b220d; color: #ffa502; }
+.bot-match-diff-badge.tier-silver { background: #1e293b; color: #e2e8f0; }
+.bot-match-diff-badge.tier-gold { background: #3b2d07; color: #fde047; }
+.bot-match-diff-badge.tier-master { background: #3b071d; color: #ff4757; }
+
+/* Savaş Öncesi AI Tahmin & Simülasyon Radarı */
+.btn-ai-simulate {
+    width: 100%;
+    background: #38bdf8;
+    border: 2.5px solid #111111;
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #111111;
+    color: #ffffff;
+    box-sizing: border-box;
+    transition: transform 0.08s;
+}
+
+.btn-ai-simulate:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #111111;
+}
+
+.btn-sim-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+}
+
+.btn-sim-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.btn-sim-texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-sim-title {
+    font-family: var(--font-manga);
+    font-size: 0.95rem;
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #111;
+    letter-spacing: 0.8px;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+.btn-sim-desc {
+    font-size: 0.58rem;
+    color: #e0f2fe;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.btn-sim-cost {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #ff4757;
+    border: 1.5px solid #111111;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    color: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 1.5px 1.5px 0 #111111;
+}
+
+/* AI Simülasyon Sonuç Raporu */
+.ai-pred-result-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.ai-result-top-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 2px solid var(--border-card);
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.ai-win-rate-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0f2b18;
+    border: 2px solid #2ed573;
+    border-radius: 8px;
+    padding: 5px 8px;
+    min-width: 72px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    flex-shrink: 0;
+}
+
+.ai-win-rate-num {
+    font-family: var(--font-manga);
+    font-size: 1.45rem;
+    color: #2ed573;
+    line-height: 1;
+}
+
+.ai-win-rate-lbl {
+    font-size: 0.52rem;
+    font-weight: 900;
+    color: #86efac;
+    text-transform: uppercase;
+    margin-top: 1px;
+}
+
+.ai-lanes-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.ai-lane-stat-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.58rem;
+    font-weight: 800;
+}
+
+.ai-lane-lbl {
+    width: 48px;
+    color: var(--text-title);
+    flex-shrink: 0;
+}
+
+.ai-bar-mini-bg {
+    flex: 1;
+    height: 6px;
+    background: #0d101c;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--border-card);
+}
+
+.ai-bar-mini-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4757, #ffa502);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+}
+
+.ai-lane-val {
+    font-family: var(--font-manga);
+    font-size: 0.8rem;
+    color: #ffa502;
+    min-width: 30px;
+    text-align: right;
+}
+
+.ai-tactical-tip-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    background: #2a1f0c;
+    border: 1.5px solid #ffa502;
+    border-radius: 8px;
+    padding: 6px 8px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.ai-tip-icon {
+    font-size: 0.95rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.ai-tip-text {
+    font-size: 0.62rem;
+    color: #fef3c7;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+.ai-tip-text b {
+    color: #ffa502 !important;
+    font-weight: 900;
+}
+
+.ai-result-actions-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.btn-ai-action-close {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-card);
+    border-radius: 8px;
+    padding: 6px 8px;
+    color: var(--text-muted);
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+    transition: transform 0.08s, background 0.1s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-ai-action-close:hover {
+    color: var(--text-main);
+    background: var(--bg-card-hover);
+}
+
+.btn-ai-action-close:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.btn-ai-action-rerun {
+    flex: 1.8;
+    background: #38bdf8;
+    border: 1.5px solid #111111;
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: #ffffff;
+    font-family: var(--font-manga);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #111111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.08s;
+}
+
+.btn-ai-action-rerun:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.btn-sim-cost-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: #ff4757;
+    border: 1px solid #111111;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    color: #fff;
+    box-shadow: 1px 1px 0 #111111;
+}
+
+/* Savaş Başlat & Geri Butonları Konteyneri (Yan Yana Responsive Sıralama) */
+.draft-action-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: 4px;
+    padding-bottom: max(4px, env(safe-area-inset-bottom, 4px));
+    box-sizing: border-box;
+}
+
+.draft-action-container .btn-primary {
+    padding: 10px 14px !important;
+    font-size: 1.15rem !important;
+    min-height: 46px;
+    margin: 0 !important;
+}
+
+.draft-action-container .btn-secondary {
+    padding: 10px 12px !important;
+    font-size: 1.05rem !important;
+    min-height: 46px;
+    margin: 0 !important;
+    white-space: nowrap;
+}
+
+/* --- KORİDOR VE SLOT SAVAŞ ARENASI --- */
+#battle-view {
+    padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 8px)) 8px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    justify-content: flex-start;
+}
+
+.battle-arena-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 6px;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.battle-hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.battle-hud-badge {
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1.5px solid var(--comic-stroke);
+}
+
+.battle-hud-badge.bot-badge {
+    background: #ff4757;
+    color: #ffffff;
+}
+
+.battle-hud-badge.player-badge {
+    background: #2ed573;
+    color: #ffffff;
+}
+
+.battle-hud-round {
+    font-family: var(--font-manga);
+    font-size: 0.95rem;
+    color: #ffa502;
+    letter-spacing: 1px;
+}
+
+.btn-battle-quit {
+    background: rgba(255, 71, 87, 0.18);
+    border: 1.5px solid #ff4757;
+    color: #ff6b81;
+    font-family: var(--font-manga);
+    font-size: 0.82rem;
+    padding: 2px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+    letter-spacing: 0.5px;
+    transition: all 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.btn-battle-quit:hover {
+    background: #ff4757;
+    color: #ffffff;
+}
+
+.btn-battle-quit:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+/* Yüz Yüze Karşılaşma Sahnesi */
+.face-to-face-arena {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-team-row);
+    border: 2.5px solid var(--border-card);
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.arena-team-container {
+    width: 100%;
+}
+
+.arena-team-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ortadaki Koridor Çatışma Ayracı */
+.arena-clash-divider {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    padding: 2px 0;
+    align-items: center;
+}
+
+.clash-lane-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: #0d101c;
+    border-radius: 6px;
+    padding: 2px 0;
+    border: 1.5px dashed var(--border-card);
+}
+
+.clash-lane-tag {
+    font-family: var(--font-manga);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.clash-lane-vs {
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    color: #ff4757;
+    line-height: 1;
+}
+
+/* Savaşçı Kartları */
+.fighter-card {
+    background: var(--bg-fighter);
+    border: 2px solid var(--border-card);
+    border-radius: 12px;
+    padding: 4px 3px 5px 3px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 96px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    box-sizing: border-box;
+    transition: transform 0.1s;
+    width: 100%;
+    min-width: 0;
+}
+
+.bot-fighter {
+    border-top: 3px solid #ff4757;
+}
+
+.player-fighter {
+    border-bottom: 3px solid #2ed573;
+}
+
+.fighter-card.dead {
+    opacity: 0.35;
+    filter: grayscale(100%);
+}
+
+.fighter-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    margin-bottom: 1px;
+}
+
+.slot-lane-indicator {
+    font-family: var(--font-manga);
+    font-size: 0.72rem;
+    color: #ffa502;
+    background: #0d101c;
+    border-radius: 4px;
+    padding: 1px 5px;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.fighter-avatar-box {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--bg-card-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1px 0;
+    border: 1.5px solid var(--border-card);
+}
+
+.fighter-emoji {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.fighter-name {
+    font-size: 0.68rem;
+    font-weight: 900;
+    color: var(--text-title);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 95%;
+    line-height: 1;
+}
+
+.hp-bar-outer {
+    width: 100%;
+    height: 13px;
+    background: #090b14;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2px;
+    border: 1.5px solid var(--comic-stroke);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hp-bar-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #2ed573, #16a34a);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.hp-bar-inner.critical {
+    background: linear-gradient(90deg, #ff4757, #c0392b);
+}
+
+.hp-label {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-manga);
+    font-size: 0.72rem;
+    line-height: 1;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 0 #000;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.energy-bar-outer {
+    width: 100%;
+    height: 3px;
+    background: #090b14;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+.energy-bar-inner {
+    height: 100%;
+    background: #ffa502;
+    transition: width 0.3s ease;
+}
+
+.fighter-mini-stats {
+    font-size: 0.58rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    line-height: 1;
+}
+
+.stat-pill-atk {
+    color: #ff4757;
+    font-weight: 900;
+}
+
+.stat-pill-spd {
+    color: #38bdf8;
+    font-weight: 900;
+}
+
+.fighter-status-bar {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.fighter-status-bar:empty {
+    display: none;
+}
+
+.anim-hit-shake {
+    animation: hitShake 0.3s ease;
+}
+
+@keyframes hitShake {
+    0%, 100% { transform: translate(0,0); }
+    25% { transform: translate(-4px, 2px); }
+    50% { transform: translate(4px, -2px); }
+    75% { transform: translate(-2px, -1px); }
+}
+
+.anim-attack-up {
+    animation: attackLungeUp 0.3s ease;
+}
+
+@keyframes attackLungeUp {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-16px) scale(1.08); }
+    100% { transform: translateY(0); }
+}
+
+.anim-attack-down {
+    animation: attackLungeDown 0.3s ease;
+}
+
+@keyframes attackLungeDown {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(16px) scale(1.08); }
+    100% { transform: translateY(0); }
+}
+
+.anim-attack {
+    animation: attackLungeUp 0.3s ease;
+}
+
+.anim-skill {
+    animation: skillPulse 0.4s ease;
+}
+
+@keyframes skillPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); filter: drop-shadow(2px 2px 0 #a55eea); }
+    100% { transform: scale(1); }
+}
+
+/* Savaş Alt Paneli & Canlı Log Akışı */
+.battle-bottom-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-height: 0;
+    margin-top: 2px;
+}
+
+.battle-logs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px;
+}
+
+.logs-header-title {
+    font-family: var(--font-manga);
+    font-size: 0.88rem;
+    color: #ffa502;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.battle-logs-box {
+    flex: 1;
+    min-height: 120px;
+    background: var(--bg-logs);
+    border: 2px solid var(--border-card);
+    border-radius: 12px;
+    padding: 6px 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.7rem;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.log-line {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+.log-line.system { color: #38bdf8; font-weight: 900; }
+.log-line.player-action { color: #2ed573; }
+.log-line.bot-action { color: #ff4757; }
+.log-line.skill { color: #a55eea; font-weight: 900; }
+.log-line.defeat { color: #ff4757; font-weight: 900; }
+
+/* --- MODAL TASARIMLARI (ÇİZGİ ROMAN) --- */
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-modal-overlay);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+    padding: 14px;
+}
+
+.modal-content {
+    background: var(--bg-modal);
+    border: 3px solid var(--border-modal);
+    border-radius: 20px;
+    width: 100%;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    box-shadow: 5px 5px 0 var(--comic-stroke);
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.modal-title {
+    font-family: var(--font-manga);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: var(--text-title);
+    text-transform: uppercase;
+}
+
+/* Profil Modalı */
+.profile-edit-avatar-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.prof-large-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff4757, #ffa502);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    border: 2.5px solid #ffffff;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+}
+
+.achievements-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 10px 0;
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+.ach-badge-card {
+    background: var(--bg-card-hover);
+    border: 2px solid var(--border-card);
+    border-radius: 10px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.ach-badge-card.unlocked {
+    border-color: #ffa502;
+    background: #2a1f0c;
+}
+
+.ach-icon { font-size: 1.35rem; }
+.ach-text { flex: 1; }
+.ach-name { font-size: 0.8rem; font-weight: 900; color: var(--text-title); }
+.ach-desc { font-size: 0.68rem; color: var(--text-muted); }
+
+/* Maç Geçmişi */
+.match-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 160px;
+    overflow-y: auto;
+    margin: 10px 0;
+}
+
+.match-history-row {
+    background: var(--bg-card-hover);
+    border: 2px solid var(--border-card);
+    border-left: 5px solid #94a3b8;
+    border-radius: 8px;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.match-history-row.win { border-left-color: #2ed573; }
+.match-history-row.loss { border-left-color: #ff4757; }
+
+.match-res-tag { font-family: var(--font-manga); font-size: 0.85rem; }
+.match-history-row.win .match-res-tag { color: #2ed573; }
+.match-history-row.loss .match-res-tag { color: #ff4757; }
+
+.match-delta.win { color: #2ed573; font-weight: 900; }
+.match-delta.loss { color: #ff4757; font-weight: 900; }
+.match-time { font-size: 0.68rem; color: var(--text-muted); }
+
+/* Lider Tablosu Zaman Dilimi Ana Sekmeleri */
+.lb-timeframe-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.lb-tf-btn {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    color: var(--text-muted);
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 6px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: all 0.1s ease;
+    white-space: nowrap;
+}
+
+.lb-tf-btn.active {
+    background: #ffa502;
+    color: #1e293b;
+    border-color: #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+/* Zaman Dilimi Bilgi & Geri Sayım Kartı */
+.lb-timeframe-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-stage);
+    border: 2px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.lb-tf-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.lb-tf-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+}
+
+.lb-tf-title {
+    font-family: var(--font-manga);
+    font-size: 0.88rem;
+    color: #38bdf8;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+
+.lb-tf-timer {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #2ed573;
+    line-height: 1.2;
+}
+
+.lb-tf-desc {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    line-height: 1.1;
+}
+
+/* Lider Tablosu Lig Sekmeleri */
+.lb-tabs-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.lb-tab-btn {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    color: var(--text-muted);
+    font-family: var(--font-manga);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 6px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+.lb-tab-btn.active {
+    background: #ff4757;
+    color: #ffffff;
+    border-color: #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.lb-search-box {
+    margin-bottom: 10px;
+}
+
+.leaderboard-list {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 50vh;
+}
+
+.leaderboard-row {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.leaderboard-row.player-row {
+    border-color: #ffa502;
+    background: #2a1f0c;
+}
+
+.lb-rank { font-family: var(--font-manga); font-size: 1.1rem; width: 35px; color: #ffa502; }
+.lb-avatar-circle { font-size: 1.45rem; }
+.lb-info { flex: 1; }
+.lb-name { font-size: 0.85rem; font-weight: 900; color: var(--text-title); }
+.lb-tier-tag { font-size: 0.7rem; }
+.lb-trophies { font-family: var(--font-manga); font-size: 1rem; color: #38bdf8; }
+
+/* Floating Text */
+.floating-text-container {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 25;
+}
+
+.float-text {
+    position: absolute;
+    font-family: var(--font-manga);
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    animation: floatUp 1s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.float-text.damage { color: #ff4757; text-shadow: 2px 2px 0 #000; }
+.float-text.crit { color: #ffa502; font-size: 1.5rem; text-shadow: 2px 2px 0 #000; }
+.float-text.heal { color: #2ed573; text-shadow: 2px 2px 0 #000; }
+.float-text.shield { color: #38bdf8; }
+.float-text.burn { color: #ff7f50; }
+.float-text.stun { color: #a55eea; }
+.float-text.skill { color: #e056fd; font-size: 1.1rem; }
+
+@keyframes floatUp {
+    0% { opacity: 0; transform: translate(-50%, 0) scale(0.6); }
+    25% { opacity: 1; transform: translate(-50%, -18px) scale(1.15); }
+    75% { opacity: 1; transform: translate(-50%, -32px) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -46px) scale(0.8); }
+}
+
+/* Sonuç Modalı */
+.result-card { text-align: center; }
+.result-icon { font-size: 3.8rem; margin-bottom: 8px; filter: drop-shadow(2px 2px 0 #000); }
+.result-title { font-family: var(--font-manga); font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase; }
+.result-title.victory { color: #2ed573; text-shadow: 2px 2px 0 #000; }
+.result-title.defeat { color: #ff4757; text-shadow: 2px 2px 0 #000; }
+
+.result-rewards {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 14px;
+    font-family: var(--font-manga);
+    font-size: 1.25rem;
+    color: var(--text-title);
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+/* Savaş Öncesi Tahmin Paneli */
+.prediction-hub-box {
+    background: var(--bg-stage);
+    border: 2px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 4px 8px;
+    margin-bottom: 2px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.pred-hub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.pred-ticket-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.68rem;
+    color: #ff4757;
+    font-weight: 800;
+}
+
+.prediction-options-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+.pred-option-card {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 4px 2px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.08s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.pred-option-card:hover {
+    border-color: #38bdf8;
+}
+
+.pred-option-card.active {
+    border-color: #ffa502 !important;
+    background: #2a1f0c !important;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transform: translate(-1px, -1px);
+}
+
+.pred-opt-icon {
+    font-size: 1.1rem;
+    margin-bottom: 0px;
+}
+
+.pred-opt-title {
+    font-size: 0.64rem;
+    font-weight: 900;
+    color: var(--text-title) !important;
+}
+
+.pred-opt-bonus {
+    font-family: var(--font-manga);
+    font-size: 0.75rem;
+    color: #ffa502 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+/* Mağaza Arayüzü */
+.store-balance-banner {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--text-title);
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.store-tabs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: var(--bg-slot);
+    padding: 4px;
+    border-radius: 12px;
+    border: 2px solid var(--border-card);
+    margin-bottom: 12px;
+}
+
+.store-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-manga);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    padding: 8px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: all 0.15s;
+    line-height: 1;
+}
+
+.store-tab-btn.active {
+    background: #ff4757;
+    color: #ffffff;
+    border: 2px solid #1e293b;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.store-items-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 52vh;
+    overflow-y: auto;
+}
+
+.store-item-card {
+    background: var(--bg-card-grad);
+    border: 2px solid var(--border-card);
+    border-radius: 14px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: border 0.1s, transform 0.08s;
+}
+
+.store-item-card:hover {
+    border-color: #ffa502;
+}
+
+.store-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.store-item-icon { font-size: 2.1rem; }
+.store-item-name { font-size: 0.92rem; font-weight: 900; color: var(--text-title); }
+.store-item-desc { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; }
+
+.store-pkg-badge {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    font-family: var(--font-manga);
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: #ff4757;
+    color: #fff;
+    border: 1px solid #1e293b;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+}
+
+.btn-buy-ticket {
+    background: #ffa502;
+    color: #1e293b;
+    border: 2px solid #1e293b;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: var(--font-manga);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.08s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-buy-ticket:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.btn-buy-real {
+    background: #38bdf8;
+    color: #fff;
+    border: 2px solid #1e293b;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: var(--font-manga);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    transition: transform 0.08s;
+}
+
+.btn-buy-real:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 transparent;
+}
+
+/* Ödeme Özeti */
+.checkout-pkg-summary {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+/* Tahmin Sonuç Bannerı */
+.result-pred-banner {
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    font-family: var(--font-manga);
+    font-size: 1.1rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+}
+
+.result-pred-banner.success {
+    background: #0f2b18;
+    border: 2px solid #2ed573;
+    color: #2ed573;
+}
+
+.result-pred-banner.failure {
+    background: var(--bg-card);
+    border: 2px solid var(--border-subtle);
+    color: var(--text-muted);
+}
+
+/* --- ÖZEL OYUN UYARI & POPUP SİSTEMİ --- */
+.game-alert-box {
+    background: var(--bg-modal);
+    border: 3px solid var(--border-modal);
+    border-radius: 20px;
+    padding: 24px 18px 16px 18px;
+    width: 92%;
+    max-width: 360px;
+    box-shadow: 5px 5px 0 var(--comic-stroke);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    animation: alertPopIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-sizing: border-box;
+}
+
+@keyframes alertPopIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.game-alert-icon-wrap {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.9rem;
+    margin-top: -38px;
+    background: #ff4757;
+    border: 3px solid #1e293b;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+}
+
+.game-alert-icon-wrap.success {
+    border-color: #1e293b;
+    background: #2ed573;
+}
+
+.game-alert-icon-wrap.error {
+    border-color: #1e293b;
+    background: #ff4757;
+}
+
+.game-alert-icon-wrap.warning {
+    border-color: #1e293b;
+    background: #ffa502;
+}
+
+.game-alert-title {
+    font-family: var(--font-manga);
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    color: var(--text-title);
+    margin: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.game-alert-message {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.game-alert-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 6px;
+    box-sizing: border-box;
+}
+
+.game-alert-btn {
+    width: 100%;
+    padding: 10px 14px !important;
+    font-size: 1.05rem !important;
+    margin-top: 4px;
+}
+
+.game-alert-actions .game-alert-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 6px !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.3px;
+    white-space: normal;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    min-height: 42px;
+    word-break: normal;
+}
+
+/* --- GİRİŞ HOŞ GELDİN KARŞILAMA EFEKTİ & POPUP --- */
+.welcome-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10000 !important;
+    padding: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    background: rgba(8, 10, 20, 0.92) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+}
+
+.welcome-overlay.hidden {
+    display: none !important;
+}
+
+.welcome-overlay.welcome-anim-out {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.welcome-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.welcome-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.welcome-sparkle {
+    position: absolute;
+    font-size: 1.3rem;
+    pointer-events: none;
+    animation: sparkleFloat 1.4s ease-out forwards;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.3) rotate(0deg);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.2) rotate(45deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.6) rotate(90deg);
+    }
+}
+
+.welcome-card-wrap {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.welcome-card {
+    background: var(--bg-card-grad, #181e33);
+    border: 3.5px solid #ffa502;
+    border-radius: 22px;
+    padding: 24px 18px 16px 18px;
+    width: 100%;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 5px 5px 0 var(--comic-stroke, #000);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    position: relative;
+    animation: welcomePopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-sizing: border-box;
+}
+
+@keyframes welcomePopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(25px);
+    }
+    70% {
+        transform: scale(1.04) translateY(-3px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.welcome-comic-boom-tag {
+    position: absolute;
+    top: -16px;
+    background: linear-gradient(135deg, #ff4757, #ff7f50);
+    border: 2.5px solid #111111;
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-family: var(--font-manga);
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    box-shadow: 3px 3px 0 #111111;
+    text-shadow: 1px 1px 0 #000;
+    text-transform: uppercase;
+    animation: boomShake 0.4s ease-out;
+}
+
+@keyframes boomShake {
+    0% { transform: scale(0.3) rotate(-10deg); }
+    50% { transform: scale(1.15) rotate(4deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.welcome-avatar-ring {
+    position: relative;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4757, #ffa502);
+    border: 3.5px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem;
+    box-shadow: 4px 4px 0 var(--comic-stroke);
+    position: relative;
+    z-index: 2;
+    animation: avatarBounce 1.2s infinite ease-in-out;
+}
+
+@keyframes avatarBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.welcome-ring-pulse {
+    position: absolute;
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    border: 2px dashed #ffa502;
+    animation: spinPulse 3s linear infinite;
+    z-index: 1;
+}
+
+@keyframes spinPulse {
+    0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
+    50% { transform: rotate(180deg) scale(1.08); opacity: 0.4; }
+    100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+}
+
+.welcome-username {
+    font-family: var(--font-manga);
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    color: var(--text-title);
+    line-height: 1.1;
+    margin-top: 2px;
+    text-transform: uppercase;
+}
+
+.welcome-tier-pill {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-card);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.76rem;
+    font-weight: 900;
+    color: #ffa502;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+}
+
+.welcome-quote {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.35;
+    margin: 4px 0 2px 0;
+    padding: 0 8px;
+}
+
+.welcome-progress-bar-bg {
+    width: 85%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-card);
+    margin-top: 6px;
+}
+
+.welcome-progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff4757, #ffa502);
+    border-radius: 4px;
+    transition: width 1.2s linear;
+}
+
+.welcome-tap-hint {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    animation: pulseSubtle 1.2s infinite ease-in-out;
+}
+
+/* Light Theme Uyumları */
+[data-theme="light"] .welcome-overlay {
+    background: rgba(15, 23, 42, 0.8) !important;
+}
+
+[data-theme="light"] .welcome-card {
+    background: #ffffff !important;
+    border: 3.5px solid #1e293b !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2), 5px 5px 0 #1e293b !important;
+}
+
+[data-theme="light"] .welcome-username {
+    color: #0f172a;
+}
+
+[data-theme="light"] .welcome-tier-pill {
+    background: #fffbeb;
+    border: 1.5px solid #d97706;
+    color: #b45309;
+    box-shadow: 1.5px 1.5px 0 #fed7aa;
+}
+
+[data-theme="light"] .welcome-quote {
+    color: #334155;
+}
+
+[data-theme="light"] .welcome-progress-bar-bg {
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+}
+
+/* --- ÇIKIŞ VEDA EFEKTİ VE POPUP STİLLERİ --- */
+.logout-card {
+    background: var(--bg-card-grad, #181e33) !important;
+    border: 3.5px solid #3742fa !important;
+    box-shadow: 0 12px 35px rgba(55, 66, 250, 0.5), 5px 5px 0 var(--comic-stroke, #000) !important;
+}
+
+.logout-boom-tag {
+    background: linear-gradient(135deg, #3742fa, #70a1ff) !important;
+    color: #ffffff !important;
+}
+
+.logout-avatar {
+    background: linear-gradient(135deg, #2ed573, #1e90ff) !important;
+    border: 3.5px solid #ffffff !important;
+    animation: avatarFloatAway 1.4s infinite ease-in-out !important;
+}
+
+@keyframes avatarFloatAway {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.05); }
+}
+
+.logout-ring-pulse {
+    border: 2px dashed #70a1ff !important;
+}
+
+.logout-tier-pill {
+    color: #70a1ff !important;
+    border-color: #3742fa !important;
+    background: rgba(55, 66, 250, 0.12) !important;
+}
+
+.logout-progress-fill {
+    background: linear-gradient(90deg, #2ed573, #1e90ff, #3742fa) !important;
+}
+
+.logout-sparkle {
+    animation: sparkleFall 1.4s ease-out forwards !important;
+}
+
+@keyframes sparkleFall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.4) rotate(0deg);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(10px) scale(1.15) rotate(-30deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.5) rotate(-90deg);
+    }
+}
+
+/* Light Theme Uyumları (Çıkış) */
+[data-theme="light"] .logout-card {
+    background: #ffffff !important;
+    border: 3.5px solid #3742fa !important;
+    box-shadow: 0 12px 35px rgba(55, 66, 250, 0.25), 5px 5px 0 #1e293b !important;
+}
+
+[data-theme="light"] .logout-tier-pill {
+    background: #eff6ff !important;
+    border: 1.5px solid #3b82f6 !important;
+    color: #1d4ed8 !important;
+    box-shadow: 1.5px 1.5px 0 #bfdbfe !important;
+}
+
+/* --- 18+ EFSANEVİ CANAVAR REHBERİ (BESTIARY) MODAL STİLLERİ --- */
+.bestiary-content {
+    max-width: 480px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.bestiary-filter-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.bestiary-search-box {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 2px solid var(--border-card);
+    background: var(--bg-card);
+    color: var(--text-title);
+    font-size: 0.8rem;
+    font-weight: 700;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.bestiary-search-box:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 10px rgba(255, 165, 2, 0.25);
+}
+
+.bestiary-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+}
+
+.bestiary-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.bestiary-tab {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border-card);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bestiary-tab:hover {
+    color: var(--text-title);
+    border-color: var(--accent-gold);
+}
+
+.bestiary-tab.active {
+    background: linear-gradient(135deg, #ffa502, #ff7f50);
+    color: #111111;
+    border-color: #111111;
+    box-shadow: 2px 2px 0 #111111;
+    font-weight: 900;
+}
+
+.bestiary-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    padding-right: 4px;
+    max-height: calc(88vh - 170px);
+}
+
+.bestiary-card {
+    background: var(--bg-card-grad);
+    border: 2.5px solid var(--border-card);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 3px 3px 0 var(--comic-stroke);
+    position: relative;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.bestiary-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-gold);
+}
+
+.bestiary-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bestiary-avatar-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 3px solid #ffa502;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    flex-shrink: 0;
+}
+
+.bestiary-header-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bestiary-name {
+    font-family: var(--font-manga);
+    font-size: 1.05rem;
+    color: var(--text-title);
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+
+.bestiary-tags {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.bestiary-role-tag {
+    background: rgba(255, 165, 2, 0.15);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 6px;
+}
+
+.bestiary-elem-tag {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 6px;
+}
+
+.bestiary-skill-box {
+    background: rgba(255, 71, 87, 0.1);
+    border: 1.5px dashed #ff4757;
+    border-radius: 10px;
+    padding: 7px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bestiary-skill-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    color: #ff6b81;
+}
+
+.bestiary-skill-name {
+    color: #ffa502;
+    background: rgba(255, 165, 2, 0.2);
+    padding: 0 4px;
+    border-radius: 4px;
+}
+
+.bestiary-skill-desc {
+    font-size: 0.72rem;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.bestiary-stats-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.bestiary-stat-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bestiary-stat-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.bestiary-stat-label b {
+    color: var(--text-title);
+}
+
+.bestiary-stat-bar-outer {
+    height: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.bestiary-stat-bar-inner {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.bestiary-stat-bar-inner.hp { background: linear-gradient(90deg, #2ed573, #10ac84); }
+.bestiary-stat-bar-inner.atk { background: linear-gradient(90deg, #ff4757, #ff6b81); }
+.bestiary-stat-bar-inner.spd { background: linear-gradient(90deg, #38bdf8, #70a1ff); }
+.bestiary-stat-bar-inner.crit { background: linear-gradient(90deg, #ffa502, #eccc68); }
+
+.bestiary-tactic-box {
+    font-size: 0.7rem;
+    color: #e2e8f0;
+    background: rgba(30, 41, 59, 0.6);
+    border-left: 3px solid var(--accent-cyan);
+    padding: 5px 8px;
+    border-radius: 0 8px 8px 0;
+    line-height: 1.35;
+}
+
+/* Light Mode Overrides for Bestiary */
+[data-theme="light"] .bestiary-content {
+    background: #f8fafc;
+}
+
+[data-theme="light"] .bestiary-search-box {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+[data-theme="light"] .bestiary-tab {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    color: #64748b;
+}
+
+[data-theme="light"] .bestiary-tab.active {
+    background: linear-gradient(135deg, #ffa502, #ff7f50);
+    color: #ffffff;
+    border-color: #1e293b;
+}
+
+[data-theme="light"] .bestiary-card {
+    background: #ffffff;
+    border-color: #1e293b;
+    box-shadow: 3px 3px 0 #1e293b;
+}
+
+[data-theme="light"] .bestiary-avatar-box {
+    background: #f1f5f9;
+    border-color: #f59e0b;
+    box-shadow: 2px 2px 0 #1e293b;
+}
+
+[data-theme="light"] .bestiary-name {
+    color: #0f172a;
+}
+
+[data-theme="light"] .bestiary-skill-box {
+    background: #fff1f2;
+    border-color: #f43f5e;
+}
+
+[data-theme="light"] .bestiary-skill-desc {
+    color: #334155;
+}
+
+[data-theme="light"] .bestiary-stats-list {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+[data-theme="light"] .bestiary-stat-bar-outer {
+    background: #e2e8f0;
+}
+
+[data-theme="light"] .bestiary-tactic-box {
+    background: #f1f5f9;
+    color: #1e293b;
+    border-left: 3px solid #0284c7;
+}
+
+.banner-perk-item {
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.banner-perk-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="light"] .banner-perk-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   ELEMENT SYNERGY & TEAM BONUSES
+   ========================================================================== */
+.draft-synergy-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.25), rgba(255, 165, 2, 0.25));
+    border: 1.5px solid var(--accent-gold);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(255, 165, 2, 0.3);
+    animation: pulse-glow 2s infinite ease-in-out;
+}
+
+[data-theme="light"] .draft-synergy-pill {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #b45309;
+    border-color: #d97706;
+}
+
+.battle-synergy-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 165, 2, 0.2);
+    border: 1px solid var(--accent-gold);
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: var(--accent-gold);
+    margin-top: 2px;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 6px rgba(255, 165, 2, 0.4); transform: scale(1); }
+    50% { box-shadow: 0 0 14px rgba(255, 71, 87, 0.7); transform: scale(1.02); }
+}
+
+/* ==========================================================================
+   AI AUTO-APPLY TACTICAL ACTION BUTTON
+   ========================================================================== */
+.btn-ai-action-apply {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 8px 0 4px 0;
+    background: linear-gradient(180deg, #2ed573, #20bf6b);
+    border: 2px solid #10ac84;
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: var(--font-manga);
+    font-size: 0.92rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 0 #0a3d24;
+    box-shadow: 0 4px 12px rgba(46, 213, 115, 0.35), 2px 2px 0 #0a3d24;
+    cursor: pointer;
+    transition: transform 0.1s ease, filter 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-ai-action-apply:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.btn-ai-action-apply:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 #0a3d24;
+}
+
+/* ==========================================================================
+   SCREEN SHAKE ANIMATIONS ON CRITICAL HITS
+   ========================================================================== */
+@keyframes shake-crit {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-5px, 4px) rotate(-1deg); }
+    40% { transform: translate(5px, -4px) rotate(1deg); }
+    60% { transform: translate(-4px, 3px) rotate(-0.5deg); }
+    80% { transform: translate(4px, -2px) rotate(0.5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.shake-crit {
+    animation: shake-crit 0.35s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* ==========================================================================
+   VICTORY CONFETTI CANVAS
+   ========================================================================== */
+.confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    border-radius: inherit;
+}
+
+/* ==========================================================================
+   VICTORY MVP CARD
+   ========================================================================== */
+.result-mvp-box {
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.15), rgba(255, 71, 87, 0.15));
+    border: 2px solid var(--accent-gold);
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    box-shadow: 0 4px 12px rgba(255, 165, 2, 0.2);
+}
+
+[data-theme="light"] .result-mvp-box {
+    background: #fff8e1;
+    border-color: #f59e0b;
+}
+
+.mvp-tag {
+    font-size: 0.68rem;
+    font-weight: 900;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.mvp-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mvp-avatar {
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1.5px solid var(--accent-gold);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="light"] .mvp-avatar {
+    background: #ffffff;
+}
+
+.mvp-info {
+    text-align: left;
+    flex: 1;
+}
+
+.mvp-name {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+[data-theme="light"] .mvp-name {
+    color: #0f172a;
+}
+
+.mvp-stats {
+    font-size: 0.72rem;
+    color: var(--accent-cyan);
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   7-DAY LOGIN CALENDAR MODAL
+   ========================================================================== */
+.daily-login-content {
+    max-width: 420px;
+}
+
+.daily-login-streak-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 8px 0 12px 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+}
+
+[data-theme="light"] .daily-login-streak-bar {
+    background: #f1f5f9;
+}
+
+.daily-login-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.daily-login-grid .daily-day-card:last-child {
+    grid-column: span 2;
+}
+
+.daily-day-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.daily-day-card.claimed {
+    opacity: 0.6;
+    border-color: #2ed573;
+    background: rgba(46, 213, 115, 0.08);
+}
+
+.daily-day-card.today {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 12px rgba(255, 165, 2, 0.4);
+    transform: scale(1.03);
+    background: linear-gradient(180deg, rgba(255, 165, 2, 0.15), var(--bg-card));
+}
+
+.daily-day-card.locked {
+    opacity: 0.75;
+}
+
+.daily-day-num {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.daily-day-card.today .daily-day-num {
+    color: var(--accent-gold);
+}
+
+.daily-day-icon {
+    font-size: 1.4rem;
+    margin: 2px 0;
+}
+
+.daily-day-reward {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+[data-theme="light"] .daily-day-reward {
+    color: #0f172a;
+}
+
+.daily-day-tag {
+    font-size: 0.58rem;
+    font-weight: 900;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+
+.daily-day-tag.claimed-tag {
+    background: #2ed573;
+    color: #000;
+}
+
+.daily-day-tag.today-tag {
+    background: #ffa502;
+    color: #000;
+    animation: pulse-glow 1.5s infinite;
+}
+
+.daily-day-tag.locked-tag {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   TITAN WORLD BOSS RAID MODAL
+   ========================================================================== */
+.boss-raid-content {
+    max-width: 440px;
+}
+
+.boss-card-hero {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(165, 94, 234, 0.2));
+    border: 2px solid #ff4757;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+[data-theme="light"] .boss-card-hero {
+    background: #ffebee;
+}
+
+.boss-hero-avatar {
+    font-size: 3rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 2px solid #ff4757;
+    border-radius: 12px;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+}
+
+.boss-hero-info {
+    flex: 1;
+    text-align: left;
+}
+
+.boss-hero-title {
+    font-family: var(--font-manga);
+    font-size: 1.05rem;
+    color: #ff4757;
+    letter-spacing: 0.5px;
+}
+
+.boss-hero-stats {
+    font-size: 0.72rem;
+    color: #ffa502;
+    font-weight: 800;
+    margin: 2px 0;
+}
+
+.boss-hero-skill {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+.boss-record-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 6px 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+[data-theme="light"] .boss-record-bar {
+    background: #f1f5f9;
+}
+
+.boss-tiers-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin: 8px 0;
+}
+
+.boss-tier-item {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-card);
+    border-radius: 8px;
+    padding: 6px 4px;
+    text-align: center;
+    font-size: 0.68rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* ==========================================================================
+   INTERACTIVE TABBED GAME GUIDE & INFO MODAL
+   ========================================================================== */
+.guide-modal-content {
+    max-width: 460px;
+    width: 95%;
+}
+
+.info-guide-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    background: var(--bg-slot);
+    padding: 4px;
+    border-radius: 10px;
+    margin: 8px 0 10px 0;
+    border: 1.5px solid var(--border-subtle);
+}
+
+.info-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 6px 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-tab-btn:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.info-tab-btn.active {
+    background: var(--accent-cyan);
+    color: #0f172a;
+    font-weight: 900;
+    border: 1.5px solid #0284c7;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+}
+
+.info-tab-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 52vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.info-guide-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-card);
+    border-radius: 10px;
+    padding: 9px 11px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+}
+
+.info-guide-card p {
+    margin: 0;
+}
+
+.info-guide-card b {
+    color: var(--text-main);
+}
+
+.info-card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-title);
+    margin-bottom: 4px;
+    font-weight: 900;
+}
+
+.info-card-icon {
+    font-size: 1rem;
+}
+
+.info-guide-card.highlight-gold {
+    border-color: #ffa502;
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.12), var(--bg-card));
+}
+
+.info-guide-card.highlight-gold .info-card-header {
+    color: #ffa502;
+}
+
+.info-guide-card.highlight-green {
+    border-color: #2ed573;
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.12), var(--bg-card));
+}
+
+.info-guide-card.highlight-green .info-card-header {
+    color: #2ed573;
+}
+
+.info-guide-card.highlight-red {
+    border-color: #ff4757;
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.12), var(--bg-card));
+}
+
+.info-guide-card.highlight-red .info-card-header {
+    color: #ff4757;
+}
+
+/* Light Theme Guide Styles */
+[data-theme="light"] .info-guide-tabs {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+}
+
+[data-theme="light"] .info-tab-btn {
+    color: #475569;
+}
+
+[data-theme="light"] .info-tab-btn.active {
+    background: #0284c7;
+    border-color: #0369a1;
+    color: #ffffff;
+}
+
+[data-theme="light"] .info-guide-card {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 2px 2px 0 #94a3b8;
+    color: #475569;
+}
+
+[data-theme="light"] .info-guide-card b {
+    color: #0f172a;
+}
+
+[data-theme="light"] .info-card-header {
+    color: #0f172a;
+}
+
+
+
