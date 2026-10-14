@@ -2595,6 +2595,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const highScore = prof.bossHighScore || 0;
         const highScoreEl = document.getElementById('boss-raid-highscore');
         if (highScoreEl) highScoreEl.textContent = `${highScore} DMG`;
+
+        const bossImg = document.querySelector('.boss-hero-avatar img');
+        if (bossImg && typeof getMonsterAsset === 'function') {
+            bossImg.src = getMonsterAsset('titan_ignis', 'assets/monsters/titan_ignis.jpg');
+        }
+
         openModal('bossRaid');
     }
 
@@ -2610,7 +2616,7 @@ document.addEventListener('DOMContentLoaded', () => {
             templateId: 'titan_ignis',
             name: 'Titan Ejderha Ignis',
             emoji: '🐉',
-            image: 'assets/monsters/titan_ignis.jpg',
+            image: (typeof getMonsterAsset === 'function') ? getMonsterAsset('titan_ignis', 'assets/monsters/titan_ignis.jpg') : 'assets/monsters/titan_ignis.jpg',
             role: 'Kadim Titan',
             element: 'Ateş',
             maxHp: 2500,
