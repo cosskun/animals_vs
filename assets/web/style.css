@@ -610,14 +610,32 @@
     --shadow-card: 3px 3px 0 #05070e;
 }
 
-* {
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
+    -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
     font-family: var(--font-family);
     color: var(--text-main);
+}
+
+input, textarea {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+img, svg, span, div, p, h1, h2, h3, h4, h5, h6, button {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
 }
 
 html, body {
@@ -635,6 +653,11 @@ html, body {
     font-family: var(--font-family);
     color: var(--text-main);
     transition: background 0.3s ease;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
 }
 
 /* Scrollbar Gizleme */
@@ -1746,6 +1769,7 @@ html, body {
     align-items: center;
     justify-content: center;
     border: 1.5px solid var(--border-subtle);
+    overflow: hidden;
 }
 
 .draft-arena-stage .fighter-emoji {
@@ -2133,7 +2157,7 @@ html, body {
     background: #38bdf8;
     border: 2.5px solid #111111;
     border-radius: 12px;
-    padding: 8px 12px;
+    padding: 7px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2152,28 +2176,33 @@ html, body {
 .btn-sim-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     text-align: left;
+    min-width: 0;
+    flex: 1;
 }
 
 .btn-sim-icon {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .btn-sim-texts {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .btn-sim-title {
     font-family: var(--font-manga);
-    font-size: 0.95rem;
+    font-size: 0.80rem;
     color: #ffffff;
     text-shadow: 1px 1px 0 #111;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.2px;
     line-height: 1.15;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .btn-sim-desc {
@@ -2181,21 +2210,23 @@ html, body {
     color: #e0f2fe;
     font-weight: 700;
     line-height: 1.1;
+    white-space: nowrap;
 }
 
 .btn-sim-cost {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     background: #ff4757;
     border: 1.5px solid #111111;
-    padding: 3px 8px;
+    padding: 3px 7px;
     border-radius: 6px;
     font-family: var(--font-manga);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #ffffff;
     flex-shrink: 0;
     box-shadow: 1.5px 1.5px 0 #111111;
+    margin-left: 6px;
 }
 
 /* AI Simülasyon Sonuç Raporu */
@@ -2631,6 +2662,40 @@ html, body {
     justify-content: center;
     margin: 1px 0;
     border: 1.5px solid var(--border-card);
+    overflow: hidden;
+}
+
+.monster-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+.draft-card-emoji-wrap {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.draft-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
 }
 
 .fighter-emoji {
@@ -2787,6 +2852,46 @@ html, body {
     100% { transform: scale(1); }
 }
 
+/* --- MODEL 5: ÇİZGİ ROMAN HİBRİT SALDIRI VE MERMİ SİSTEMİ --- */
+.anim-attacker-charge {
+    animation: attackerChargePulse 0.35s ease forwards;
+    z-index: 25 !important;
+}
+
+@keyframes attackerChargePulse {
+    0% { transform: scale(1); box-shadow: 2px 2px 0 var(--comic-stroke); }
+    35% { transform: scale(1.14); box-shadow: 0 0 16px #ffa502, 0 0 26px rgba(255, 165, 2, 0.7); }
+    100% { transform: scale(1); box-shadow: 2px 2px 0 var(--comic-stroke); }
+}
+
+.combat-projectile {
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    font-size: 1.85rem;
+    line-height: 1;
+    user-select: none;
+    will-change: transform, opacity;
+}
+
+.comic-impact-burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.3);
+    font-size: 2.6rem;
+    z-index: 35;
+    pointer-events: none;
+    user-select: none;
+    animation: comicBurstPop 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes comicBurstPop {
+    0% { transform: translate(-50%, -50%) scale(0.2) rotate(-15deg); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.4) rotate(15deg); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0.9) rotate(-10deg); opacity: 0; }
+}
+
 /* Savaş Alt Paneli & Canlı Log Akışı */
 .battle-bottom-panel {
     display: flex;
@@ -2850,6 +2955,11 @@ html, body {
     justify-content: center;
     z-index: 60;
     padding: 14px;
+}
+
+#player-detail-modal,
+#checkout-modal {
+    z-index: 75;
 }
 
 .modal-content {
@@ -2924,6 +3034,29 @@ html, body {
 .ach-badge-card.unlocked {
     border-color: #ffa502;
     background: #2a1f0c;
+}
+
+[data-theme="light"] .ach-badge-card {
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+
+[data-theme="light"] .ach-badge-card.unlocked {
+    background: #fef3c7 !important;
+    border-color: #f59e0b !important;
+}
+
+[data-theme="light"] .ach-badge-card.unlocked .ach-name {
+    color: #92400e !important;
+}
+
+[data-theme="light"] .ach-badge-card.unlocked .ach-desc {
+    color: #78350f !important;
+}
+
+[data-theme="light"] .match-history-row {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
 }
 
 .ach-icon { font-size: 1.35rem; }
@@ -3121,6 +3254,35 @@ html, body {
     transform: translateX(-50%);
     pointer-events: none;
     z-index: 25;
+}
+
+/* Dokunmatik Sürükleme Hayalet Kartı (Touch Ghost) */
+.drag-touch-ghost {
+    position: fixed !important;
+    pointer-events: none !important;
+    z-index: 999999 !important;
+    transform: translate(-50%, -50%) scale(1.08);
+    background: var(--bg-card);
+    border: 2px solid var(--accent-gold);
+    border-radius: 12px;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 2px 2px 0 var(--comic-stroke);
+    will-change: left, top;
+}
+
+/* Kart Slota Yerleşme Uçuş Klonu */
+.flying-card-clone {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 999999 !important;
+    pointer-events: none !important;
+    box-sizing: border-box !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .float-text {
@@ -3403,28 +3565,68 @@ html, body {
     box-shadow: 2px 2px 0 var(--comic-stroke);
 }
 
-/* Tahmin Sonuç Bannerı */
+/* Tahmin & Raid Sonuç Bannerı */
 .result-pred-banner {
     border-radius: 12px;
-    padding: 10px;
+    padding: 10px 14px;
     text-align: center;
     font-family: var(--font-manga);
-    font-size: 1.1rem;
-    letter-spacing: 0.8px;
+    font-size: 1.05rem;
+    letter-spacing: 0.6px;
     margin-bottom: 8px;
     box-shadow: 2px 2px 0 var(--comic-stroke);
+    line-height: 1.4;
 }
 
+/* Dark Mod (Varsayılan Koyu Tema) */
 .result-pred-banner.success {
-    background: #0f2b18;
+    background: #064e3b;
     border: 2px solid #2ed573;
-    color: #2ed573;
+    color: #a7f3d0;
+}
+
+.result-pred-banner.success b,
+.result-pred-banner.success strong {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
 }
 
 .result-pred-banner.failure {
-    background: var(--bg-card);
-    border: 2px solid var(--border-subtle);
-    color: var(--text-muted);
+    background: #1f2937;
+    border: 2px solid #64748b;
+    color: #cbd5e1;
+}
+
+.result-pred-banner.failure b,
+.result-pred-banner.failure strong {
+    color: #ffffff !important;
+}
+
+/* Light Mod (Açık Tema) Uyumluluğu */
+[data-theme="light"] .result-pred-banner.success {
+    background: #dcfce7 !important;
+    border: 2px solid #16a34a !important;
+    color: #15803d !important;
+    box-shadow: 2px 2px 0 #166534 !important;
+}
+
+[data-theme="light"] .result-pred-banner.success b,
+[data-theme="light"] .result-pred-banner.success strong {
+    color: #0f172a !important;
+    text-shadow: none !important;
+}
+
+[data-theme="light"] .result-pred-banner.failure {
+    background: #f1f5f9 !important;
+    border: 2px solid #94a3b8 !important;
+    color: #475569 !important;
+    box-shadow: 2px 2px 0 #64748b !important;
+}
+
+[data-theme="light"] .result-pred-banner.failure b,
+[data-theme="light"] .result-pred-banner.failure strong {
+    color: #0f172a !important;
+    text-shadow: none !important;
 }
 
 /* --- ÖZEL OYUN UYARI & POPUP SİSTEMİ --- */
@@ -3991,6 +4193,15 @@ html, body {
     font-size: 1.8rem;
     box-shadow: 2px 2px 0 var(--comic-stroke);
     flex-shrink: 0;
+    overflow: hidden;
+}
+
+.bestiary-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 .bestiary-header-info {
@@ -4525,6 +4736,15 @@ html, body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+    overflow: hidden;
+}
+
+.boss-hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    display: block;
 }
 
 .boss-hero-info {

@@ -17,7 +17,7 @@ class AnimalsVsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AnimalsVs',
+      title: 'Canavar Arenası',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,

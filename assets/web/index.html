@@ -480,7 +480,10 @@
                     <div class="prof-large-avatar" id="prof-modal-avatar">⚔️</div>
                     <div style="flex: 1;">
                         <input type="text" id="prof-modal-username" class="input-field" style="width: 100%; font-weight: bold;" placeholder="Kullanıcı Adı">
-                        <span id="prof-stat-level" style="font-size: 0.72rem; color: var(--accent-cyan);">Seviye 1</span>
+                        <div style="display: flex; gap: 8px; margin-top: 4px; align-items: center;">
+                            <span id="prof-stat-level" style="font-size: 0.72rem; color: var(--accent-cyan); font-weight: 700;">Seviye 1</span>
+                            <span id="prof-stat-trophies" style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 800;">🏆 0 Kupa</span>
+                        </div>
                     </div>
                 </div>
 
@@ -587,7 +590,7 @@
                     </div>
                 </div>
 
-                <button class="btn-secondary btn-close-modal" style="margin-top: 10px;">Geri Dön</button>
+                <button class="btn-secondary btn-close-modal" id="btn-close-player-detail" style="margin-top: 10px;">Geri Dön</button>
             </div>
         </div>
 
@@ -870,7 +873,9 @@
                 </div>
                 
                 <div class="boss-card-hero">
-                    <div class="boss-hero-avatar">🐉</div>
+                    <div class="boss-hero-avatar">
+                        <img src="assets/monsters/titan_ignis.jpg" alt="Kadim Titan Ejderha Ignis">
+                    </div>
                     <div class="boss-hero-info">
                         <div class="boss-hero-title">KADİM TİTAN EJDERHA IGNIS</div>
                         <div class="boss-hero-stats">🔥 Ateş Titanı • ❤️ 2500 HP • ⚔️ 85 Alan Hasarı</div>

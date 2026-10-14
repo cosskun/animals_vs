@@ -153,6 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Screen Switching
     function switchScreen(screenName) {
+        if (screenName === 'lobby') {
+            isBossRaidMode = false;
+        }
         Object.keys(views).forEach(key => {
             if (views[key]) views[key].classList.add('hidden');
         });
@@ -694,14 +697,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!stats) return;
 
         const user = window.authMgr.currentUser;
+        if (!user) return;
         editProfileAvatar = user.avatar || '⚔️';
-        document.getElementById('prof-modal-avatar').textContent = editProfileAvatar;
-        document.getElementById('prof-modal-username').value = user.username;
-        document.getElementById('prof-stat-matches').textContent = stats.totalMatches;
-        document.getElementById('prof-stat-winrate').textContent = `%${stats.winRate}`;
-        document.getElementById('prof-stat-streak').textContent = `${stats.bestStreak} Maç`;
-        document.getElementById('prof-stat-trophies').textContent = stats.trophies;
-        document.getElementById('prof-stat-level').textContent = `Seviye ${stats.level}`;
+
+        const elAvatar = document.getElementById('prof-modal-avatar');
+        if (elAvatar) elAvatar.textContent = editProfileAvatar;
+
+        const elUsername = document.getElementById('prof-modal-username');
+        if (elUsername) elUsername.value = user.username;
+
+        const elMatches = document.getElementById('prof-stat-matches');
+        if (elMatches) elMatches.textContent = stats.totalMatches;
+
+        const elWinRate = document.getElementById('prof-stat-winrate');
+        if (elWinRate) elWinRate.textContent = `%${stats.winRate}`;
+
+        const elStreak = document.getElementById('prof-stat-streak');
+        if (elStreak) elStreak.textContent = `${stats.bestStreak} Maç`;
+
+        const elTrophies = document.getElementById('prof-stat-trophies');
+        if (elTrophies) elTrophies.textContent = `🏆 ${stats.trophies} Kupa`;
+
+        const elLevel = document.getElementById('prof-stat-level');
+        if (elLevel) elLevel.textContent = `Seviye ${stats.level}`;
 
         // Profil Avatar Seçici Izgarası
         const profAvatarContainer = document.getElementById('prof-avatar-picker');
@@ -714,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 opt.onclick = () => {
                     window.soundFX.playClick();
                     editProfileAvatar = emoji;
-                    document.getElementById('prof-modal-avatar').textContent = emoji;
+                    if (elAvatar) elAvatar.textContent = emoji;
                     profAvatarContainer.querySelectorAll('.avatar-opt').forEach(el => el.classList.remove('selected'));
                     opt.classList.add('selected');
                 };
@@ -724,47 +742,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Başarımlar / Rozetler
         const achContainer = document.getElementById('prof-achievements-list');
-        achContainer.innerHTML = '';
-        stats.achievements.forEach(ach => {
-            const item = document.createElement('div');
-            item.className = `ach-badge-card ${ach.unlocked ? 'unlocked' : 'locked'}`;
-            item.innerHTML = `
-                <div class="ach-icon">${ach.icon}</div>
-                <div class="ach-text">
-                    <div class="ach-name">${ach.name}</div>
-                    <div class="ach-desc">${ach.desc}</div>
-                </div>
-                <div class="ach-status">${ach.unlocked ? '✅' : '🔒'}</div>
-            `;
-            achContainer.appendChild(item);
-        });
+        if (achContainer) {
+            achContainer.innerHTML = '';
+            (stats.achievements || []).forEach(ach => {
+                const item = document.createElement('div');
+                item.className = `ach-badge-card ${ach.unlocked ? 'unlocked' : 'locked'}`;
+                item.innerHTML = `
+                    <div class="ach-icon">${ach.icon}</div>
+                    <div class="ach-text">
+                        <div class="ach-name">${ach.name}</div>
+                        <div class="ach-desc">${ach.desc}</div>
+                    </div>
+                    <div class="ach-status">${ach.unlocked ? '✅' : '🔒'}</div>
+                `;
+                achContainer.appendChild(item);
+            });
+        }
 
         // Maç Geçmişi
         const historyContainer = document.getElementById('prof-match-history');
-        historyContainer.innerHTML = '';
-        if (stats.matchHistory.length === 0) {
-            historyContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 10px;">Henüz tamamlanmış maç bulunmuyor.</p>';
-        } else {
-            stats.matchHistory.forEach(match => {
-                const row = document.createElement('div');
-                row.className = `match-history-row ${match.victory ? 'win' : 'loss'}`;
-                
-                const pIcons = match.playerTeam.map(t => t.emoji).join(' ');
-                const bIcons = match.botTeam.map(t => t.emoji).join(' ');
-                const deltaTag = match.trophyDelta >= 0 ? `+${match.trophyDelta}` : `${match.trophyDelta}`;
+        if (historyContainer) {
+            historyContainer.innerHTML = '';
+            const history = stats.matchHistory || [];
+            if (history.length === 0) {
+                historyContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 10px;">Henüz tamamlanmış maç bulunmuyor.</p>';
+            } else {
+                history.forEach(match => {
+                    const row = document.createElement('div');
+                    row.className = `match-history-row ${match.victory ? 'win' : 'loss'}`;
+                    
+                    const pIcons = (match.playerTeam || []).map(t => t.emoji).join(' ');
+                    const bIcons = (match.botTeam || []).map(t => t.emoji).join(' ');
+                    const deltaTag = match.trophyDelta >= 0 ? `+${match.trophyDelta}` : `${match.trophyDelta}`;
 
-                row.innerHTML = `
-                    <div class="match-res-tag">${match.victory ? 'ZAFER' : 'BOZGUN'}</div>
-                    <div class="match-teams-icons">
-                        <span>${pIcons}</span>
-                        <span style="font-size: 0.65rem; color: var(--text-muted);">VS</span>
-                        <span>${bIcons}</span>
-                    </div>
-                    <div class="match-delta ${match.victory ? 'win' : 'loss'}">🏆 ${deltaTag}</div>
-                    <div class="match-time">${match.date}</div>
-                `;
-                historyContainer.appendChild(row);
-            });
+                    row.innerHTML = `
+                        <div class="match-res-tag">${match.victory ? 'ZAFER' : 'BOZGUN'}</div>
+                        <div class="match-teams-icons">
+                            <span>${pIcons}</span>
+                            <span style="font-size: 0.65rem; color: var(--text-muted);">VS</span>
+                            <span>${bIcons}</span>
+                        </div>
+                        <div class="match-delta ${match.victory ? 'win' : 'loss'}">🏆 ${deltaTag}</div>
+                        <div class="match-time">${match.date || ''}</div>
+                    `;
+                    historyContainer.appendChild(row);
+                });
+            }
         }
 
         openModal('profile');
@@ -785,6 +808,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 5'Lİ DRAFT VE 3'LÜ SLOT DİZİLİMİ ---
     function prepareNewMatch() {
         window.soundFX.playClick();
+        isBossRaidMode = false;
 
         // Günlük Savaş Hakkı Kontrolü (Günde Max 3 Maç)
         const dailyStatus = window.authMgr.getDailyBattleStatus();
@@ -834,13 +858,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let draggedTemplateId = null;
 
+    function cleanupTouchGhosts() {
+        document.querySelectorAll('.drag-touch-ghost').forEach(el => {
+            if (el.parentNode) el.parentNode.removeChild(el);
+        });
+    }
+
     function renderDraftScreen() {
+        cleanupTouchGhosts();
+
         // 1. Bot Takımı - Arena Görünümü ile Birebir Aynı
         const botCardsContainer = document.getElementById('bot-team-preview');
         botCardsContainer.innerHTML = '';
         currentBotTeam.forEach(monster => {
             botCardsContainer.appendChild(createFighterCard(monster, true));
         });
+
+        // Başlık güncellemesi
+        const botTitleEl = document.querySelector('.lane-header-row.bot-header span:first-child');
+        if (botTitleEl) {
+            botTitleEl.textContent = isBossRaidMode ? '🐉 TİTAN BOSS DİZİLİMİ' : '🔴 RAKİP BOT DİZİLİMİ';
+        }
 
         // Bot Zorluk Rozeti & Dinamik Bilgilendirme
         const diffBadge = document.getElementById('bot-difficulty-badge');
@@ -906,46 +944,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Slottan Başka Slota Taşınabilirlik (Mobil / Dokunmatik Touch Drag & Swap)
                 let slotTouchGhost = null;
                 let slotTouchTarget = null;
+                let startSlotX = 0;
+                let startSlotY = 0;
+                let isSlotDragging = false;
+
                 fighterCard.ontouchstart = (e) => {
                     draggedTemplateId = slotMonster.templateId;
                     const touch = e.touches[0];
-                    slotTouchGhost = document.createElement('div');
-                    slotTouchGhost.className = 'drag-touch-ghost';
-                    slotTouchGhost.innerHTML = `
-                        <span style="font-size: 1.5rem;">${slotMonster.emoji}</span>
-                        <span style="font-size: 0.62rem; font-weight: 800; color: #fff;">${slotMonster.name.split(' ')[0]}</span>
-                    `;
-                    slotTouchGhost.style.left = `${touch.clientX}px`;
-                    slotTouchGhost.style.top = `${touch.clientY}px`;
-                    document.body.appendChild(slotTouchGhost);
+                    startSlotX = touch.clientX;
+                    startSlotY = touch.clientY;
+                    isSlotDragging = false;
+                    slotTouchTarget = null;
                 };
+
                 fighterCard.ontouchmove = (e) => {
                     const touch = e.touches[0];
-                    if (slotTouchGhost) {
+                    const dist = Math.hypot(touch.clientX - startSlotX, touch.clientY - startSlotY);
+
+                    // Yalnızca kullanıcı parmağını en az 10px hareket ettirdiyse hayalet oluştur
+                    if (!isSlotDragging && dist > 10) {
+                        isSlotDragging = true;
+                        cleanupTouchGhosts();
+                        slotTouchGhost = document.createElement('div');
+                        slotTouchGhost.className = 'drag-touch-ghost';
+                        slotTouchGhost.innerHTML = `
+                            ${slotMonster.image ? `<img src="${slotMonster.image}" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">` : `<span style="font-size: 1.5rem;">${slotMonster.emoji}</span>`}
+                            <span style="font-size: 0.62rem; font-weight: 800; color: #fff;">${slotMonster.name.split(' ')[0]}</span>
+                        `;
+                        document.body.appendChild(slotTouchGhost);
+                    }
+
+                    if (isSlotDragging && slotTouchGhost) {
                         slotTouchGhost.style.left = `${touch.clientX}px`;
                         slotTouchGhost.style.top = `${touch.clientY}px`;
-                    }
-                    const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
-                    const slotEl = targetEl ? targetEl.closest('.draft-drop-slot') : null;
-                    document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
-                    if (slotEl) {
-                        slotEl.classList.add('drag-over');
-                        slotTouchTarget = parseInt(slotEl.dataset.slotIndex);
-                    } else {
-                        slotTouchTarget = null;
+
+                        const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+                        const slotEl = targetEl ? targetEl.closest('.draft-drop-slot') : null;
+                        document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
+                        if (slotEl) {
+                            slotEl.classList.add('drag-over');
+                            slotTouchTarget = parseInt(slotEl.dataset.slotIndex);
+                        } else {
+                            slotTouchTarget = null;
+                        }
                     }
                 };
-                fighterCard.ontouchend = () => {
-                    if (slotTouchGhost && slotTouchGhost.parentNode) {
-                        slotTouchGhost.parentNode.removeChild(slotTouchGhost);
-                        slotTouchGhost = null;
-                    }
+
+                const finishSlotTouch = () => {
+                    cleanupTouchGhosts();
+                    slotTouchGhost = null;
                     document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
-                    if (slotTouchTarget !== null && !isNaN(slotTouchTarget)) {
+                    if (isSlotDragging && slotTouchTarget !== null && !isNaN(slotTouchTarget)) {
                         placeMonsterIntoSpecificSlot(slotMonster.templateId, slotTouchTarget);
                     }
+                    isSlotDragging = false;
                     draggedTemplateId = null;
                 };
+
+                fighterCard.ontouchend = finishSlotTouch;
+                fighterCard.ontouchcancel = finishSlotTouch;
 
                 dropSlot.appendChild(fighterCard);
             } else {
@@ -1003,61 +1060,82 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mobil Dokunmatik (Touch) Sürükleme Desteği & Uçan Ghost Efekti
             let touchTargetSlot = null;
             let touchGhost = null;
+            let startTouchX = 0;
+            let startTouchY = 0;
+            let isTouchDragging = false;
 
             card.ontouchstart = (e) => {
                 if (isAssigned) return;
                 draggedTemplateId = monster.templateId;
                 const touch = e.touches[0];
-                touchGhost = document.createElement('div');
-                touchGhost.className = 'drag-touch-ghost';
-                touchGhost.innerHTML = `
-                    <span style="font-size: 1.5rem;">${monster.emoji}</span>
-                    <span style="font-size: 0.62rem; font-weight: 800; color: #fff;">${monster.name.split(' ')[0]}</span>
-                `;
-                touchGhost.style.left = `${touch.clientX}px`;
-                touchGhost.style.top = `${touch.clientY}px`;
-                document.body.appendChild(touchGhost);
+                startTouchX = touch.clientX;
+                startTouchY = touch.clientY;
+                isTouchDragging = false;
+                touchTargetSlot = null;
             };
 
             card.ontouchmove = (e) => {
+                if (isAssigned) return;
                 const touch = e.touches[0];
-                if (touchGhost) {
+                const dist = Math.hypot(touch.clientX - startTouchX, touch.clientY - startTouchY);
+
+                // Yalnızca kullanıcı parmağını en az 10px hareket ettirdiyse hayalet oluştur
+                if (!isTouchDragging && dist > 10) {
+                    isTouchDragging = true;
+                    cleanupTouchGhosts();
+                    touchGhost = document.createElement('div');
+                    touchGhost.className = 'drag-touch-ghost';
+                    touchGhost.innerHTML = `
+                        ${monster.image ? `<img src="${monster.image}" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">` : `<span style="font-size: 1.5rem;">${monster.emoji}</span>`}
+                        <span style="font-size: 0.62rem; font-weight: 800; color: #fff;">${monster.name.split(' ')[0]}</span>
+                    `;
+                    document.body.appendChild(touchGhost);
+                }
+
+                if (isTouchDragging && touchGhost) {
                     touchGhost.style.left = `${touch.clientX}px`;
                     touchGhost.style.top = `${touch.clientY}px`;
-                }
-                const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
-                const slotEl = targetEl ? targetEl.closest('.draft-drop-slot') : null;
-                
-                document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
-                if (slotEl) {
-                    slotEl.classList.add('drag-over');
-                    touchTargetSlot = parseInt(slotEl.dataset.slotIndex);
-                } else {
-                    touchTargetSlot = null;
+
+                    const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const slotEl = targetEl ? targetEl.closest('.draft-drop-slot') : null;
+                    
+                    document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
+                    if (slotEl) {
+                        slotEl.classList.add('drag-over');
+                        touchTargetSlot = parseInt(slotEl.dataset.slotIndex);
+                    } else {
+                        touchTargetSlot = null;
+                    }
                 }
             };
 
-            card.ontouchend = () => {
-                if (touchGhost && touchGhost.parentNode) {
-                    touchGhost.parentNode.removeChild(touchGhost);
-                    touchGhost = null;
-                }
+            const finishCandidateTouch = () => {
+                cleanupTouchGhosts();
+                touchGhost = null;
                 document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
-                if (touchTargetSlot !== null && !isNaN(touchTargetSlot)) {
+                if (isTouchDragging && touchTargetSlot !== null && !isNaN(touchTargetSlot)) {
                     placeMonsterIntoSpecificSlot(monster.templateId, touchTargetSlot, card);
                 }
+                isTouchDragging = false;
                 draggedTemplateId = null;
             };
 
+            card.ontouchend = finishCandidateTouch;
+            card.ontouchcancel = finishCandidateTouch;
+
             // Tıklama ile Hızlı Yerleştirme
             card.onclick = () => {
+                // Eğer dokunmatik sürükleme yapıldıysa tıklama olayını engelle
+                if (isTouchDragging) return;
                 assignMonsterToNextFreeSlot(monster, card);
             };
 
             card.innerHTML = `
                 <div class="draft-badge-5">${isAssigned ? '✓ SEÇİLDİ' : '+ SEÇ'}</div>
                 <div class="draft-card-top">
-                    <span class="draft-card-emoji">${monster.emoji}</span>
+                    <div class="draft-card-emoji-wrap">
+                        ${monster.image ? `<img src="${monster.image}" class="draft-card-img" alt="${monster.name}">` : `<span class="draft-card-emoji">${monster.emoji}</span>`}
+                    </div>
                     <div class="card-title-5">${monster.name.split(' ')[0]}</div>
                     <div class="card-role-5">${monster.role}</div>
                 </div>
@@ -1089,10 +1167,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const clone = document.createElement('div');
         clone.className = 'flying-card-clone';
         clone.innerHTML = sourceEl.innerHTML;
+        clone.style.position = 'fixed';
+        clone.style.zIndex = '999999';
+        clone.style.pointerEvents = 'none';
+        clone.style.margin = '0';
+        clone.style.boxSizing = 'border-box';
         clone.style.left = `${startRect.left}px`;
         clone.style.top = `${startRect.top}px`;
         clone.style.width = `${startRect.width}px`;
         clone.style.height = `${startRect.height}px`;
+        clone.style.transition = 'left 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), top 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)';
         document.body.appendChild(clone);
 
         requestAnimationFrame(() => {
@@ -1126,6 +1210,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const performPlacement = () => {
             const currentOccupant = playerSlots[targetSlotIndex];
 
+            // Taşınacak canavarın mevcut slot veya havuzdaki referansını al (Statları birebir koru)
+            const movingMonster = (oldSlotIdx !== -1 && playerSlots[oldSlotIdx])
+                ? playerSlots[oldSlotIdx]
+                : candidate5Monsters.find(m => m.templateId === templateId);
+
             if (oldSlotIdx !== -1) {
                 // Eğer zaten aynı slottaysa hiçbir şey yapma
                 if (oldSlotIdx === targetSlotIndex) {
@@ -1134,18 +1223,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 // Slottan slota sürükleme: İki slotun canavarlarını yer değiştir (SWAP)
                 if (currentOccupant) {
-                    // Hedef slotta başka canavar vardı: onu eski slota taşı (SWAP)
-                    playerSlots[oldSlotIdx] = MonsterFactory.createMonster(currentOccupant.templateId, playerLevel, false, oldSlotIdx);
+                    // Hedef slotta başka canavar vardı: onu eski slota taşı (SWAP) - statları birebir koru
+                    playerSlots[oldSlotIdx] = { ...currentOccupant, slotIndex: oldSlotIdx };
                 } else {
                     // Hedef slot boştu: eski slotu boşalt
                     playerSlots[oldSlotIdx] = null;
                 }
-            } else {
-                // Havuzdan (alttaki 5'li havuzdan) slota yerleştirildi
-                // Hedef slot doluysa, hedefteki canavar havuza döner (üzerine yazılır)
             }
 
-            playerSlots[targetSlotIndex] = MonsterFactory.createMonster(templateId, playerLevel, false, targetSlotIndex);
+            // Slota yerleştirilecek canavar: Havuzdaki veya eski slottaki canavarın statlarını birebir koru
+            const monsterToPlace = movingMonster
+                ? { ...movingMonster, slotIndex: targetSlotIndex }
+                : MonsterFactory.createMonster(templateId, playerLevel, false, targetSlotIndex);
+
+            playerSlots[targetSlotIndex] = monsterToPlace;
             renderDraftScreen();
         };
 
@@ -1219,25 +1310,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (count < 3) {
-            if (startBtn) startBtn.disabled = true;
-            alertBox.textContent = `Lütfen 3 koridor slotunu da doldurun (${count}/3 yerleştirildi).`;
+            if (startBtn) {
+                startBtn.disabled = true;
+                startBtn.textContent = isBossRaidMode ? '🐉 TİTAN SAVAŞINI BAŞLAT' : '⚔️ SAVAŞI BAŞLAT';
+            }
+            alertBox.textContent = isBossRaidMode 
+                ? `Titan Boss'a karşı 3 koridor slotunu da doldurun (${count}/3 yerleştirildi).`
+                : `Lütfen 3 koridor slotunu da doldurun (${count}/3 yerleştirildi).`;
             alertBox.className = 'draft-alert info';
             return;
         }
 
-        // Kural: Oyuncu bot ile AYNI 3 canavarı seçemez!
+        // Kural: Oyuncu bot ile AYNI 3 canavarı seçemez! (Boss modunda geçerli değildir)
         const playerIds = playerSlots.map(s => s.templateId);
         const botIds = currentBotTeam.map(s => s.templateId);
 
-        if (window.botGen.isSameTeam(playerIds, botIds)) {
+        if (!isBossRaidMode && window.botGen.isSameTeam(playerIds, botIds)) {
             if (startBtn) startBtn.disabled = true;
             alertBox.innerHTML = '🚫 <b>KURAL DIŞI!</b> Rakip bot ile birebir aynı dizilimi kuramazsınız. Lütfen en az bir farklı canavar yerleştirin!';
             alertBox.className = 'draft-alert warning animate-shake';
             return;
         }
 
-        if (startBtn) startBtn.disabled = false;
-        alertBox.textContent = '✅ Koridor takımı hazır! Savaşa başlayabilir veya AI Simülasyonu çalıştırabilirsiniz.';
+        if (startBtn) {
+            startBtn.disabled = false;
+            startBtn.textContent = isBossRaidMode ? '🐉 TİTAN SAVAŞINI BAŞLAT' : '⚔️ SAVAŞI BAŞLAT';
+        }
+        alertBox.textContent = isBossRaidMode 
+            ? '🐉 Titan Raid kadronuz hazır! Maksimum hasarı vurmak için savaşı başlatın veya AI Simülasyonu çalıştırın.'
+            : '✅ Koridor takımı hazır! Savaşa başlayabilir veya AI Simülasyonu çalıştırabilirsiniz.';
         alertBox.className = 'draft-alert success';
 
         const resCard = document.getElementById('ai-pred-result-card');
@@ -1352,11 +1453,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (act.type === 'bench' && act.candidate) {
             const existingIdx = playerSlots.findIndex(s => s && s.templateId === act.candidate.templateId);
             if (existingIdx !== -1) playerSlots[existingIdx] = null;
-            playerSlots[act.targetSlotIdx] = MonsterFactory.createMonster(act.candidate.templateId, playerLevel, false, act.targetSlotIdx);
+            const poolMonster = candidate5Monsters.find(m => m.templateId === act.candidate.templateId) || act.candidate;
+            playerSlots[act.targetSlotIdx] = { ...poolMonster, slotIndex: act.targetSlotIdx };
         } else if (act.type === 'full' && Array.isArray(act.templateIds)) {
             for (let i = 0; i < 3; i++) {
                 if (act.templateIds[i]) {
-                    playerSlots[i] = MonsterFactory.createMonster(act.templateIds[i], playerLevel, false, i);
+                    const poolMonster = candidate5Monsters.find(m => m.templateId === act.templateIds[i]);
+                    playerSlots[i] = poolMonster 
+                        ? { ...poolMonster, slotIndex: i } 
+                        : MonsterFactory.createMonster(act.templateIds[i], playerLevel, false, i);
                 }
             }
         }
@@ -1437,6 +1542,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- KORİDOR / SLOT BAZLI SAVAŞ ARENASI ---
     function startBattle() {
         window.soundFX.playClick();
+
+        if (isBossRaidMode) {
+            // Titan Raid modunda günlük lig hakkı tüketilmez (Sınırsız deneme)
+            switchScreen('battle');
+            renderBattleArena();
+
+            // Savaş HUD Sinerji Rozetini Güncelle
+            const activeMonsters = playerSlots.filter(s => s !== null);
+            const synergy = (window.calculateTeamSynergy && activeMonsters.length >= 2) ? window.calculateTeamSynergy(activeMonsters) : null;
+            const battleSynergyPill = document.getElementById('battle-synergy-pill');
+            if (battleSynergyPill) {
+                if (synergy) {
+                    battleSynergyPill.classList.remove('hidden');
+                    battleSynergyPill.textContent = `${synergy.icon} ${synergy.name}`;
+                    if (window.soundFX && window.soundFX.playSynergyActive) {
+                        window.soundFX.playSynergyActive();
+                    }
+                } else {
+                    battleSynergyPill.classList.add('hidden');
+                }
+            }
+
+            const logContainer = document.getElementById('battle-logs');
+            logContainer.innerHTML = '<p class="log-line system">🐉 <b>KADİM TİTAN EJDERHA IGNIS SAHNEYE ÇIKTI!</b> Takımınız maksimum hasarı vurmaya hazırlanıyor...</p>';
+
+            if (window.soundFX && window.soundFX.playRoar) window.soundFX.playRoar();
+
+            currentBattle = new BattleEngine(playerSlots, currentBotTeam, null, {
+                onLog: (msg, type) => addBattleLog(msg, type),
+                onUpdateUI: () => renderBattleArena(),
+                onFloatText: (instanceId, text, type) => showFloatingText(instanceId, text, type),
+                onAction: (attackerId, act, targetId) => triggerSlotAttackAnimation(attackerId, act, targetId),
+                onCritEffect: () => triggerScreenShake(),
+                onGameOver: (playerWon, predResult, mvpFighter) => handleBossRaidEnd(playerSlots, mvpFighter)
+            });
+
+            const btnQuit = document.getElementById('btn-battle-quit');
+            if (btnQuit) {
+                btnQuit.textContent = '🏳️ Çık';
+                btnQuit.style.background = '';
+                btnQuit.style.borderColor = '';
+                btnQuit.style.color = '';
+            }
+
+            currentBattle.start();
+            return;
+        }
 
         const dailyStatus = window.authMgr.getDailyBattleStatus();
         if (!dailyStatus.canPlay) {
@@ -1529,6 +1681,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const statusBarHtml = badges ? `<div class="fighter-status-bar">${badges}</div>` : '';
         const removeBtnHtml = showRemoveBtn ? `<button type="button" class="slot-drop-remove" title="Slottan Çıkar">✕</button>` : '';
+        div.dataset.emoji = monster.emoji || '';
 
         div.innerHTML = `
             <div class="fighter-top-row">
@@ -1538,7 +1691,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="floating-text-container" id="floater-${monster.instanceId}"></div>
             ${statusBarHtml}
             <div class="fighter-avatar-box">
-                <span class="fighter-emoji">${monster.emoji}</span>
+                ${monster.image ? `<img src="${monster.image}" class="monster-avatar-img" alt="${monster.name}">` : `<span class="fighter-emoji">${monster.emoji}</span>`}
             </div>
             <div class="fighter-name">${monster.name.split(' ')[0]}</div>
             <div class="hp-bar-outer">
@@ -1571,12 +1724,104 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById(`floater-${instanceId}`);
         if (!container) return;
 
-        const floatEl = document.createElement('div');
-        floatEl.className = `float-text ${type}`;
-        floatEl.textContent = text;
-        container.appendChild(floatEl);
+        // Hasar rakamını merminin hedefe çarpma anıyla (180ms) senkronize et
+        const delay = (type === 'damage' || type === 'crit') ? 180 : 0;
+        setTimeout(() => {
+            const floatEl = document.createElement('div');
+            floatEl.className = `float-text ${type}`;
+            floatEl.textContent = text;
+            container.appendChild(floatEl);
 
-        setTimeout(() => floatEl.remove(), 1200);
+            setTimeout(() => floatEl.remove(), 1200);
+        }, delay);
+    }
+
+    // --- MODEL 5: ÇİZGİ ROMAN HİBRİT SALDIRI & UÇAN MERMİ MOTORU ---
+    function getProjectileForMonster(emoji, action) {
+        if (action === 'skill') return { icon: '⭐', glow: '#a55eea' };
+
+        switch (emoji) {
+            case '🐉': // Titan Ejderha Ignis
+            case '🦎': // Ateş Ejderciği
+                return { icon: '🔥', glow: '#ff4757' };
+            case '🐯': // Kaplan
+            case '🦁': // Aslan
+            case '🐺': // Kurt
+            case '🐆': // Pars
+                return { icon: '🐾', glow: '#ffa502' };
+            case '🦅': // Kartal
+            case '🦉': // Baykuş
+            case '🦆': // Ördek
+                return { icon: '🪶', glow: '#38bdf8' };
+            case '🐻': // Ayı
+            case '🐘': // Fil
+            case '🐗': // Domuz
+            case '🦏': // Gergedan
+                return { icon: '🪨', glow: '#ea580c' };
+            case '🦊': // Tilki
+            case '🐵': // Maymun
+            case '🐍': // Yılan
+                return { icon: '⚡', glow: '#eab308' };
+            case '🐼': // Panda
+            case '🐢': // Kaplumbağa
+                return { icon: '🍃', glow: '#2ed573' };
+            default:
+                return { icon: '💥', glow: '#ff4757' };
+        }
+    }
+
+    function spawnCombatProjectile(attackerEl, targetEl, action) {
+        if (!attackerEl || !targetEl) return;
+
+        const startRect = attackerEl.getBoundingClientRect();
+        const targetRect = targetEl.getBoundingClientRect();
+
+        const startX = startRect.left + startRect.width / 2;
+        const startY = startRect.top + startRect.height / 2;
+        const endX = targetRect.left + targetRect.width / 2;
+        const endY = targetRect.top + targetRect.height / 2;
+        const deltaX = endX - startX;
+        const deltaY = endY - startY;
+
+        const emoji = attackerEl.dataset?.emoji || attackerEl.querySelector('.fighter-emoji')?.textContent?.trim() || '';
+        const projData = getProjectileForMonster(emoji, action);
+
+        const projectile = document.createElement('div');
+        projectile.className = 'combat-projectile';
+        projectile.textContent = projData.icon;
+        projectile.style.left = `${startX}px`;
+        projectile.style.top = `${startY}px`;
+        projectile.style.transform = 'translate(-50%, -50%) scale(0.6)';
+        projectile.style.filter = `drop-shadow(0 0 10px ${projData.glow})`;
+        projectile.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.22s ease';
+        projectile.style.opacity = '1';
+
+        document.body.appendChild(projectile);
+
+        // Bir sonraki render frame'inde hedefe uçur
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                projectile.style.transform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px)) scale(1.35)`;
+            });
+        });
+
+        // 220ms sonra hedefte patlama yarat ve mermiyi temizle
+        setTimeout(() => {
+            projectile.remove();
+            spawnComicImpactBurst(targetEl, projData.glow);
+        }, 220);
+    }
+
+    function spawnComicImpactBurst(targetEl, glowColor = '#ff4757') {
+        if (!targetEl) return;
+
+        const burst = document.createElement('div');
+        burst.className = 'comic-impact-burst';
+        burst.textContent = '💥';
+        burst.style.filter = `drop-shadow(0 0 12px ${glowColor})`;
+
+        targetEl.appendChild(burst);
+        setTimeout(() => burst.remove(), 320);
     }
 
     function triggerSlotAttackAnimation(attackerId, action, targetId) {
@@ -1586,13 +1831,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (attackerEl) {
             const isBot = attackerEl.classList.contains('bot-fighter');
             const attackClass = action === 'skill' ? 'anim-skill' : (isBot ? 'anim-attack-down' : 'anim-attack-up');
-            attackerEl.classList.add(attackClass);
-            setTimeout(() => attackerEl.classList.remove('anim-skill', 'anim-attack-up', 'anim-attack-down'), 450);
+            attackerEl.classList.add(attackClass, 'anim-attacker-charge');
+            setTimeout(() => attackerEl.classList.remove('anim-skill', 'anim-attack-up', 'anim-attack-down', 'anim-attacker-charge'), 450);
+        }
+
+        if (attackerEl && targetEl) {
+            spawnCombatProjectile(attackerEl, targetEl, action);
         }
 
         if (targetEl) {
-            targetEl.classList.add('anim-hit-shake');
-            setTimeout(() => targetEl.classList.remove('anim-hit-shake'), 400);
+            // Merminin varış anıyla (200ms) sarsılmayı senkronize et
+            setTimeout(() => {
+                targetEl.classList.add('anim-hit-shake');
+                setTimeout(() => targetEl.classList.remove('anim-hit-shake'), 350);
+            }, 200);
         }
     }
 
@@ -1674,7 +1926,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const av = document.getElementById('result-mvp-avatar');
             const nm = document.getElementById('result-mvp-name');
             const st = document.getElementById('result-mvp-stats');
-            if (av) av.textContent = mvpFighter.emoji;
+            if (av) {
+                if (mvpFighter.image) {
+                    av.innerHTML = `<img src="${mvpFighter.image}" class="monster-avatar-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+                } else {
+                    av.textContent = mvpFighter.emoji;
+                }
+            }
             if (nm) nm.textContent = `${mvpFighter.name}`;
             if (st) st.textContent = `💥 ${mvpFighter.damageDealt || 0} Hasar • ⚔️ ${mvpFighter.kills || 0} Nakavt`;
         } else if (mvpBox) {
@@ -2009,7 +2267,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="bestiary-card-header">
                     <div class="bestiary-avatar-box" style="border-color: ${m.color};">
-                        <span class="bestiary-emoji">${m.emoji}</span>
+                        ${m.image ? `<img src="${m.image}" class="bestiary-avatar-img" alt="${m.name}">` : `<span class="bestiary-emoji">${m.emoji}</span>`}
                     </div>
                     <div class="bestiary-header-info">
                         <div class="bestiary-name">${m.name}</div>
@@ -2165,6 +2423,21 @@ document.addEventListener('DOMContentLoaded', () => {
         btnBattleQuit.onclick = () => {
             window.soundFX.playClick();
             if (currentBattle && currentBattle.isRunning) {
+                if (isBossRaidMode) {
+                    showConfirmDialog({
+                        title: 'Titan Raid\'den Çıkılsın mı?',
+                        message: 'Dünya Bossu savaşından ayrılmak istediğinize emin misiniz?<br><br><small style="color: #2ed573; font-weight: bold;">ℹ️ Titan Raid denemesi sınırsızdır; günlük lig hakkınız eksilmez.</small>',
+                        icon: '🐉',
+                        type: 'info',
+                        confirmText: '🏳️ Ayrıl ve Lobiye Dön',
+                        cancelText: '⚔️ Savaşa Dön',
+                        onConfirm: () => {
+                            if (currentBattle) currentBattle.stop();
+                            handleBossRaidEnd(playerSlots, null);
+                        }
+                    });
+                    return;
+                }
                 showConfirmDialog({
                     title: 'Savaştan Çıkılsın mı?',
                     message: '⚠️ Savaş devam ederken ayrılırsanız <b>günlük 1 savaş hakkınız yanacak</b> ve bu maç hükmen <b>mağlubiyet</b> sayılacaktır.<br><br>Yine de çıkmak istediğinize emin misiniz?',
@@ -2331,20 +2604,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const playerLevel = (window.authMgr.currentUser && window.authMgr.currentUser.profile && window.authMgr.currentUser.profile.level) || 1;
 
-        // Oyuncu için 3 güçlü önerilen canavar
-        const recs = MonsterFactory.get5DraftRecommendations(playerLevel);
-        playerSlots = [
-            MonsterFactory.createMonster(recs[0].templateId, playerLevel, false, 0),
-            MonsterFactory.createMonster(recs[1].templateId, playerLevel, false, 1),
-            MonsterFactory.createMonster(recs[2].templateId, playerLevel, false, 2)
-        ];
-
         // Boss Ekibi: Ortada Kadim Titan Ejderha Ignis (2500 HP), Yanlarda Minionlar (380 HP)
         const bossFighter = {
             instanceId: 'titan_boss_1',
             templateId: 'titan_ignis',
             name: 'Titan Ejderha Ignis',
             emoji: '🐉',
+            image: 'assets/monsters/titan_ignis.jpg',
             role: 'Kadim Titan',
             element: 'Ateş',
             maxHp: 2500,
@@ -2417,33 +2683,25 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         currentBotTeam = [whelp1, bossFighter, whelp2];
+        currentBotTeam.matchmaking = {
+            difficultyLabel: '👑 DÜNYA BOSSU (2500 HP & Alev Alanı)',
+            botBadgeClass: 'tier-master'
+        };
 
-        switchScreen('battle');
-        renderBattleArena();
+        // Oyuncuya 5 canavardan oluşan stratejik draft havuzu öner
+        candidate5Monsters = MonsterFactory.get5DraftRecommendations(playerLevel);
 
-        const logContainer = document.getElementById('battle-logs');
-        logContainer.innerHTML = '<p class="log-line system">🐉 <b>KADİM TİTAN EJDERHA IGNIS SAHNEYE ÇIKTI!</b> Takımınız maksimum hasarı vurmaya hazırlanıyor...</p>';
+        // Oyuncu slotlarını boşalt - oyuncu kendi 3 canavarını ve koridor dizilimini kendisi belirlesin!
+        playerSlots = [null, null, null];
 
-        if (window.soundFX && window.soundFX.playRoar) window.soundFX.playRoar();
+        // AI Simülasyon Kartını Sıfırla
+        const idleView = document.getElementById('ai-pred-idle-view');
+        const resCard = document.getElementById('ai-pred-result-card');
+        if (idleView) idleView.classList.remove('hidden');
+        if (resCard) resCard.classList.add('hidden');
 
-        currentBattle = new BattleEngine(playerSlots, currentBotTeam, null, {
-            onLog: (msg, type) => addBattleLog(msg, type),
-            onUpdateUI: () => renderBattleArena(),
-            onFloatText: (instanceId, text, type) => showFloatingText(instanceId, text, type),
-            onAction: (attackerId, act, targetId) => triggerSlotAttackAnimation(attackerId, act, targetId),
-            onCritEffect: () => triggerScreenShake(),
-            onGameOver: (playerWon, predResult, mvpFighter) => handleBossRaidEnd(playerSlots, mvpFighter)
-        });
-
-        const btnQuit = document.getElementById('btn-battle-quit');
-        if (btnQuit) {
-            btnQuit.textContent = '🏳️ Çık';
-            btnQuit.style.background = '';
-            btnQuit.style.borderColor = '';
-            btnQuit.style.color = '';
-        }
-
-        currentBattle.start();
+        renderDraftScreen();
+        switchScreen('draft');
     }
 
     function handleBossRaidEnd(pSlots, mvpFighter) {
@@ -2495,7 +2753,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const av = document.getElementById('result-mvp-avatar');
             const nm = document.getElementById('result-mvp-name');
             const st = document.getElementById('result-mvp-stats');
-            if (av) av.textContent = mvpFighter.emoji;
+            if (av) {
+                if (mvpFighter.image) {
+                    av.innerHTML = `<img src="${mvpFighter.image}" class="monster-avatar-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+                } else {
+                    av.textContent = mvpFighter.emoji;
+                }
+            }
             if (nm) nm.textContent = `${mvpFighter.name}`;
             if (st) st.textContent = `💥 ${mvpFighter.damageDealt || 0} Hasar • ⚔️ ${mvpFighter.kills || 0} Nakavt`;
         } else if (mvpBox) {
@@ -2531,12 +2795,30 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Modal Kapatma Düğmeleri
+    // Modal Kapatma Düğmeleri (Her buton yalnızca bulunduğu modalı kapatır, arkadaki pencereleri korur)
     document.querySelectorAll('.btn-close-modal').forEach(btn => {
-        btn.onclick = () => {
+        btn.onclick = (e) => {
+            e.stopPropagation();
             window.soundFX.playClick();
-            closeAllModals();
+            const modalOverlay = btn.closest('.modal-overlay');
+            if (modalOverlay) {
+                modalOverlay.classList.add('hidden');
+            } else {
+                closeAllModals();
+            }
         };
+    });
+
+    // Modal Arka Planına (Overlay) Tıklayınca Sadece İlgili Modalı Kapatma
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                // Savaş sonucu veya sistem uyarısı gibi kritik akışlar hariç
+                if (overlay.id === 'result-modal' || overlay.id === 'game-alert-modal') return;
+                window.soundFX.playClick();
+                overlay.classList.add('hidden');
+            }
+        });
     });
 
     // Ses Toggle
@@ -2571,7 +2853,17 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme(savedTheme);
 
     if (themeBtnHeader) themeBtnHeader.onclick = toggleCurrentTheme;
-    if (themeBtnAuth) themeBtnAuth.onclick = toggleCurrentTheme;
+    // Metin Seçimini ve Uzun Basma Büyüteç Menüsünü Engelle (Native Oyun Hissiyatı)
+    document.addEventListener('selectstart', (e) => {
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+        }
+    });
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+        }
+    });
 
     // Başlatma
     initAuth();
