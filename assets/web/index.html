@@ -11,9 +11,6 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700;800;900&family=Lilita+One&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +19,58 @@
         <!-- 0. ÜST OYUN LOGO VE ÇENTİK GÜVENLİ BARI (EN TEPE) -->
         <header class="game-header" id="game-header-bar" style="display: none;">
             <div class="header-branding-centered">
-                <span class="header-game-logo">⚔️🐾</span>
+                <span class="header-game-logo" aria-label="AniClash Arması">
+                    <svg viewBox="0 0 100 100" class="aniclash-crest-svg">
+                        <defs>
+                            <linearGradient id="shieldBgB" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e293b"/>
+                                <stop offset="100%" stop-color="#0f172a"/>
+                            </linearGradient>
+                            <linearGradient id="shieldGoldB" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fde047"/>
+                                <stop offset="50%" stop-color="#eab308"/>
+                                <stop offset="100%" stop-color="#ca8a04"/>
+                            </linearGradient>
+                            <linearGradient id="bladeGradB" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="40%" stop-color="#cbd5e1"/>
+                                <stop offset="100%" stop-color="#64748b"/>
+                            </linearGradient>
+                            <linearGradient id="firePawB" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ff2a40"/>
+                                <stop offset="60%" stop-color="#ff793f"/>
+                                <stop offset="100%" stop-color="#ffa502"/>
+                            </linearGradient>
+                            <filter id="crestShadowB" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="1.5" dy="2" stdDeviation="1" flood-color="#000" flood-opacity="0.45"/>
+                            </filter>
+                        </defs>
+                        <path d="M50 4 L88 20 L84 66 L50 96 L16 66 L12 20 Z" fill="url(#shieldBgB)" stroke="url(#shieldGoldB)" stroke-width="5" stroke-linejoin="round" filter="url(#crestShadowB)"/>
+                        <path d="M50 11 L80 24 L76 60 L50 86 L24 60 L20 24 Z" fill="#0f172a" opacity="0.6"/>
+                        <g transform="rotate(45 50 50)">
+                            <path d="M47 14 L50 7 L53 14 L52 75 L48 75 Z" fill="url(#bladeGradB)" stroke="#0f172a" stroke-width="2"/>
+                            <line x1="50" y1="10" x2="50" y2="72" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+                            <path d="M38 72 L62 72 L60 76 L40 76 Z" fill="url(#shieldGoldB)" stroke="#0f172a" stroke-width="2"/>
+                            <rect x="48" y="76" width="4" height="12" fill="#78350f" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="50" cy="90" r="3.5" fill="url(#shieldGoldB)" stroke="#0f172a" stroke-width="2"/>
+                        </g>
+                        <g transform="rotate(-45 50 50)">
+                            <path d="M47 14 L50 7 L53 14 L52 75 L48 75 Z" fill="url(#bladeGradB)" stroke="#0f172a" stroke-width="2"/>
+                            <line x1="50" y1="10" x2="50" y2="72" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+                            <path d="M38 72 L62 72 L60 76 L40 76 Z" fill="url(#shieldGoldB)" stroke="#0f172a" stroke-width="2"/>
+                            <rect x="48" y="76" width="4" height="12" fill="#78350f" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="50" cy="90" r="3.5" fill="url(#shieldGoldB)" stroke="#0f172a" stroke-width="2"/>
+                        </g>
+                        <g filter="url(#crestShadowB)">
+                            <path d="M50 44 C41 44 34 52 37 64 C39 71 46 75 50 73 C54 75 61 71 63 64 C66 52 59 44 50 44 Z" fill="url(#firePawB)" stroke="#0f172a" stroke-width="2.5"/>
+                            <path d="M50 48 C44 48 39 54 41 63 C43 68 47 70 50 69 C53 70 57 68 59 63 C61 54 56 48 50 48 Z" fill="#fffbeb" opacity="0.35"/>
+                            <circle cx="30" cy="40" r="5" fill="url(#firePawB)" stroke="#0f172a" stroke-width="2"/>
+                            <circle cx="41" cy="31" r="5.5" fill="url(#firePawB)" stroke="#0f172a" stroke-width="2"/>
+                            <circle cx="59" cy="31" r="5.5" fill="url(#firePawB)" stroke="#0f172a" stroke-width="2"/>
+                            <circle cx="70" cy="40" r="5" fill="url(#firePawB)" stroke="#0f172a" stroke-width="2"/>
+                        </g>
+                    </svg>
+                </span>
                 <span class="header-game-title">ANICLASH: BEAST RUMBLE</span>
             </div>
         </header>
@@ -34,7 +82,58 @@
                     <button class="btn-icon-small" id="btn-toggle-theme-auth" title="Açık / Koyu Tema">☀️</button>
                 </div>
                 <div class="auth-hero">
-                    <div class="auth-logo">⚔️🐾</div>
+                    <div class="auth-logo">
+                        <svg viewBox="0 0 100 100" class="aniclash-crest-svg">
+                            <defs>
+                                <linearGradient id="shieldBgAuth" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#1e293b"/>
+                                    <stop offset="100%" stop-color="#0f172a"/>
+                                </linearGradient>
+                                <linearGradient id="shieldGoldAuth" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#fde047"/>
+                                    <stop offset="50%" stop-color="#eab308"/>
+                                    <stop offset="100%" stop-color="#ca8a04"/>
+                                </linearGradient>
+                                <linearGradient id="bladeGradAuth" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="40%" stop-color="#cbd5e1"/>
+                                    <stop offset="100%" stop-color="#64748b"/>
+                                </linearGradient>
+                                <linearGradient id="firePawAuth" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#ff2a40"/>
+                                    <stop offset="60%" stop-color="#ff793f"/>
+                                    <stop offset="100%" stop-color="#ffa502"/>
+                                </linearGradient>
+                                <filter id="crestShadowAuth" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000" flood-opacity="0.5"/>
+                                </filter>
+                            </defs>
+                            <path d="M50 4 L88 20 L84 66 L50 96 L16 66 L12 20 Z" fill="url(#shieldBgAuth)" stroke="url(#shieldGoldAuth)" stroke-width="5" stroke-linejoin="round" filter="url(#crestShadowAuth)"/>
+                            <path d="M50 11 L80 24 L76 60 L50 86 L24 60 L20 24 Z" fill="#0f172a" opacity="0.6"/>
+                            <g transform="rotate(45 50 50)">
+                                <path d="M47 14 L50 7 L53 14 L52 75 L48 75 Z" fill="url(#bladeGradAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <line x1="50" y1="10" x2="50" y2="72" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+                                <path d="M38 72 L62 72 L60 76 L40 76 Z" fill="url(#shieldGoldAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <rect x="48" y="76" width="4" height="12" fill="#78350f" stroke="#0f172a" stroke-width="1.5"/>
+                                <circle cx="50" cy="90" r="3.5" fill="url(#shieldGoldAuth)" stroke="#0f172a" stroke-width="2"/>
+                            </g>
+                            <g transform="rotate(-45 50 50)">
+                                <path d="M47 14 L50 7 L53 14 L52 75 L48 75 Z" fill="url(#bladeGradAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <line x1="50" y1="10" x2="50" y2="72" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+                                <path d="M38 72 L62 72 L60 76 L40 76 Z" fill="url(#shieldGoldAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <rect x="48" y="76" width="4" height="12" fill="#78350f" stroke="#0f172a" stroke-width="1.5"/>
+                                <circle cx="50" cy="90" r="3.5" fill="url(#shieldGoldAuth)" stroke="#0f172a" stroke-width="2"/>
+                            </g>
+                            <g filter="url(#crestShadowAuth)">
+                                <path d="M50 44 C41 44 34 52 37 64 C39 71 46 75 50 73 C54 75 61 71 63 64 C66 52 59 44 50 44 Z" fill="url(#firePawAuth)" stroke="#0f172a" stroke-width="2.5"/>
+                                <path d="M50 48 C44 48 39 54 41 63 C43 68 47 70 50 69 C53 70 57 68 59 63 C61 54 56 48 50 48 Z" fill="#fffbeb" opacity="0.35"/>
+                                <circle cx="30" cy="40" r="5" fill="url(#firePawAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <circle cx="41" cy="31" r="5.5" fill="url(#firePawAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <circle cx="59" cy="31" r="5.5" fill="url(#firePawAuth)" stroke="#0f172a" stroke-width="2"/>
+                                <circle cx="70" cy="40" r="5" fill="url(#firePawAuth)" stroke="#0f172a" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
                     <h1 style="font-family: var(--font-manga); font-size: 2.3rem; letter-spacing: 2px; background: linear-gradient(180deg, #ff4757, #ffa502); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(2px 2px 0 #000); margin-bottom: -4px;">ANICLASH</h1>
                     <div style="font-family: var(--font-manga); font-size: 1.15rem; color: #ffa502; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 1.5px 1.5px 0 #000;">BEAST RUMBLE</div>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-weight: 700;">Taktiksel Koridor ve Slot Arenası</p>
@@ -455,11 +554,17 @@
                     </div>
                 </div>
 
-                <!-- Arena Altı / Canlı Savaş Log Akışı -->
-                <div class="battle-bottom-panel">
-                    <div class="battle-logs-header">
-                        <span class="logs-header-title">📜 CANLI SAVAŞ AKIŞI</span>
-                        <span class="logs-header-sub" id="battle-live-speed">⚡ Otomatik Savaş</span>
+                <!-- Arena Altı / Canlı Savaş Log Akışı (Varsayılan: Kapalı) -->
+                <div class="battle-bottom-panel collapsed" id="battle-bottom-panel">
+                    <div class="battle-logs-header" id="battle-logs-toggle-btn" role="button" tabindex="0" title="Canlı Savaş Akışını Göster / Gizle">
+                        <div class="logs-header-left">
+                            <span class="logs-header-title">📜 CANLI SAVAŞ AKIŞI</span>
+                            <span class="logs-header-sub" id="battle-live-speed">⚡ 1.25x Hız</span>
+                        </div>
+                        <div class="logs-header-toggle-indicator" id="battle-logs-toggle-indicator">
+                            <span class="toggle-text">Akışı Aç</span>
+                            <span class="toggle-icon">▲</span>
+                        </div>
                     </div>
                     <div class="battle-logs-box" id="battle-logs">
                         <p class="log-line system">Arena hazır, koridorlar hedefleniyor...</p>
@@ -512,7 +617,7 @@
                 <div class="achievements-grid" id="prof-achievements-list"></div>
 
                 <!-- Maç Geçmişi -->
-                <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-cyan); margin-top: 8px;">📜 SON MAÇ GEÇMİŞİ</div>
+                <div class="match-history-section-title">📜 SON MAÇ GEÇMİŞİ</div>
                 <div class="match-history-list" id="prof-match-history"></div>
 
                 <div style="display: flex; gap: 8px; margin-top: 10px;">

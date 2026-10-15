@@ -771,16 +771,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     const row = document.createElement('div');
                     row.className = `match-history-row ${match.victory ? 'win' : 'loss'}`;
                     
-                    const pIcons = (match.playerTeam || []).map(t => t.emoji).join(' ');
-                    const bIcons = (match.botTeam || []).map(t => t.emoji).join(' ');
+                    const pIcons = (match.playerTeam || []).map(t => t.emoji).join('');
+                    const bIcons = (match.botTeam || []).map(t => t.emoji).join('');
                     const deltaTag = match.trophyDelta >= 0 ? `+${match.trophyDelta}` : `${match.trophyDelta}`;
 
                     row.innerHTML = `
                         <div class="match-res-tag">${match.victory ? 'ZAFER' : 'BOZGUN'}</div>
                         <div class="match-teams-icons">
-                            <span>${pIcons}</span>
-                            <span style="font-size: 0.65rem; color: var(--text-muted);">VS</span>
-                            <span>${bIcons}</span>
+                            <span class="team-emojis">${pIcons}</span>
+                            <span class="match-vs-pill">VS</span>
+                            <span class="team-emojis">${bIcons}</span>
                         </div>
                         <div class="match-delta ${match.victory ? 'win' : 'loss'}">🏆 ${deltaTag}</div>
                         <div class="match-time">${match.date || ''}</div>
@@ -862,6 +862,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.drag-touch-ghost').forEach(el => {
             if (el.parentNode) el.parentNode.removeChild(el);
         });
+        const draftView = document.getElementById('draft-view');
+        if (draftView) draftView.style.overflowY = 'auto';
+        document.body.style.overflow = '';
     }
 
     function renderDraftScreen() {
@@ -871,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const botCardsContainer = document.getElementById('bot-team-preview');
         botCardsContainer.innerHTML = '';
         currentBotTeam.forEach(monster => {
-            botCardsContainer.appendChild(createFighterCard(monster, true));
+            botCardsContainer.appendChild(createFighterCard(monster, true, false, null, 'draft-fighter-'));
         });
 
         // Başlık güncellemesi
@@ -926,7 +929,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Dolu Slot - Arena Dövüşçü Kartı Görünümünde
                 const fighterCard = createFighterCard(slotMonster, false, true, () => {
                     removeMonsterFromSlot(i);
-                });
+                }, 'draft-fighter-');
 
                 // Slottan Başka Slota Taşınabilirlik (Masaüstü HTML5 Drag)
                 fighterCard.draggable = true;
@@ -961,22 +964,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     const touch = e.touches[0];
                     const dist = Math.hypot(touch.clientX - startSlotX, touch.clientY - startSlotY);
 
-                    // Yalnızca kullanıcı parmağını en az 10px hareket ettirdiyse hayalet oluştur
-                    if (!isSlotDragging && dist > 10) {
+                    // Yalnızca kullanıcı parmağını en az 8px hareket ettirdiyse sürüklemeyi başlat ve kaydırmayı kilitle
+                    if (!isSlotDragging && dist > 8) {
                         isSlotDragging = true;
+                        const draftView = document.getElementById('draft-view');
+                        if (draftView) draftView.style.overflowY = 'hidden';
+                        document.body.style.overflow = 'hidden';
+
                         cleanupTouchGhosts();
                         slotTouchGhost = document.createElement('div');
                         slotTouchGhost.className = 'drag-touch-ghost';
                         slotTouchGhost.innerHTML = `
-                            ${slotMonster.image ? `<img src="${slotMonster.image}" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">` : `<span style="font-size: 1.5rem;">${slotMonster.emoji}</span>`}
-                            <span style="font-size: 0.62rem; font-weight: 800; color: #fff;">${slotMonster.name.split(' ')[0]}</span>
+                            ${slotMonster.image ? `<img src="${slotMonster.image}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;">` : `<span style="font-size: 1.6rem;">${slotMonster.emoji}</span>`}
+                            <span style="font-size: 0.65rem; font-weight: 800; color: #fff;">${slotMonster.name.split(' ')[0]}</span>
                         `;
                         document.body.appendChild(slotTouchGhost);
                     }
 
-                    if (isSlotDragging && slotTouchGhost) {
-                        slotTouchGhost.style.left = `${touch.clientX}px`;
-                        slotTouchGhost.style.top = `${touch.clientY}px`;
+                    if (isSlotDragging) {
+                        if (e.cancelable) e.preventDefault();
+                        if (slotTouchGhost) {
+                            slotTouchGhost.style.left = `${touch.clientX}px`;
+                            slotTouchGhost.style.top = `${touch.clientY}px`;
+                        }
 
                         const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
                         const slotEl = targetEl ? targetEl.closest('.draft-drop-slot') : null;
@@ -991,6 +1001,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 const finishSlotTouch = () => {
+                    const draftView = document.getElementById('draft-view');
+                    if (draftView) draftView.style.overflowY = 'auto';
+                    document.body.style.overflow = '';
+
                     cleanupTouchGhosts();
                     slotTouchGhost = null;
                     document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
@@ -1079,22 +1093,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 const touch = e.touches[0];
                 const dist = Math.hypot(touch.clientX - startTouchX, touch.clientY - startTouchY);
 
-                // Yalnızca kullanıcı parmağını en az 10px hareket ettirdiyse hayalet oluştur
-                if (!isTouchDragging && dist > 10) {
+                // Yalnızca kullanıcı parmağını en az 8px hareket ettirdiyse sürüklemeyi başlat ve kaydırmayı kilitle
+                if (!isTouchDragging && dist > 8) {
                     isTouchDragging = true;
+                    const draftView = document.getElementById('draft-view');
+                    if (draftView) draftView.style.overflowY = 'hidden';
+                    document.body.style.overflow = 'hidden';
+
                     cleanupTouchGhosts();
                     touchGhost = document.createElement('div');
                     touchGhost.className = 'drag-touch-ghost';
                     touchGhost.innerHTML = `
-                        ${monster.image ? `<img src="${monster.image}" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">` : `<span style="font-size: 1.5rem;">${monster.emoji}</span>`}
-                        <span style="font-size: 0.62rem; font-weight: 800; color: #fff;">${monster.name.split(' ')[0]}</span>
+                        ${monster.image ? `<img src="${monster.image}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;">` : `<span style="font-size: 1.6rem;">${monster.emoji}</span>`}
+                        <span style="font-size: 0.65rem; font-weight: 800; color: #fff;">${monster.name.split(' ')[0]}</span>
                     `;
                     document.body.appendChild(touchGhost);
                 }
 
-                if (isTouchDragging && touchGhost) {
-                    touchGhost.style.left = `${touch.clientX}px`;
-                    touchGhost.style.top = `${touch.clientY}px`;
+                if (isTouchDragging) {
+                    if (e.cancelable) e.preventDefault();
+                    if (touchGhost) {
+                        touchGhost.style.left = `${touch.clientX}px`;
+                        touchGhost.style.top = `${touch.clientY}px`;
+                    }
 
                     const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
                     const slotEl = targetEl ? targetEl.closest('.draft-drop-slot') : null;
@@ -1110,6 +1131,10 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const finishCandidateTouch = () => {
+                const draftView = document.getElementById('draft-view');
+                if (draftView) draftView.style.overflowY = 'auto';
+                document.body.style.overflow = '';
+
                 cleanupTouchGhosts();
                 touchGhost = null;
                 document.querySelectorAll('.draft-drop-slot').forEach(el => el.classList.remove('drag-over'));
@@ -1431,7 +1456,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const applyBtn = document.getElementById('btn-apply-ai-sim');
         if (applyBtn) {
             applyBtn.onclick = applyAiSimulationSuggestion;
-            if (sim.suggestionAction) {
+            // Eğer kazanma ihtimali %50 üstündeyse önerilen dizilimi uygula butonu çıkmaz
+            if (sim.suggestionAction && sim.winRate <= 50) {
                 applyBtn.classList.remove('hidden');
             } else {
                 applyBtn.classList.add('hidden');
@@ -1440,7 +1466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyAiSimulationSuggestion() {
-        if (!lastSimResult || !lastSimResult.suggestionAction) return;
+        if (!lastSimResult || !lastSimResult.suggestionAction || lastSimResult.winRate > 50) return;
         const act = lastSimResult.suggestionAction;
         const playerLevel = (window.authMgr.currentUser && window.authMgr.currentUser.profile && window.authMgr.currentUser.profile.level) || 1;
 
@@ -1548,6 +1574,13 @@ document.addEventListener('DOMContentLoaded', () => {
             switchScreen('battle');
             renderBattleArena();
 
+            // Savaş Akışı Paneli Varsayılan: Kapalı
+            const bottomPanel = document.getElementById('battle-bottom-panel');
+            if (bottomPanel) {
+                bottomPanel.classList.add('collapsed');
+                updateBattleLogsToggleUI(true);
+            }
+
             // Savaş HUD Sinerji Rozetini Güncelle
             const activeMonsters = playerSlots.filter(s => s !== null);
             const synergy = (window.calculateTeamSynergy && activeMonsters.length >= 2) ? window.calculateTeamSynergy(activeMonsters) : null;
@@ -1608,6 +1641,13 @@ document.addEventListener('DOMContentLoaded', () => {
         switchScreen('battle');
         renderBattleArena();
 
+        // Savaş Akışı Paneli Varsayılan: Kapalı
+        const bottomPanel = document.getElementById('battle-bottom-panel');
+        if (bottomPanel) {
+            bottomPanel.classList.add('collapsed');
+            updateBattleLogsToggleUI(true);
+        }
+
         // Savaş HUD Sinerji Rozetini Güncelle
         const activeMonsters = playerSlots.filter(s => s !== null);
         const synergy = (window.calculateTeamSynergy && activeMonsters.length >= 2) ? window.calculateTeamSynergy(activeMonsters) : null;
@@ -1666,9 +1706,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function createFighterCard(monster, isBot, showRemoveBtn = false, onRemove = null) {
+    function createFighterCard(monster, isBot, showRemoveBtn = false, onRemove = null, idPrefix = 'fighter-') {
         const div = document.createElement('div');
-        div.id = `fighter-${monster.instanceId}`;
+        div.id = `${idPrefix}${monster.instanceId}`;
         div.className = `fighter-card lane-slot-${monster.slotIndex} ${isBot ? 'bot-fighter' : 'player-fighter'} ${monster.currentHp <= 0 ? 'dead' : ''}`;
 
         const hpPct = Math.max(0, Math.min(100, Math.round((monster.currentHp / monster.maxHp) * 100)));
@@ -1682,13 +1722,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const statusBarHtml = badges ? `<div class="fighter-status-bar">${badges}</div>` : '';
         const removeBtnHtml = showRemoveBtn ? `<button type="button" class="slot-drop-remove" title="Slottan Çıkar">✕</button>` : '';
         div.dataset.emoji = monster.emoji || '';
+        const floaterId = idPrefix === 'draft-fighter-' ? `draft-floater-${monster.instanceId}` : `floater-${monster.instanceId}`;
 
         div.innerHTML = `
             <div class="fighter-top-row">
                 <span class="slot-lane-indicator">SLOT ${monster.slotIndex + 1}</span>
                 ${removeBtnHtml}
             </div>
-            <div class="floating-text-container" id="floater-${monster.instanceId}"></div>
+            <div class="floating-text-container" id="${floaterId}"></div>
             ${statusBarHtml}
             <div class="fighter-avatar-box">
                 ${monster.image ? `<img src="${monster.image}" class="monster-avatar-img" alt="${monster.name}">` : `<span class="fighter-emoji">${monster.emoji}</span>`}
@@ -1721,7 +1762,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showFloatingText(instanceId, text, type) {
-        const container = document.getElementById(`floater-${instanceId}`);
+        // Öncelikli olarak aktif arena içerisindeki floater konteynerini bul
+        const arena = document.getElementById('battle-view');
+        const container = (arena ? arena.querySelector(`#floater-${instanceId}`) : null) || document.getElementById(`floater-${instanceId}`);
         if (!container) return;
 
         // Hasar rakamını merminin hedefe çarpma anıyla (180ms) senkronize et
@@ -1776,12 +1819,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const startRect = attackerEl.getBoundingClientRect();
         const targetRect = targetEl.getBoundingClientRect();
 
-        const startX = startRect.left + startRect.width / 2;
-        const startY = startRect.top + startRect.height / 2;
-        const endX = targetRect.left + targetRect.width / 2;
-        const endY = targetRect.top + targetRect.height / 2;
-        const deltaX = endX - startX;
-        const deltaY = endY - startY;
+        // Güvenlik denetimi: Eğer koordinatlar geçersiz, 0 veya ekran dışındaysa asla mermi oluşturma (sol üst köşe taşmasını engelle)
+        if (!startRect || !targetRect || 
+            startRect.width === 0 || targetRect.width === 0 || 
+            (startRect.left === 0 && startRect.top === 0) || 
+            (targetRect.left === 0 && targetRect.top === 0)) {
+            return;
+        }
+
+        const startX = Math.round(startRect.left + startRect.width / 2);
+        const startY = Math.round(startRect.top + startRect.height / 2);
+        const endX = Math.round(targetRect.left + targetRect.width / 2);
+        const endY = Math.round(targetRect.top + targetRect.height / 2);
+
+        // Ekran sol üst köşesine (<=12px) yanlışlıkla çizilmeyi kesin olarak engelle
+        if (startX <= 12 || startY <= 12 || endX <= 12 || endY <= 12) {
+            return;
+        }
 
         const emoji = attackerEl.dataset?.emoji || attackerEl.querySelector('.fighter-emoji')?.textContent?.trim() || '';
         const projData = getProjectileForMonster(emoji, action);
@@ -1789,19 +1843,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const projectile = document.createElement('div');
         projectile.className = 'combat-projectile';
         projectile.textContent = projData.icon;
-        projectile.style.left = `${startX}px`;
-        projectile.style.top = `${startY}px`;
-        projectile.style.transform = 'translate(-50%, -50%) scale(0.6)';
+        projectile.style.left = '0px';
+        projectile.style.top = '0px';
+        projectile.style.transform = `translate(${startX}px, ${startY}px) translate(-50%, -50%) scale(0.6)`;
         projectile.style.filter = `drop-shadow(0 0 10px ${projData.glow})`;
         projectile.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.22s ease';
         projectile.style.opacity = '1';
 
         document.body.appendChild(projectile);
 
-        // Bir sonraki render frame'inde hedefe uçur
+        // Bir sonraki render frame'inde doğrudan hedefin merkezine uçur
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                projectile.style.transform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px)) scale(1.35)`;
+                projectile.style.transform = `translate(${endX}px, ${endY}px) translate(-50%, -50%) scale(1.35)`;
             });
         });
 
@@ -1825,8 +1879,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function triggerSlotAttackAnimation(attackerId, action, targetId) {
-        const attackerEl = document.getElementById(`fighter-${attackerId}`);
-        const targetEl = document.getElementById(`fighter-${targetId}`);
+        const arena = document.getElementById('battle-view');
+        const attackerEl = (arena ? arena.querySelector(`#fighter-${attackerId}`) : null) || document.getElementById(`fighter-${attackerId}`);
+        const targetEl = (arena ? arena.querySelector(`#fighter-${targetId}`) : null) || document.getElementById(`fighter-${targetId}`);
 
         if (attackerEl) {
             const isBot = attackerEl.classList.contains('bot-fighter');
@@ -1859,8 +1914,23 @@ document.addEventListener('DOMContentLoaded', () => {
         logBox.scrollTop = logBox.scrollHeight;
     }
 
+    function updateBattleLogsToggleUI(isCollapsed) {
+        const indicator = document.getElementById('battle-logs-toggle-indicator');
+        if (indicator) {
+            const textSpan = indicator.querySelector('.toggle-text');
+            const iconSpan = indicator.querySelector('.toggle-icon');
+            if (textSpan) textSpan.textContent = isCollapsed ? 'Akışı Aç' : 'Gizle';
+            if (iconSpan) iconSpan.textContent = isCollapsed ? '▲' : '▼';
+        }
+        const toggleBtn = document.getElementById('battle-logs-toggle-btn');
+        if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        }
+    }
+
     // --- SAVAŞ SONUÇ VE TAHMİN ÖDÜLLERİ ---
     function handleBattleEnd(playerWon, predResult, mvpFighter = null) {
+        document.querySelectorAll('.combat-projectile, .comic-impact-burst').forEach(el => el.remove());
         let baseTokenReward = playerWon ? 15 : 4;
         let trophyDelta = playerWon ? (25 + Math.floor(Math.random() * 8)) : -(14 + Math.floor(Math.random() * 5));
         let expDelta = playerWon ? 45 : 12;
@@ -2468,6 +2538,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-start-battle').onclick = startBattle;
+
+    // Canlı Savaş Akışı Paneli Aç/Kapa (Aşağıdan Yukarı Kayma Efektli)
+    const battleLogsToggleBtn = document.getElementById('battle-logs-toggle-btn');
+    if (battleLogsToggleBtn) {
+        battleLogsToggleBtn.onclick = () => {
+            const bottomPanel = document.getElementById('battle-bottom-panel');
+            if (!bottomPanel) return;
+            const isCollapsed = bottomPanel.classList.toggle('collapsed');
+            updateBattleLogsToggleUI(isCollapsed);
+            if (window.soundFX && window.soundFX.playClick) {
+                window.soundFX.playClick();
+            }
+        };
+    }
     document.getElementById('btn-play-again').onclick = () => {
         closeModal('result');
         prepareNewMatch();
@@ -2711,6 +2795,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleBossRaidEnd(pSlots, mvpFighter) {
+        document.querySelectorAll('.combat-projectile, .comic-impact-burst').forEach(el => el.remove());
         isBossRaidMode = false;
         let totalDmg = 0;
         pSlots.forEach(p => {

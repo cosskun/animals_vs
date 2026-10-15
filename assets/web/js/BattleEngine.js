@@ -256,7 +256,8 @@ class BattleEngine {
 
         this.turn++;
         if (this.isRunning) {
-            setTimeout(() => this.processNextTurn(), 400);
+            // Savaş akış hızı 1.25x daha yavaş (400ms * 1.25 = 500ms)
+            setTimeout(() => this.processNextTurn(), 500);
         }
     }
 
@@ -466,6 +467,34 @@ class BattleEngine {
                 this.callbacks.onFloatText(target.instanceId, `🔥 -${skillAppliedDmg}`, 'crit');
                 break;
 
+            case 'lion':
+                if (window.soundFX && typeof window.soundFX.playRoar === 'function') window.soundFX.playRoar();
+                skillAppliedDmg = Math.round(attacker.atk * 1.4);
+                target.currentHp = Math.max(0, target.currentHp - skillAppliedDmg);
+                target.atk = Math.max(10, Math.round(target.atk * 0.85));
+                this.callbacks.onFloatText(target.instanceId, `🦁 -${skillAppliedDmg}`, 'crit');
+                break;
+
+            case 'bull':
+                const missingHpPct = Math.max(0, (attacker.maxHp - attacker.currentHp) / attacker.maxHp);
+                const bullMult = 1.25 + missingHpPct * 0.8;
+                skillAppliedDmg = Math.round(attacker.atk * bullMult);
+                target.currentHp = Math.max(0, target.currentHp - skillAppliedDmg);
+                this.callbacks.onFloatText(target.instanceId, `🐂 -${skillAppliedDmg} (Öfke)`, 'crit');
+                break;
+
+            case 'eagle':
+                skillAppliedDmg = Math.round(attacker.atk * 1.55);
+                target.currentHp = Math.max(0, target.currentHp - skillAppliedDmg);
+                this.callbacks.onFloatText(target.instanceId, `🦅 -${skillAppliedDmg} (Dalış)`, 'crit');
+                break;
+
+            case 'cat':
+                skillAppliedDmg = Math.round(attacker.atk * 1.35);
+                target.currentHp = Math.max(0, target.currentHp - skillAppliedDmg);
+                this.callbacks.onFloatText(target.instanceId, `🐱 -${skillAppliedDmg} (Tırmık)`, 'crit');
+                break;
+
             default:
                 skillAppliedDmg = Math.round(attacker.atk * 1.35);
                 target.currentHp = Math.max(0, target.currentHp - skillAppliedDmg);
@@ -481,7 +510,8 @@ class BattleEngine {
     }
 
     sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        // Savaş hızı 1.25x daha yavaş akması için tüm aksiyon ve efekt bekleme süreleri 1.25 ile çarpılır
+        return new Promise(resolve => setTimeout(resolve, Math.round(ms * 1.25)));
     }
 
     // --- TAKTİKSEL MAÇ VE KORİDOR ANALİZİ (SIMULATION SUITE) ---
@@ -748,6 +778,11 @@ class BattleEngine {
                     templateIds: bestIds,
                     rate: bestScore
                 };
+            }
+
+            // Kazanma ihtimali %50 üstündeyse önerilen dizilimi uygula butonu/aksiyonu devre dışı bırakılır
+            if (winRate > 50) {
+                suggestionAction = null;
             }
         } else if (winRate >= 70) {
             tacticalAdvice = `🌟 <b>Mükemmel Kadro (%${winRate} Zafer İhtimali):</b> Mevcut diziliminiz rakibe karşı çok güçlü ve avantajlı!`;

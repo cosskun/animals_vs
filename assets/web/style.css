@@ -1,4 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700;800;900&family=Lilita+One&family=Outfit:wght@600;800;900&display=swap');
+/* --- YEREL ÇEVRİMDIŞI FONT TANIMLARI (OFFLINE & NATIVE COMPATIBLE) --- */
+@font-face {
+    font-family: 'Bangers';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/Bangers.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('fonts/Fredoka-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('fonts/Fredoka-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('fonts/Outfit.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Lilita One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/LilitaOne.ttf') format('truetype');
+}
 
 :root {
     /* --- SHONEN COMIC MANGA TEMASI (KOYU MÜREKKEP MODU) --- */
@@ -402,6 +443,13 @@
 [data-theme="light"] .battle-hud-round {
     color: #d97706 !important;
 }
+[data-theme="light"] .battle-logs-header {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+[data-theme="light"] .battle-logs-header:hover {
+    background: #f1f5f9;
+}
 [data-theme="light"] .battle-logs-box {
     background: #ffffff;
     border: 1.5px solid #475569;
@@ -773,8 +821,19 @@ html, body {
 }
 
 .header-game-logo {
-    font-size: 1.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
     line-height: 1;
+}
+
+.header-game-logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .header-game-title {
@@ -1138,8 +1197,18 @@ html, body {
 }
 
 .auth-logo {
-    font-size: 3.5rem;
-    filter: drop-shadow(2px 2px 0 #000);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 10px auto;
+}
+
+.auth-logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .auth-tabs {
@@ -1740,16 +1809,16 @@ html, body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: stretch;
-    min-height: 100px;
+    min-height: 120px;
     border: 1.5px solid var(--border-card);
 }
 
 .draft-arena-stage .fighter-card {
     background: var(--bg-fighter);
     border: 2px solid var(--border-card);
-    padding: 4px;
+    padding: 4px 3px 5px 3px;
     border-radius: 10px;
-    min-height: 98px;
+    min-height: 116px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -1760,10 +1829,10 @@ html, body {
 }
 
 .draft-arena-stage .fighter-avatar-box {
-    width: 28px;
-    height: 28px;
-    margin: 1px 0;
-    border-radius: 6px;
+    width: 46px;
+    height: 46px;
+    margin: 2px 0;
+    border-radius: 9px;
     background: var(--bg-card-hover);
     display: flex;
     align-items: center;
@@ -1773,12 +1842,12 @@ html, body {
 }
 
 .draft-arena-stage .fighter-emoji {
-    font-size: 1.15rem;
+    font-size: 1.65rem;
     line-height: 1;
 }
 
 .draft-arena-stage .fighter-name {
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     font-weight: 900;
     color: var(--text-title);
     margin-bottom: 2px;
@@ -1895,7 +1964,7 @@ html, body {
     border-radius: 10px;
     padding: 4px;
     text-align: center;
-    min-height: 98px;
+    min-height: 116px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -1905,6 +1974,7 @@ html, body {
     cursor: pointer;
     transition: all 0.12s ease;
     box-sizing: border-box;
+    touch-action: none !important;
 }
 
 .draft-drop-slot .fighter-card {
@@ -1918,6 +1988,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    touch-action: none !important;
 }
 
 .draft-drop-slot.drag-over {
@@ -2027,7 +2098,7 @@ html, body {
     background: var(--bg-card-grad);
     border: 2px solid var(--border-card);
     border-radius: 10px;
-    padding: 3px 2px;
+    padding: 4px 3px;
     cursor: grab;
     position: relative;
     display: flex;
@@ -2035,13 +2106,15 @@ html, body {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    gap: 1px;
-    height: 82px;
+    gap: 2px;
+    height: 106px;
     min-width: 0;
     box-sizing: border-box;
     box-shadow: 2px 2px 0 var(--comic-stroke);
     transition: transform 0.08s ease;
     user-select: none;
+    -webkit-user-select: none;
+    touch-action: none !important;
     overflow: hidden;
 }
 
@@ -2064,9 +2137,9 @@ html, body {
 }
 
 .draft-badge-5 {
-    font-size: 0.48rem;
+    font-size: 0.52rem;
     font-weight: 900;
-    padding: 1px 3px;
+    padding: 2px 3px;
     border-radius: 3px;
     background: #101424;
     color: var(--text-muted);
@@ -2090,24 +2163,25 @@ html, body {
 }
 
 .draft-card-emoji {
-    font-size: 1.15rem;
+    font-size: 1.45rem;
     line-height: 1;
     margin: 1px 0;
 }
 
 .card-title-5 {
-    font-size: 0.56rem;
+    font-size: 0.65rem;
     font-weight: 900;
     color: var(--text-title);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    line-height: 1;
+    line-height: 1.1;
+    margin-top: 1px;
 }
 
 .card-role-5 {
-    font-size: 0.46rem;
+    font-size: 0.50rem;
     color: #ffa502;
     line-height: 1;
     font-weight: 800;
@@ -2122,14 +2196,15 @@ html, body {
     grid-template-columns: 1fr 1fr;
     gap: 2px;
     background: #0d101c;
-    padding: 2px;
+    padding: 2px 3px;
     border-radius: 4px;
-    font-size: 0.46rem;
+    font-size: 0.50rem;
     font-weight: 800;
     color: var(--text-main);
     width: 100%;
-    line-height: 1;
+    line-height: 1.1;
     text-align: center;
+    box-sizing: border-box;
 }
 
 /* Savaş Öncesi Bot Zorluk Rozetleri */
@@ -2233,7 +2308,7 @@ html, body {
 .ai-pred-result-container {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     animation: fadeIn 0.2s ease-out;
 }
 
@@ -2242,7 +2317,7 @@ html, body {
     gap: 8px;
     align-items: center;
     background: var(--bg-card);
-    padding: 6px 10px;
+    padding: 4px 8px;
     border-radius: 10px;
     border: 2px solid var(--border-card);
     box-shadow: 2px 2px 0 var(--comic-stroke);
@@ -2256,21 +2331,21 @@ html, body {
     background: #0f2b18;
     border: 2px solid #2ed573;
     border-radius: 8px;
-    padding: 5px 8px;
-    min-width: 72px;
+    padding: 3px 6px;
+    min-width: 65px;
     box-shadow: 2px 2px 0 var(--comic-stroke);
     flex-shrink: 0;
 }
 
 .ai-win-rate-num {
     font-family: var(--font-manga);
-    font-size: 1.45rem;
+    font-size: 1.25rem;
     color: #2ed573;
     line-height: 1;
 }
 
 .ai-win-rate-lbl {
-    font-size: 0.52rem;
+    font-size: 0.50rem;
     font-weight: 900;
     color: #86efac;
     text-transform: uppercase;
@@ -2280,7 +2355,7 @@ html, body {
 .ai-lanes-breakdown {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     flex: 1;
 }
 
@@ -2300,7 +2375,7 @@ html, body {
 
 .ai-bar-mini-bg {
     flex: 1;
-    height: 6px;
+    height: 5px;
     background: #0d101c;
     border-radius: 3px;
     overflow: hidden;
@@ -2316,7 +2391,7 @@ html, body {
 
 .ai-lane-val {
     font-family: var(--font-manga);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #ffa502;
     min-width: 30px;
     text-align: right;
@@ -2325,11 +2400,11 @@ html, body {
 .ai-tactical-tip-box {
     display: flex;
     align-items: flex-start;
-    gap: 6px;
+    gap: 5px;
     background: #2a1f0c;
     border: 1.5px solid #ffa502;
     border-radius: 8px;
-    padding: 6px 8px;
+    padding: 4px 7px;
     box-shadow: 2px 2px 0 var(--comic-stroke);
 }
 
@@ -2611,7 +2686,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: 96px;
+    min-height: 108px;
     box-shadow: 2px 2px 0 var(--comic-stroke);
     box-sizing: border-box;
     transition: transform 0.1s;
@@ -2653,8 +2728,8 @@ html, body {
 }
 
 .fighter-avatar-box {
-    width: 34px;
-    height: 34px;
+    width: 42px;
+    height: 42px;
     border-radius: 8px;
     background: var(--bg-card-hover);
     display: flex;
@@ -2677,21 +2752,21 @@ html, body {
 }
 
 .draft-card-emoji-wrap {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
 .draft-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
     display: block;
     user-select: none;
     -webkit-user-drag: none;
@@ -2699,12 +2774,12 @@ html, body {
 }
 
 .fighter-emoji {
-    font-size: 1.4rem;
+    font-size: 1.55rem;
     line-height: 1;
 }
 
 .fighter-name {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 900;
     color: var(--text-title);
     margin-bottom: 2px;
@@ -2866,6 +2941,8 @@ html, body {
 
 .combat-projectile {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 99999;
     pointer-events: none;
     font-size: 1.85rem;
@@ -2897,16 +2974,50 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+}
+
+.battle-bottom-panel.collapsed {
+    flex: 0 0 auto;
+}
+
+.battle-bottom-panel:not(.collapsed) {
     flex: 1;
     min-height: 0;
-    margin-top: 2px;
 }
 
 .battle-logs-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4px;
+    padding: 6px 12px;
+    background: #101424;
+    border: 2px solid var(--border-card);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 var(--comic-stroke);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.battle-logs-header:hover {
+    background: #161b30;
+    border-color: #ffa502;
+}
+
+.battle-logs-header:active {
+    transform: scale(0.99);
+}
+
+.logs-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .logs-header-title {
@@ -2917,9 +3028,48 @@ html, body {
     text-transform: uppercase;
 }
 
+.logs-header-sub {
+    font-size: 0.72rem;
+    color: var(--text-dim, #94a3b8);
+    font-weight: 700;
+}
+
+.logs-header-toggle-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 165, 2, 0.12);
+    border: 1.5px solid #ffa502;
+    color: #ffa502;
+    font-family: var(--font-manga);
+    font-size: 0.76rem;
+    padding: 3px 9px;
+    border-radius: 6px;
+    box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+    transition: all 0.2s ease;
+}
+
+.battle-logs-header:hover .logs-header-toggle-indicator {
+    background: #ffa502;
+    color: #101424;
+}
+
+.logs-header-toggle-indicator .toggle-icon {
+    font-size: 0.75rem;
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.battle-bottom-panel.collapsed .logs-header-toggle-indicator .toggle-icon {
+    transform: rotate(0deg);
+}
+
+.battle-bottom-panel:not(.collapsed) .logs-header-toggle-indicator .toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Savaş Log Kutusu & Aşağıdan Yukarı Kayma Efekti (Slide-Up) */
 .battle-logs-box {
-    flex: 1;
-    min-height: 120px;
     background: var(--bg-logs);
     border: 2px solid var(--border-card);
     border-radius: 12px;
@@ -2931,6 +3081,40 @@ html, body {
     font-size: 0.7rem;
     box-sizing: border-box;
     box-shadow: 2px 2px 0 var(--comic-stroke);
+    
+    /* Akıcı Aşağıdan Yukarı Açılma / Kapanma Geçişi */
+    transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.28s ease,
+                transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                padding 0.3s ease,
+                margin 0.3s ease,
+                border-width 0.3s ease;
+    transform-origin: bottom center;
+}
+
+/* Kapalı Durum (Collapsed) - Görünmez ve 0 yükseklik */
+.battle-bottom-panel.collapsed .battle-logs-box {
+    max-height: 0 !important;
+    min-height: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(24px) scaleY(0.9);
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+    border-width: 0 2px !important;
+    border-color: transparent !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Açık Durum (Expanded) - Aşağıdan yukarı kayarak görünür */
+.battle-bottom-panel:not(.collapsed) .battle-logs-box {
+    max-height: 145px;
+    min-height: 95px;
+    flex: 1;
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    pointer-events: auto;
 }
 
 .log-line {
@@ -3057,6 +3241,17 @@ html, body {
 [data-theme="light"] .match-history-row {
     background: #ffffff !important;
     border-color: #cbd5e1 !important;
+    box-shadow: 0 3px 0 #e2e8f0;
+}
+
+[data-theme="light"] .match-history-row.win {
+    background: #f0fdf4 !important;
+    border-left-color: #10b981 !important;
+}
+
+[data-theme="light"] .match-history-row.loss {
+    background: #fef2f2 !important;
+    border-left-color: #ef4444 !important;
 }
 
 .ach-icon { font-size: 1.35rem; }
@@ -3065,38 +3260,135 @@ html, body {
 .ach-desc { font-size: 0.68rem; color: var(--text-muted); }
 
 /* Maç Geçmişi */
+.match-history-section-title {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--accent-cyan);
+    margin-top: 14px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .match-history-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    max-height: 160px;
+    gap: 8px;
+    max-height: 240px;
     overflow-y: auto;
-    margin: 10px 0;
+    margin: 0 0 12px 0;
+    padding-right: 2px;
 }
 
 .match-history-row {
     background: var(--bg-card-hover);
     border: 2px solid var(--border-card);
-    border-left: 5px solid #94a3b8;
-    border-radius: 8px;
-    padding: 6px 10px;
+    border-left: 6px solid #94a3b8;
+    border-radius: 12px;
+    padding: 10px 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.78rem;
-    box-shadow: 2px 2px 0 var(--comic-stroke);
+    gap: 8px;
+    box-shadow: 0 3px 0 var(--comic-stroke);
+    box-sizing: border-box;
 }
 
-.match-history-row.win { border-left-color: #2ed573; }
-.match-history-row.loss { border-left-color: #ff4757; }
+.match-history-row.win {
+    border-left-color: #10b981;
+    background: rgba(16, 185, 129, 0.08);
+}
 
-.match-res-tag { font-family: var(--font-manga); font-size: 0.85rem; }
-.match-history-row.win .match-res-tag { color: #2ed573; }
-.match-history-row.loss .match-res-tag { color: #ff4757; }
+.match-history-row.loss {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+}
 
-.match-delta.win { color: #2ed573; font-weight: 900; }
-.match-delta.loss { color: #ff4757; font-weight: 900; }
-.match-time { font-size: 0.68rem; color: var(--text-muted); }
+.match-res-tag {
+    font-family: var(--font-manga);
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    line-height: 1;
+    width: 54px;
+    flex-shrink: 0;
+}
+
+.match-history-row.win .match-res-tag {
+    color: #10b981;
+}
+
+.match-history-row.loss .match-res-tag {
+    color: #ef4444;
+}
+
+.match-teams-icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.match-teams-icons .team-emojis {
+    font-size: 1.25rem;
+    line-height: 1;
+    display: inline-flex;
+    gap: 1px;
+    white-space: nowrap;
+}
+
+.match-vs-pill {
+    font-family: var(--font-manga);
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: #ef4444;
+    background: #fee2e2;
+    padding: 1px 4px;
+    border-radius: 4px;
+    border: 1px solid #fca5a5;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .match-vs-pill {
+    background: #3f1d24;
+    border-color: #ff4757;
+    color: #ffa502;
+}
+
+.match-delta {
+    font-family: var(--font-manga);
+    font-size: 1.1rem;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.match-delta.win {
+    color: #10b981;
+    font-weight: 900;
+}
+
+.match-delta.loss {
+    color: #ef4444;
+    font-weight: 900;
+}
+
+.match-time {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+}
 
 /* Lider Tablosu Zaman Dilimi Ana Sekmeleri */
 .lb-timeframe-tabs {
@@ -3272,6 +3564,7 @@ html, body {
     justify-content: center;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 2px 2px 0 var(--comic-stroke);
     will-change: left, top;
+    touch-action: none !important;
 }
 
 /* Kart Slota Yerleşme Uçuş Klonu */
@@ -4457,14 +4750,14 @@ html, body {
    ========================================================================== */
 .btn-ai-action-apply {
     width: 100%;
-    padding: 10px 14px;
-    margin: 8px 0 4px 0;
+    padding: 7px 12px;
+    margin: 4px 0 2px 0;
     background: linear-gradient(180deg, #2ed573, #20bf6b);
     border: 2px solid #10ac84;
-    border-radius: 10px;
+    border-radius: 8px;
     color: #ffffff;
     font-family: var(--font-manga);
-    font-size: 0.92rem;
+    font-size: 0.84rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     text-shadow: 1px 1px 0 #0a3d24;
