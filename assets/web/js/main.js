@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const tokens = prof.tokens !== undefined ? prof.tokens : 250;
         const tickets = prof.predictionRights !== undefined ? prof.predictionRights : 3;
+        const rerollTickets = prof.rerollRights !== undefined ? prof.rerollRights : 3;
 
         const isAdmin = window.authMgr.isAdmin();
         document.getElementById('header-avatar').textContent = user.avatar || '🎮';
@@ -211,11 +212,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (trophEl) trophEl.textContent = `🏆 ${prof.trophies}`;
         }
         
-        // Token ve Tahmin Hakları
+        // Token, Tahmin Hakları ve Canavar Değiştirme Biletleri
         const tokenEl = document.getElementById('player-tokens');
         const ticketEl = document.getElementById('player-tickets');
+        const rerollEl = document.getElementById('player-reroll-tickets');
         if (tokenEl) tokenEl.textContent = isAdmin ? '∞' : tokens;
         if (ticketEl) ticketEl.textContent = isAdmin ? '∞' : tickets;
+        if (rerollEl) rerollEl.textContent = isAdmin ? '∞' : rerollTickets;
 
         const lobbyTokEl = document.getElementById('lobby-stat-tokens');
         const lobbyTktEl = document.getElementById('lobby-stat-tickets');
@@ -225,10 +228,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const predCountEl = document.getElementById('pred-rights-count');
         if (predCountEl) predCountEl.textContent = isAdmin ? '∞' : tickets;
 
+        const draftRerollCountEl = document.getElementById('draft-reroll-tickets-count');
+        if (draftRerollCountEl) draftRerollCountEl.textContent = isAdmin ? '∞' : rerollTickets;
+
         const storeTokEl = document.getElementById('store-current-tokens');
         const storeTktEl = document.getElementById('store-current-tickets');
+        const storeRerollEl = document.getElementById('store-current-reroll-tickets');
         if (storeTokEl) storeTokEl.textContent = isAdmin ? '∞' : tokens;
         if (storeTktEl) storeTktEl.textContent = isAdmin ? '∞' : tickets;
+        if (storeRerollEl) storeRerollEl.textContent = isAdmin ? '∞' : rerollTickets;
 
         const expPct = Math.min(100, Math.round((prof.exp / prof.expToNext) * 100));
         document.getElementById('player-exp-bar').style.width = `${expPct}%`;
@@ -898,6 +906,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ticketsEl.textContent = `${rights}`;
         }
 
+        // Canavar Değiştirme Bilet Sayısı Güncellemesi
+        const rerollTicketsEl = document.getElementById('draft-reroll-tickets-count');
+        if (rerollTicketsEl) {
+            const isAdmin = window.authMgr && window.authMgr.isAdmin();
+            const rerollRights = window.economyMgr.getRerollRights();
+            rerollTicketsEl.textContent = isAdmin ? '∞' : `${rerollRights}`;
+        }
+
         // 2. Oyuncu Slotları (Sürükle-Bırak Drop Hedefleri)
         const slotsContainer = document.getElementById('player-slots-container');
         slotsContainer.innerHTML = '';
@@ -1308,6 +1324,52 @@ document.addEventListener('DOMContentLoaded', () => {
             renderDraftScreen();
         }
         validateDraftLineup();
+    }
+
+    function rerollDraftMonsters() {
+        const rights = window.economyMgr.getRerollRights();
+        const isAdmin = window.authMgr && window.authMgr.isAdmin();
+
+        if (!isAdmin && rights <= 0) {
+            window.soundFX.playClick();
+            if (confirm('Canavar Değiştirme Biletiniz kalmadı! Mağazadan Token karşılığı bilet almak ister misiniz?')) {
+                renderStoreModal('reroll');
+            }
+            return;
+        }
+
+        const consumed = window.economyMgr.consumeRerollRight();
+        if (!consumed) return;
+
+        if (window.soundFX && window.soundFX.playCoins) {
+            window.soundFX.playCoins();
+        } else {
+            window.soundFX.playClick();
+        }
+
+        // 1. Oyuncunun slotlarındaki canavarları tamamen temizle
+        playerSlots = [null, null, null];
+
+        // 2. Oyun başlarken hangi rastgelelikle geliyorsa aynı rastgelelikle yeni 5 canavar üret
+        const playerLevel = (window.authMgr.currentUser && window.authMgr.currentUser.profile && window.authMgr.currentUser.profile.level) || 1;
+        candidate5Monsters = MonsterFactory.get5DraftRecommendations(playerLevel);
+
+        // 3. AI Simülasyon Kartını Sıfırla
+        const idleView = document.getElementById('ai-pred-idle-view');
+        const resCard = document.getElementById('ai-pred-result-card');
+        if (idleView) idleView.classList.remove('hidden');
+        if (resCard) resCard.classList.add('hidden');
+
+        // 4. Ekranı ve başlık göstergelerini yenile
+        renderDraftScreen();
+        updateGlobalHeader();
+
+        // 5. Bilgilendirme ve görsel geri bildirim
+        const alertBox = document.getElementById('draft-validation-alert');
+        if (alertBox) {
+            alertBox.textContent = '🎲 Canavarlar yenilendi! Yeni 5 canavardan 3 tanesini koridorlara yerleştirin.';
+            alertBox.className = 'draft-alert info animate-shake';
+        }
     }
 
     function validateDraftLineup() {
@@ -2118,76 +2180,122 @@ document.addEventListener('DOMContentLoaded', () => {
         updateGlobalHeader();
 
         const tabTickets = document.getElementById('tab-store-tickets');
+        const tabReroll = document.getElementById('tab-store-reroll');
         const tabTokens = document.getElementById('tab-store-tokens');
         const panelTickets = document.getElementById('store-tickets-panel');
+        const panelReroll = document.getElementById('store-reroll-panel');
         const panelTokens = document.getElementById('store-tokens-panel');
 
+        if (tabTickets) tabTickets.classList.remove('active');
+        if (tabReroll) tabReroll.classList.remove('active');
+        if (tabTokens) tabTokens.classList.remove('active');
+
+        if (panelTickets) panelTickets.classList.add('hidden');
+        if (panelReroll) panelReroll.classList.add('hidden');
+        if (panelTokens) panelTokens.classList.add('hidden');
+
         if (activeTab === 'tickets') {
-            tabTickets.classList.add('active');
-            tabTokens.classList.remove('active');
-            panelTickets.classList.remove('hidden');
-            panelTokens.classList.add('hidden');
+            if (tabTickets) tabTickets.classList.add('active');
+            if (panelTickets) panelTickets.classList.remove('hidden');
+        } else if (activeTab === 'reroll') {
+            if (tabReroll) tabReroll.classList.add('active');
+            if (panelReroll) panelReroll.classList.remove('hidden');
         } else {
-            tabTokens.classList.add('active');
-            tabTickets.classList.remove('active');
-            panelTokens.classList.remove('hidden');
-            panelTickets.classList.add('hidden');
+            if (tabTokens) tabTokens.classList.add('active');
+            if (panelTokens) panelTokens.classList.remove('hidden');
         }
 
         // Sekme 1: Tahmin Hakları Paketleri (Token İle)
-        panelTickets.innerHTML = '';
-        window.PREDICTION_PACKAGES_TOKEN.forEach(pkg => {
-            const card = document.createElement('div');
-            card.className = 'store-item-card';
-            card.innerHTML = `
-                ${pkg.badge ? `<div class="store-pkg-badge">${pkg.badge}</div>` : ''}
-                <div class="store-item-left">
-                    <div class="store-item-icon">${pkg.icon}</div>
-                    <div>
-                        <div class="store-item-name">${pkg.name}</div>
-                        <div class="store-item-desc">${pkg.desc}</div>
+        if (panelTickets) {
+            panelTickets.innerHTML = '';
+            window.PREDICTION_PACKAGES_TOKEN.forEach(pkg => {
+                const card = document.createElement('div');
+                card.className = 'store-item-card';
+                card.innerHTML = `
+                    ${pkg.badge ? `<div class="store-pkg-badge">${pkg.badge}</div>` : ''}
+                    <div class="store-item-left">
+                        <div class="store-item-icon">${pkg.icon}</div>
+                        <div>
+                            <div class="store-item-name">${pkg.name}</div>
+                            <div class="store-item-desc">${pkg.desc}</div>
+                        </div>
                     </div>
-                </div>
-                <button class="btn-buy-ticket"><span class="token-coin-icon"></span> ${pkg.costToken} Token</button>
-            `;
-            card.querySelector('button').onclick = () => {
-                window.soundFX.playClick();
-                const res = window.economyMgr.buyPredictionRightsWithTokens(pkg.id);
-                if (res.success) {
-                    window.soundFX.playCoins();
-                    updateGlobalHeader();
-                    renderStoreModal('tickets');
-                    alert(res.message);
-                } else {
-                    alert(res.message);
-                }
-            };
-            panelTickets.appendChild(card);
-        });
+                    <button class="btn-buy-ticket"><span class="token-coin-icon"></span> ${pkg.costToken} Token</button>
+                `;
+                card.querySelector('button').onclick = () => {
+                    window.soundFX.playClick();
+                    const res = window.economyMgr.buyPredictionRightsWithTokens(pkg.id);
+                    if (res.success) {
+                        window.soundFX.playCoins();
+                        updateGlobalHeader();
+                        renderStoreModal('tickets');
+                        alert(res.message);
+                    } else {
+                        alert(res.message);
+                    }
+                };
+                panelTickets.appendChild(card);
+            });
+        }
 
-        // Sekme 2: Gerçek Para ile Token Satın Alma Paketleri (₺)
-        panelTokens.innerHTML = '';
-        window.TOKEN_PACKAGES_REAL_MONEY.forEach(pkg => {
-            const card = document.createElement('div');
-            card.className = 'store-item-card';
-            const bonusText = pkg.bonus > 0 ? `<span style="color: var(--accent-cyan); font-weight: bold;">+${pkg.bonus} Bonus</span>` : '';
-            card.innerHTML = `
-                ${pkg.badge ? `<div class="store-pkg-badge">${pkg.badge}</div>` : ''}
-                <div class="store-item-left">
-                    <div class="store-item-icon">${pkg.icon}</div>
-                    <div>
-                        <div class="store-item-name">${pkg.tokens} Token ${bonusText}</div>
-                        <div class="store-item-desc">${pkg.name}</div>
+        // Sekme 2: Canavar Değiştirme Biletleri Paketleri (Token İle - Koyu Turuncu)
+        if (panelReroll) {
+            panelReroll.innerHTML = '';
+            (window.REROLL_PACKAGES_TOKEN || []).forEach(pkg => {
+                const card = document.createElement('div');
+                card.className = 'store-item-card';
+                card.innerHTML = `
+                    ${pkg.badge ? `<div class="store-pkg-badge" style="background: #d35400;">${pkg.badge}</div>` : ''}
+                    <div class="store-item-left">
+                        <div class="store-item-icon">${pkg.icon}</div>
+                        <div>
+                            <div class="store-item-name" style="color: #f39c12;">${pkg.name}</div>
+                            <div class="store-item-desc">${pkg.desc}</div>
+                        </div>
                     </div>
-                </div>
-                <button class="btn-buy-real">${pkg.priceTL}</button>
-            `;
-            card.querySelector('button').onclick = () => {
-                window.soundFX.playClick();
-                renderCheckoutModal(pkg);
-            };
-            panelTokens.appendChild(card);
-        });
+                    <button class="btn-buy-reroll"><span class="token-coin-icon"></span> ${pkg.costToken} Token</button>
+                `;
+                card.querySelector('button').onclick = () => {
+                    window.soundFX.playClick();
+                    const res = window.economyMgr.buyRerollRightsWithTokens(pkg.id);
+                    if (res.success) {
+                        window.soundFX.playCoins();
+                        updateGlobalHeader();
+                        renderStoreModal('reroll');
+                        alert(res.message);
+                    } else {
+                        alert(res.message);
+                    }
+                };
+                panelReroll.appendChild(card);
+            });
+        }
+
+        // Sekme 3: Gerçek Para ile Token Satın Alma Paketleri (₺)
+        if (panelTokens) {
+            panelTokens.innerHTML = '';
+            window.TOKEN_PACKAGES_REAL_MONEY.forEach(pkg => {
+                const card = document.createElement('div');
+                card.className = 'store-item-card';
+                const bonusText = pkg.bonus > 0 ? `<span style="color: var(--accent-cyan); font-weight: bold;">+${pkg.bonus} Bonus</span>` : '';
+                card.innerHTML = `
+                    ${pkg.badge ? `<div class="store-pkg-badge">${pkg.badge}</div>` : ''}
+                    <div class="store-item-left">
+                        <div class="store-item-icon">${pkg.icon}</div>
+                        <div>
+                            <div class="store-item-name">${pkg.tokens} Token ${bonusText}</div>
+                            <div class="store-item-desc">${pkg.name}</div>
+                        </div>
+                    </div>
+                    <button class="btn-buy-real">${pkg.priceTL}</button>
+                `;
+                card.querySelector('button').onclick = () => {
+                    window.soundFX.playClick();
+                    renderCheckoutModal(pkg);
+                };
+                panelTokens.appendChild(card);
+            });
+        }
 
         openModal('store');
     }
@@ -2225,6 +2333,13 @@ document.addEventListener('DOMContentLoaded', () => {
         window.soundFX.playClick();
         renderStoreModal('tickets');
     };
+    const tabStoreRerollBtn = document.getElementById('tab-store-reroll');
+    if (tabStoreRerollBtn) {
+        tabStoreRerollBtn.onclick = () => {
+            window.soundFX.playClick();
+            renderStoreModal('reroll');
+        };
+    }
     document.getElementById('tab-store-tokens').onclick = () => {
         window.soundFX.playClick();
         renderStoreModal('tokens');
@@ -2267,6 +2382,22 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
     });
+
+    // Canavar Değiştirme Bileti Butonları
+    const btnHeaderReroll = document.getElementById('btn-header-reroll-tickets');
+    if (btnHeaderReroll) {
+        btnHeaderReroll.onclick = () => {
+            window.soundFX.playClick();
+            renderStoreModal('reroll');
+        };
+    }
+
+    const btnRerollDraft = document.getElementById('btn-reroll-monsters');
+    if (btnRerollDraft) {
+        btnRerollDraft.onclick = () => {
+            rerollDraftMonsters();
+        };
+    }
 
     document.getElementById('btn-open-leaderboard').onclick = () => {
         window.soundFX.playClick();

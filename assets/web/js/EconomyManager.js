@@ -13,6 +13,12 @@ const PREDICTION_PACKAGES_TOKEN = [
     { id: 'pred_15', name: '15\'li Mega Tahmin Paketi', rights: 15, costToken: 450, icon: '🏆', desc: '15 Maç İçin (150 Token Tasarruf)', badge: 'VIP Paket' }
 ];
 
+const REROLL_PACKAGES_TOKEN = [
+    { id: 'reroll_1', name: 'Tekli Canavar Bileti', rights: 1, costToken: 35, icon: '🎲', desc: '1 Kez Canavarları Yenile' },
+    { id: 'reroll_5', name: '5\'li Yenileme Paketi', rights: 5, costToken: 150, icon: '🔄', desc: '5 Kez Yenile (25 Token Tasarruf)', badge: 'Avantajlı' },
+    { id: 'reroll_15', name: '15\'li Taktisyen Kasası', rights: 15, costToken: 390, icon: '👑', desc: '15 Kez Yenile (135 Token Tasarruf)', badge: 'VIP Paket' }
+];
+
 class EconomyManager {
     constructor(authManager) {
         this.auth = authManager;
@@ -23,6 +29,7 @@ class EconomyManager {
         const prof = this.auth.currentUser.profile;
         if (prof.tokens === undefined) prof.tokens = 250;
         if (prof.predictionRights === undefined) prof.predictionRights = 3;
+        if (prof.rerollRights === undefined) prof.rerollRights = 3;
         return prof;
     }
 
@@ -80,6 +87,48 @@ class EconomyManager {
         };
     }
 
+    getRerollRights() {
+        const prof = this.getProfile();
+        return prof ? (prof.rerollRights !== undefined ? prof.rerollRights : 3) : 0;
+    }
+
+    consumeRerollRight() {
+        if (this.auth && this.auth.isAdmin()) return true; // Admin için sınırsız hak
+        const prof = this.getProfile();
+        if (!prof || (prof.rerollRights !== undefined ? prof.rerollRights : 3) <= 0) {
+            return false;
+        }
+        prof.rerollRights = (prof.rerollRights !== undefined ? prof.rerollRights : 3) - 1;
+        this.auth.saveCurrentUserData();
+        return true;
+    }
+
+    buyRerollRightsWithTokens(packageId) {
+        const pkg = REROLL_PACKAGES_TOKEN.find(p => p.id === packageId);
+        if (!pkg) return { success: false, message: 'Paket bulunamadı.' };
+
+        const prof = this.getProfile();
+        if (!prof) return { success: false, message: 'Giriş yapılmadı.' };
+
+        if (prof.tokens < pkg.costToken) {
+            return { 
+                success: false, 
+                message: `Yetersiz Token! Bu paket için ${pkg.costToken} Token gerekiyor (Mevcut: ${prof.tokens} Token).` 
+            };
+        }
+
+        prof.tokens -= pkg.costToken;
+        prof.rerollRights = (prof.rerollRights !== undefined ? prof.rerollRights : 3) + pkg.rights;
+        this.auth.saveCurrentUserData();
+
+        return { 
+            success: true, 
+            message: `Tebrikler! ${pkg.rights} adet Canavar Değiştirme Bileti başarıyla satın alındı.`,
+            newTokens: prof.tokens,
+            newRights: prof.rerollRights
+        };
+    }
+
     simulateRealMoneyPurchase(packageId, cardDetails) {
         const pkg = TOKEN_PACKAGES_REAL_MONEY.find(p => p.id === packageId);
         if (!pkg) return { success: false, message: 'Paket bulunamadı.' };
@@ -104,6 +153,7 @@ class EconomyManager {
 if (typeof window !== 'undefined') {
     window.TOKEN_PACKAGES_REAL_MONEY = TOKEN_PACKAGES_REAL_MONEY;
     window.PREDICTION_PACKAGES_TOKEN = PREDICTION_PACKAGES_TOKEN;
+    window.REROLL_PACKAGES_TOKEN = REROLL_PACKAGES_TOKEN;
     window.EconomyManager = EconomyManager;
     window.economyMgr = new EconomyManager(window.authMgr);
 }
@@ -112,6 +162,7 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         TOKEN_PACKAGES_REAL_MONEY,
         PREDICTION_PACKAGES_TOKEN,
+        REROLL_PACKAGES_TOKEN,
         EconomyManager
     };
 }

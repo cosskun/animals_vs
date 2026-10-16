@@ -49,6 +49,7 @@ class ProfileManager {
 
         if (prof.tokens === undefined) prof.tokens = 250;
         if (prof.predictionRights === undefined) prof.predictionRights = 3;
+        if (prof.rerollRights === undefined) prof.rerollRights = 3;
 
         // Token ödülü ekle
         prof.tokens += tokenReward;

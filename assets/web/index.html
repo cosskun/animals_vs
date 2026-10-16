@@ -248,6 +248,16 @@
                                 <span class="wallet-pill-arrow">➔</span>
                             </div>
                         </div>
+                        <div class="dashboard-wallet-pill reroll-pill" id="btn-header-reroll-tickets" title="Canavar Değiştirme Biletleri (Mağazayı Aç)">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span style="font-size: 0.85rem;">🎲</span>
+                                <span class="wallet-pill-label">Yenile:</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span class="wallet-pill-val" id="player-reroll-tickets">3</span>
+                                <span class="wallet-pill-arrow">➔</span>
+                            </div>
+                        </div>
                         <div class="dashboard-wallet-pill energy-pill" id="lobby-daily-battles-pill" title="Günlük Savaş Hakkı (Günde Max 3 Maç)">
                             <div style="display: flex; align-items: center; gap: 4px;">
                                 <span style="font-size: 0.85rem;">⚡</span>
@@ -423,6 +433,21 @@
 
             <div class="draft-alert info" id="draft-validation-alert" style="margin: 6px 0;">
                 Canavarları savaş slotlarına yerleştirin (Sürükleyin veya Tıklayın).
+            </div>
+
+            <!-- Canavar Kartları Havuzu Başlığı & Yenileme Butonu -->
+            <div class="draft-pool-header-row">
+                <div class="pool-header-title">
+                    <span>🐾 CANAVAR HAVUZU</span>
+                </div>
+                <button type="button" class="btn-reroll-monsters" id="btn-reroll-monsters" title="1 Canavar Değiştirme Bileti kullanarak 5 canavarı da tamamen yenile">
+                    <span class="reroll-icon">🔄</span>
+                    <span class="reroll-text">Yenile</span>
+                    <span class="reroll-ticket-pill">
+                        <span class="reroll-pill-icon">🎲</span>
+                        <b id="draft-reroll-tickets-count">3</b>
+                    </span>
+                </button>
             </div>
 
             <!-- Canavar Kartları Havuzu (Tek Sırada 5 Kart) -->
@@ -814,11 +839,13 @@
                 <div class="store-balance-banner">
                     <div style="display: flex; align-items: center; gap: 4px;">Mevcut Bakiye: <b id="store-current-tokens" style="color: var(--accent-gold);">250</b> <span class="token-coin-icon"></span></div>
                     <div style="display: flex; align-items: center; gap: 4px;">Tahmin Hakları: <b id="store-current-tickets" style="color: #ff7675;">3</b> <span class="ticket-badge-icon"></span></div>
+                    <div style="display: flex; align-items: center; gap: 4px;">Canavar Biletleri: <b id="store-current-reroll-tickets" style="color: #f39c12;">3</b> <span>🎲</span></div>
                 </div>
 
                 <!-- Mağaza Sekmeleri -->
                 <div class="store-tabs-row">
                     <button class="store-tab-btn active" id="tab-store-tickets"><span class="ticket-badge-icon"></span> Tahmin Hakları</button>
+                    <button class="store-tab-btn" id="tab-store-reroll"><span style="font-size: 0.9rem;">🎲</span> Canavar Bileti</button>
                     <button class="store-tab-btn" id="tab-store-tokens"><span class="token-coin-icon"></span> Token Satın Al</button>
                 </div>
 
@@ -827,7 +854,12 @@
                     <!-- JS ile dinamik gelecek -->
                 </div>
 
-                <!-- Sekme 2: Gerçek Para ile Token Satın Alma -->
+                <!-- Sekme 2: Token İle Canavar Değiştirme Bileti Satın Alma -->
+                <div id="store-reroll-panel" class="store-items-grid hidden">
+                    <!-- JS ile dinamik gelecek -->
+                </div>
+
+                <!-- Sekme 3: Gerçek Para ile Token Satın Alma -->
                 <div id="store-tokens-panel" class="store-items-grid hidden">
                     <!-- JS ile dinamik gelecek -->
                 </div>

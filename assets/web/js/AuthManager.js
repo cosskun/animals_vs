@@ -58,6 +58,7 @@ class AuthManager {
                     totalDamageDealt: 0,
                     tokens: 350,
                     predictionRights: 5,
+                    rerollRights: 5,
                     dailyBattles: {
                         date: new Date().toISOString().slice(0, 10),
                         played: 0,
@@ -99,6 +100,9 @@ class AuthManager {
                     claimed: false
                 };
             }
+            if (users['rumeysa'].profile.rerollRights === undefined) {
+                users['rumeysa'].profile.rerollRights = 5;
+            }
             this.saveUsers(users);
         }
     }
@@ -124,6 +128,7 @@ class AuthManager {
                     totalDamageDealt: 99999,
                     tokens: 99999,
                     predictionRights: 999,
+                    rerollRights: 999,
                     dailyBattles: {
                         date: new Date().toISOString().slice(0, 10),
                         played: 0,
@@ -139,6 +144,7 @@ class AuthManager {
             if (users['admin'].profile) {
                 users['admin'].profile.tokens = Math.max(users['admin'].profile.tokens || 0, 99999);
                 users['admin'].profile.predictionRights = Math.max(users['admin'].profile.predictionRights || 0, 999);
+                users['admin'].profile.rerollRights = Math.max(users['admin'].profile.rerollRights || 0, 999);
             }
             this.saveUsers(users);
         }
@@ -157,6 +163,11 @@ class AuthManager {
                             played: 0,
                             max: 3
                         };
+                        users[username] = this.currentUser;
+                        this.saveUsers(users);
+                    }
+                    if (this.currentUser && this.currentUser.profile && this.currentUser.profile.rerollRights === undefined) {
+                        this.currentUser.profile.rerollRights = 3;
                         users[username] = this.currentUser;
                         this.saveUsers(users);
                     }
@@ -215,6 +226,7 @@ class AuthManager {
                 totalDamageDealt: 0,
                 tokens: 250,
                 predictionRights: 3,
+                rerollRights: 3,
                 dailyBattles: {
                     date: new Date().toISOString().slice(0, 10),
                     played: 0,

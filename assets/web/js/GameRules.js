@@ -23,12 +23,14 @@
         DAILY_BATTLES_MAX: 3,           // Günlük resmi lig savaşı limiti
         DAILY_RESET_HOUR: 0,            // Gece sıfırlanma saati (00:00)
         PREDICTION_TICKET_COST: 1,      // AI simülasyon ve tahmin için harcanan bilet
+        REROLL_TICKET_COST: 1,          // Canavar yenileme için harcanan bilet
         BASE_EXP_PER_WIN: 45,           // Galibiyette kazanılan temel TP
         BASE_EXP_PER_LOSS: 12,          // Mağlubiyette kazanılan temel TP
         BASE_TOKEN_PER_WIN: 15,         // Galibiyet temel Token ödülü
         BASE_TOKEN_PER_LOSS: 4,         // Mağlubiyet teselli Token ödülü
         INITIAL_TOKENS: 250,            // Yeni hesap başlangıç Token miktarı
         INITIAL_PREDICTION_RIGHTS: 3,   // Yeni hesap başlangıç Tahmin Bilet hakkı
+        INITIAL_REROLL_RIGHTS: 3,       // Yeni hesap başlangıç Canavar Yenileme Bilet hakkı
         INITIAL_TROPHIES: 150,          // Yeni hesap başlangıç kupası
         LEVEL_STAT_SCALE: 0.12,         // Seviye başına canavar güç çarpanı (+%12)
         LEVEL_EXP_BASE: 100,            // Seviye 1 -> 2 için gereken temel TP
